@@ -1,0 +1,103 @@
+public abstract class jdk.internal.util.random.RandomSupport$AbstractSplittableWithBrineGenerator extends jdk.internal.util.random.RandomSupport$AbstractSplittableGenerator
+{
+    static final int SALT_SHIFT;
+
+    protected void <init>()
+    {
+        jdk.internal.util.random.RandomSupport$AbstractSplittableWithBrineGenerator r0;
+
+        r0 := @this: jdk.internal.util.random.RandomSupport$AbstractSplittableWithBrineGenerator;
+
+        specialinvoke r0.<jdk.internal.util.random.RandomSupport$AbstractSplittableGenerator: void <init>()>();
+
+        return;
+    }
+
+    java.util.Spliterator makeSplitsSpliterator(long, long, java.util.random.RandomGenerator$SplittableGenerator)
+    {
+        jdk.internal.util.random.RandomSupport$AbstractSplittableWithBrineGenerator$RandomSplitsSpliteratorWithSalt $r1;
+        long $l0, l2, l3, l4, $l5, $l6, l7, l8;
+        java.util.random.RandomGenerator$SplittableGenerator r2;
+        byte $b1;
+        jdk.internal.util.random.RandomSupport$AbstractSplittableWithBrineGenerator r0;
+
+        r0 := @this: jdk.internal.util.random.RandomSupport$AbstractSplittableWithBrineGenerator;
+
+        l2 := @parameter0: long;
+
+        l3 := @parameter1: long;
+
+        r2 := @parameter2: java.util.random.RandomGenerator$SplittableGenerator;
+
+        l7 = virtualinvoke r0.<jdk.internal.util.random.RandomSupport$AbstractSplittableWithBrineGenerator: long nextLong()>();
+
+        l8 = -1152921504606846976L;
+
+     label1:
+        $l0 = l8 & 15L;
+
+        $b1 = $l0 cmp 0L;
+
+        if $b1 != 0 goto label2;
+
+        l4 = staticinvoke <java.lang.Math: long multiplyHigh(long,long)>(l7, 15L);
+
+        $l6 = l8 >>> 4;
+
+        $l5 = l4 << 60;
+
+        l8 = $l6 | $l5;
+
+        l7 = l7 * 15L;
+
+        goto label1;
+
+     label2:
+        $r1 = new jdk.internal.util.random.RandomSupport$AbstractSplittableWithBrineGenerator$RandomSplitsSpliteratorWithSalt;
+
+        specialinvoke $r1.<jdk.internal.util.random.RandomSupport$AbstractSplittableWithBrineGenerator$RandomSplitsSpliteratorWithSalt: void <init>(java.util.random.RandomGenerator$SplittableGenerator,long,long,jdk.internal.util.random.RandomSupport$AbstractSplittableWithBrineGenerator,long)>(r2, l2, l3, r0, l8);
+
+        return $r1;
+    }
+
+    public java.util.random.RandomGenerator$SplittableGenerator split(long)
+    {
+        java.util.random.RandomGenerator$SplittableGenerator $r1;
+        jdk.internal.util.random.RandomSupport$AbstractSplittableWithBrineGenerator r0;
+        long l0;
+
+        r0 := @this: jdk.internal.util.random.RandomSupport$AbstractSplittableWithBrineGenerator;
+
+        l0 := @parameter0: long;
+
+        $r1 = virtualinvoke r0.<jdk.internal.util.random.RandomSupport$AbstractSplittableWithBrineGenerator: java.util.random.RandomGenerator$SplittableGenerator split(java.util.random.RandomGenerator$SplittableGenerator,long)>(r0, l0);
+
+        return $r1;
+    }
+
+    public java.util.random.RandomGenerator$SplittableGenerator split(java.util.random.RandomGenerator$SplittableGenerator)
+    {
+        java.util.random.RandomGenerator$SplittableGenerator r1, $r2;
+        jdk.internal.util.random.RandomSupport$AbstractSplittableWithBrineGenerator r0;
+        long $l0;
+
+        r0 := @this: jdk.internal.util.random.RandomSupport$AbstractSplittableWithBrineGenerator;
+
+        r1 := @parameter0: java.util.random.RandomGenerator$SplittableGenerator;
+
+        $l0 = interfaceinvoke r1.<java.util.random.RandomGenerator$SplittableGenerator: long nextLong()>();
+
+        $r2 = virtualinvoke r0.<jdk.internal.util.random.RandomSupport$AbstractSplittableWithBrineGenerator: java.util.random.RandomGenerator$SplittableGenerator split(java.util.random.RandomGenerator$SplittableGenerator,long)>(r1, $l0);
+
+        return $r2;
+    }
+
+    public abstract java.util.random.RandomGenerator$SplittableGenerator split(java.util.random.RandomGenerator$SplittableGenerator, long);
+
+    public static void <clinit>()
+    {
+        <jdk.internal.util.random.RandomSupport$AbstractSplittableWithBrineGenerator: int SALT_SHIFT> = 4;
+
+        return;
+    }
+}

@@ -1,0 +1,44 @@
+final class jdk.internal.icu.text.NormalizerBase$NFKCMode extends jdk.internal.icu.text.NormalizerBase$Mode
+{
+
+    private void <init>()
+    {
+        jdk.internal.icu.text.NormalizerBase$NFKCMode r0;
+
+        r0 := @this: jdk.internal.icu.text.NormalizerBase$NFKCMode;
+
+        specialinvoke r0.<jdk.internal.icu.text.NormalizerBase$Mode: void <init>()>();
+
+        return;
+    }
+
+    protected jdk.internal.icu.text.Normalizer2 getNormalizer2(int)
+    {
+        jdk.internal.icu.text.NormalizerBase$NFKCMode r2;
+        int i0, $i1;
+        jdk.internal.icu.text.Normalizer2 $r3;
+        jdk.internal.icu.text.NormalizerBase$ModeImpl $r0, $r1;
+
+        r2 := @this: jdk.internal.icu.text.NormalizerBase$NFKCMode;
+
+        i0 := @parameter0: int;
+
+        $i1 = i0 & 32;
+
+        if $i1 == false goto label1;
+
+        $r1 = <jdk.internal.icu.text.NormalizerBase$NFKC32ModeImpl: jdk.internal.icu.text.NormalizerBase$ModeImpl INSTANCE>;
+
+        $r3 = $r1.<jdk.internal.icu.text.NormalizerBase$ModeImpl: jdk.internal.icu.text.Normalizer2 normalizer2>;
+
+        goto label2;
+
+     label1:
+        $r0 = <jdk.internal.icu.text.NormalizerBase$NFKCModeImpl: jdk.internal.icu.text.NormalizerBase$ModeImpl INSTANCE>;
+
+        $r3 = $r0.<jdk.internal.icu.text.NormalizerBase$ModeImpl: jdk.internal.icu.text.Normalizer2 normalizer2>;
+
+     label2:
+        return $r3;
+    }
+}

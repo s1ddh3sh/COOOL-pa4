@@ -1,0 +1,49 @@
+public final class jdk.internal.event.X509CertificateEvent extends jdk.internal.event.Event
+{
+    private static final jdk.internal.event.X509CertificateEvent EVENT;
+    public java.lang.String algorithm;
+    public java.lang.String serialNumber;
+    public java.lang.String subject;
+    public java.lang.String issuer;
+    public java.lang.String keyType;
+    public int keyLength;
+    public long certificateId;
+    public long validFrom;
+    public long validUntil;
+
+    public void <init>()
+    {
+        jdk.internal.event.X509CertificateEvent r0;
+
+        r0 := @this: jdk.internal.event.X509CertificateEvent;
+
+        specialinvoke r0.<jdk.internal.event.Event: void <init>()>();
+
+        return;
+    }
+
+    public static boolean isTurnedOn()
+    {
+        jdk.internal.event.X509CertificateEvent $r0;
+        boolean $z0;
+
+        $r0 = <jdk.internal.event.X509CertificateEvent: jdk.internal.event.X509CertificateEvent EVENT>;
+
+        $z0 = virtualinvoke $r0.<jdk.internal.event.X509CertificateEvent: boolean isEnabled()>();
+
+        return $z0;
+    }
+
+    static void <clinit>()
+    {
+        jdk.internal.event.X509CertificateEvent $r0;
+
+        $r0 = new jdk.internal.event.X509CertificateEvent;
+
+        specialinvoke $r0.<jdk.internal.event.X509CertificateEvent: void <init>()>();
+
+        <jdk.internal.event.X509CertificateEvent: jdk.internal.event.X509CertificateEvent EVENT> = $r0;
+
+        return;
+    }
+}

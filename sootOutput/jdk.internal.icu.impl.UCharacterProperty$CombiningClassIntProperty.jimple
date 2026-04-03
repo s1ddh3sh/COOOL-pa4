@@ -1,0 +1,23 @@
+class jdk.internal.icu.impl.UCharacterProperty$CombiningClassIntProperty extends jdk.internal.icu.impl.UCharacterProperty$IntProperty
+{
+    final jdk.internal.icu.impl.UCharacterProperty this$0;
+
+    void <init>(jdk.internal.icu.impl.UCharacterProperty, int)
+    {
+        int i0;
+        jdk.internal.icu.impl.UCharacterProperty$CombiningClassIntProperty r0;
+        jdk.internal.icu.impl.UCharacterProperty r1;
+
+        r0 := @this: jdk.internal.icu.impl.UCharacterProperty$CombiningClassIntProperty;
+
+        r1 := @parameter0: jdk.internal.icu.impl.UCharacterProperty;
+
+        i0 := @parameter1: int;
+
+        r0.<jdk.internal.icu.impl.UCharacterProperty$CombiningClassIntProperty: jdk.internal.icu.impl.UCharacterProperty this$0> = r1;
+
+        specialinvoke r0.<jdk.internal.icu.impl.UCharacterProperty$IntProperty: void <init>(jdk.internal.icu.impl.UCharacterProperty,int)>(r1, i0);
+
+        return;
+    }
+}

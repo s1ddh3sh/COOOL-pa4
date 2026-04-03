@@ -1,0 +1,69 @@
+Soot started on Fri Apr 03 14:04:05 IST 2026
+
+Call Site: virtualinvoke $r5.<tests.Test1.A: void foo()>()
+Possible Types:
+ : Any_subtype_of_tests.Test1.A
+Resolved Targets:
+ : <tests.Test1.A: void foo()>
+ : <C: void foo()>
+ : <B: void foo()>
+not monomorphic
+
+Call Site: virtualinvoke $r4.<tests.Test1.A: void foo()>()
+Possible Types:
+ : Any_subtype_of_tests.Test1.A
+Resolved Targets:
+ : <tests.Test1.A: void foo()>
+ : <C: void foo()>
+ : <B: void foo()>
+not monomorphic
+
+Call Site: virtualinvoke $r5.<tests.Test1.A: void foo()>()
+Possible Types:
+ : Any_subtype_of_tests.Test1.A
+Resolved Targets:
+ : <tests.Test1.A: void foo()>
+ : <C: void foo()>
+ : <B: void foo()>
+not monomorphic
+
+Call Site: virtualinvoke $r0.<java.io.PrintStream: void println(java.lang.String)>("C.foo")
+Possible Types:
+ : Any_subtype_of_java.io.PrintStream
+Resolved Targets:
+ : <java.io.PrintStream: void println(java.lang.String)>
+monomorphic
+
+Call Site: virtualinvoke r0.<tests.Test1.A: void foo()>()
+Possible Types:
+ : Any_subtype_of_tests.Test1.A
+Resolved Targets:
+ : <tests.Test1.A: void foo()>
+ : <C: void foo()>
+ : <B: void foo()>
+not monomorphic
+
+Call Site: virtualinvoke $r2.<tests.Test1.A: void foo()>()
+Possible Types:
+ : Any_subtype_of_tests.Test1.A
+Resolved Targets:
+ : <tests.Test1.A: void foo()>
+ : <C: void foo()>
+ : <B: void foo()>
+not monomorphic
+
+Call Site: virtualinvoke $r0.<java.io.PrintStream: void println(java.lang.String)>("B.foo")
+Possible Types:
+ : Any_subtype_of_java.io.PrintStream
+Resolved Targets:
+ : <java.io.PrintStream: void println(java.lang.String)>
+monomorphic
+
+Call Site: virtualinvoke $r0.<java.io.PrintStream: void println(java.lang.String)>("A.foo")
+Possible Types:
+ : Any_subtype_of_java.io.PrintStream
+Resolved Targets:
+ : <java.io.PrintStream: void println(java.lang.String)>
+monomorphic
+Soot finished on Fri Apr 03 14:04:06 IST 2026
+Soot has run for 0 min. 0 sec.

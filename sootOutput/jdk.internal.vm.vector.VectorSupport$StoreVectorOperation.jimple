@@ -1,0 +1,5 @@
+public interface  jdk.internal.vm.vector.VectorSupport$StoreVectorOperation extends java.lang.Object
+{
+
+    public abstract void store(java.lang.Object, int, jdk.internal.vm.vector.VectorSupport$Vector);
+}

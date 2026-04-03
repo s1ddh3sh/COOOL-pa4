@@ -1,0 +1,36 @@
+public class jdk.internal.vm.vector.VectorSupport$VectorPayload extends java.lang.Object
+{
+    private final java.lang.Object payload;
+
+    public void <init>(java.lang.Object)
+    {
+        java.lang.Object r1;
+        jdk.internal.vm.vector.VectorSupport$VectorPayload r0;
+
+        r0 := @this: jdk.internal.vm.vector.VectorSupport$VectorPayload;
+
+        r1 := @parameter0: java.lang.Object;
+
+        specialinvoke r0.<java.lang.Object: void <init>()>();
+
+        r0.<jdk.internal.vm.vector.VectorSupport$VectorPayload: java.lang.Object payload> = r1;
+
+        return;
+    }
+
+    protected final java.lang.Object getPayload()
+    {
+        java.lang.Object $r1, $r3;
+        jdk.internal.vm.vector.VectorSupport$VectorPayload r0, $r2;
+
+        r0 := @this: jdk.internal.vm.vector.VectorSupport$VectorPayload;
+
+        $r1 = staticinvoke <jdk.internal.vm.vector.VectorSupport: java.lang.Object maybeRebox(java.lang.Object)>(r0);
+
+        $r2 = (jdk.internal.vm.vector.VectorSupport$VectorPayload) $r1;
+
+        $r3 = $r2.<jdk.internal.vm.vector.VectorSupport$VectorPayload: java.lang.Object payload>;
+
+        return $r3;
+    }
+}

@@ -1,0 +1,200 @@
+public class Test extends java.lang.Object
+{
+
+    public void <init>()
+    {
+        Test r0;
+
+        r0 := @this: Test;
+
+        specialinvoke r0.<java.lang.Object: void <init>()>();
+
+        return;
+    }
+
+    static void case1()
+    {
+        tests.Test1.B $r1;
+        tests.Test1.A $r2;
+
+        $r1 = new tests.Test1.B;
+
+        specialinvoke $r1.<tests.Test1.B: void <init>()>();
+
+        $r2 = (tests.Test1.A) $r1;
+
+        virtualinvoke $r2.<tests.Test1.A: void foo()>();
+
+        return;
+    }
+
+    static void case2(boolean)
+    {
+        java.lang.Object r2;
+        tests.Test1.C $r4;
+        tests.Test1.B $r3;
+        tests.Test1.A $r5;
+        boolean z0;
+
+        z0 := @parameter0: boolean;
+
+        if z0 == false goto label1;
+
+        $r3 = new tests.Test1.B;
+
+        specialinvoke $r3.<tests.Test1.B: void <init>()>();
+
+        r2 = $r3;
+
+        goto label2;
+
+     label1:
+        $r4 = new tests.Test1.C;
+
+        specialinvoke $r4.<tests.Test1.C: void <init>()>();
+
+        r2 = $r4;
+
+     label2:
+        $r5 = (tests.Test1.A) r2;
+
+        virtualinvoke $r5.<tests.Test1.A: void foo()>();
+
+        return;
+    }
+
+    static void case3()
+    {
+        tests.Test1.B $r2, $r3;
+        tests.Test1.A $r4;
+
+        $r2 = new tests.Test1.B;
+
+        specialinvoke $r2.<tests.Test1.B: void <init>()>();
+
+        $r3 = new tests.Test1.B;
+
+        specialinvoke $r3.<tests.Test1.B: void <init>()>();
+
+        $r4 = (tests.Test1.A) $r3;
+
+        virtualinvoke $r4.<tests.Test1.A: void foo()>();
+
+        return;
+    }
+
+    static void case4(boolean)
+    {
+        java.lang.Object r2;
+        tests.Test1.C $r4;
+        tests.Test1.B $r3;
+        tests.Test1.A $r5;
+        boolean z0;
+
+        z0 := @parameter0: boolean;
+
+        $r3 = new tests.Test1.B;
+
+        specialinvoke $r3.<tests.Test1.B: void <init>()>();
+
+        r2 = $r3;
+
+        if z0 == false goto label1;
+
+        $r4 = new tests.Test1.C;
+
+        specialinvoke $r4.<tests.Test1.C: void <init>()>();
+
+        r2 = $r4;
+
+     label1:
+        $r5 = (tests.Test1.A) r2;
+
+        virtualinvoke $r5.<tests.Test1.A: void foo()>();
+
+        return;
+    }
+
+    static void callFoo(tests.Test1.A)
+    {
+        tests.Test1.A r0;
+
+        r0 := @parameter0: tests.Test1.A;
+
+        virtualinvoke r0.<tests.Test1.A: void foo()>();
+
+        return;
+    }
+
+    static void case5()
+    {
+        tests.Test1.B $r1;
+        tests.Test1.A $r2;
+
+        $r1 = new tests.Test1.B;
+
+        specialinvoke $r1.<tests.Test1.B: void <init>()>();
+
+        $r2 = (tests.Test1.A) $r1;
+
+        staticinvoke <tests.Test1.Test: void callFoo(tests.Test1.A)>($r2);
+
+        return;
+    }
+
+    static void case6(boolean)
+    {
+        java.lang.Object r2;
+        tests.Test1.C $r4;
+        tests.Test1.B $r3;
+        tests.Test1.A $r5;
+        boolean z0;
+
+        z0 := @parameter0: boolean;
+
+        if z0 == false goto label1;
+
+        $r3 = new tests.Test1.B;
+
+        specialinvoke $r3.<tests.Test1.B: void <init>()>();
+
+        r2 = $r3;
+
+        goto label2;
+
+     label1:
+        $r4 = new tests.Test1.C;
+
+        specialinvoke $r4.<tests.Test1.C: void <init>()>();
+
+        r2 = $r4;
+
+     label2:
+        $r5 = (tests.Test1.A) r2;
+
+        staticinvoke <tests.Test1.Test: void callFoo(tests.Test1.A)>($r5);
+
+        return;
+    }
+
+    public static void main(java.lang.String[])
+    {
+        java.lang.String[] r0;
+
+        r0 := @parameter0: java.lang.String[];
+
+        staticinvoke <tests.Test1.Test: void case1()>();
+
+        staticinvoke <tests.Test1.Test: void case2(boolean)>(1);
+
+        staticinvoke <tests.Test1.Test: void case3()>();
+
+        staticinvoke <tests.Test1.Test: void case4(boolean)>(0);
+
+        staticinvoke <tests.Test1.Test: void case5()>();
+
+        staticinvoke <tests.Test1.Test: void case6(boolean)>(1);
+
+        return;
+    }
+}

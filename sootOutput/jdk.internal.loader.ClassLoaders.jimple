@@ -1,0 +1,243 @@
+public class jdk.internal.loader.ClassLoaders extends java.lang.Object
+{
+    private static final jdk.internal.access.JavaLangAccess JLA;
+    private static final jdk.internal.loader.ClassLoaders$BootClassLoader BOOT_LOADER;
+    private static final jdk.internal.loader.ClassLoaders$PlatformClassLoader PLATFORM_LOADER;
+    private static final jdk.internal.loader.ClassLoaders$AppClassLoader APP_LOADER;
+
+    private void <init>()
+    {
+        jdk.internal.loader.ClassLoaders r0;
+
+        r0 := @this: jdk.internal.loader.ClassLoaders;
+
+        specialinvoke r0.<java.lang.Object: void <init>()>();
+
+        return;
+    }
+
+    private static void setArchivedServicesCatalog(java.lang.ClassLoader)
+    {
+        jdk.internal.loader.ArchivedClassLoaders $r1;
+        java.lang.ClassLoader r0;
+        jdk.internal.module.ServicesCatalog r2;
+
+        r0 := @parameter0: java.lang.ClassLoader;
+
+        $r1 = staticinvoke <jdk.internal.loader.ArchivedClassLoaders: jdk.internal.loader.ArchivedClassLoaders get()>();
+
+        r2 = virtualinvoke $r1.<jdk.internal.loader.ArchivedClassLoaders: jdk.internal.module.ServicesCatalog servicesCatalog(java.lang.ClassLoader)>(r0);
+
+        staticinvoke <jdk.internal.module.ServicesCatalog: void putServicesCatalog(java.lang.ClassLoader,jdk.internal.module.ServicesCatalog)>(r0, r2);
+
+        return;
+    }
+
+    static jdk.internal.loader.BuiltinClassLoader bootLoader()
+    {
+        jdk.internal.loader.ClassLoaders$BootClassLoader $r0;
+
+        $r0 = <jdk.internal.loader.ClassLoaders: jdk.internal.loader.ClassLoaders$BootClassLoader BOOT_LOADER>;
+
+        return $r0;
+    }
+
+    public static java.lang.ClassLoader platformClassLoader()
+    {
+        jdk.internal.loader.ClassLoaders$PlatformClassLoader $r0;
+
+        $r0 = <jdk.internal.loader.ClassLoaders: jdk.internal.loader.ClassLoaders$PlatformClassLoader PLATFORM_LOADER>;
+
+        return $r0;
+    }
+
+    public static java.lang.ClassLoader appClassLoader()
+    {
+        jdk.internal.loader.ClassLoaders$AppClassLoader $r0;
+
+        $r0 = <jdk.internal.loader.ClassLoaders: jdk.internal.loader.ClassLoaders$AppClassLoader APP_LOADER>;
+
+        return $r0;
+    }
+
+    private static java.net.URL toFileURL(java.lang.String)
+    {
+        java.nio.file.LinkOption[] $r2;
+        java.net.URL $r7;
+        java.lang.String[] $r1;
+        java.io.File $r5;
+        java.lang.Exception $r8;
+        java.lang.String r0;
+        java.net.URI $r6;
+        java.nio.file.Path $r3, $r4;
+
+        r0 := @parameter0: java.lang.String;
+
+     label1:
+        $r1 = newarray (java.lang.String)[0];
+
+        $r3 = staticinvoke <java.nio.file.Path: java.nio.file.Path of(java.lang.String,java.lang.String[])>(r0, $r1);
+
+        $r2 = newarray (java.nio.file.LinkOption)[0];
+
+        $r4 = interfaceinvoke $r3.<java.nio.file.Path: java.nio.file.Path toRealPath(java.nio.file.LinkOption[])>($r2);
+
+        $r5 = interfaceinvoke $r4.<java.nio.file.Path: java.io.File toFile()>();
+
+        $r6 = virtualinvoke $r5.<java.io.File: java.net.URI toURI()>();
+
+        $r7 = virtualinvoke $r6.<java.net.URI: java.net.URL toURL()>();
+
+     label2:
+        return $r7;
+
+     label3:
+        $r8 := @caughtexception;
+
+        return null;
+
+        catch java.nio.file.InvalidPathException from label1 to label2 with label3;
+        catch java.io.IOException from label1 to label2 with label3;
+    }
+
+    static void <clinit>()
+    {
+        jdk.internal.loader.ArchivedClassLoaders r1;
+        jdk.internal.access.JavaLangAccess $r0;
+        jdk.internal.loader.URLClassPath $r9, $r17, $r24;
+        jdk.internal.loader.ClassLoaders$BootClassLoader $r11, $r12, $r18, $r20;
+        jdk.internal.loader.ClassLoaders$PlatformClassLoader $r3, $r14, $r15, $r19;
+        java.lang.String $r8, r16, $r21, r22, $r23;
+        boolean $z0, $z1;
+        jdk.internal.loader.ClassLoaders$AppClassLoader $r2, $r5, $r6, $r7;
+        java.lang.ClassLoader $r4, $r10, $r13;
+
+        $r0 = staticinvoke <jdk.internal.access.SharedSecrets: jdk.internal.access.JavaLangAccess getJavaLangAccess()>();
+
+        <jdk.internal.loader.ClassLoaders: jdk.internal.access.JavaLangAccess JLA> = $r0;
+
+        r1 = staticinvoke <jdk.internal.loader.ArchivedClassLoaders: jdk.internal.loader.ArchivedClassLoaders get()>();
+
+        if r1 == null goto label01;
+
+        $r10 = virtualinvoke r1.<jdk.internal.loader.ArchivedClassLoaders: java.lang.ClassLoader bootLoader()>();
+
+        $r11 = (jdk.internal.loader.ClassLoaders$BootClassLoader) $r10;
+
+        <jdk.internal.loader.ClassLoaders: jdk.internal.loader.ClassLoaders$BootClassLoader BOOT_LOADER> = $r11;
+
+        $r12 = <jdk.internal.loader.ClassLoaders: jdk.internal.loader.ClassLoaders$BootClassLoader BOOT_LOADER>;
+
+        staticinvoke <jdk.internal.loader.ClassLoaders: void setArchivedServicesCatalog(java.lang.ClassLoader)>($r12);
+
+        $r13 = virtualinvoke r1.<jdk.internal.loader.ArchivedClassLoaders: java.lang.ClassLoader platformLoader()>();
+
+        $r14 = (jdk.internal.loader.ClassLoaders$PlatformClassLoader) $r13;
+
+        <jdk.internal.loader.ClassLoaders: jdk.internal.loader.ClassLoaders$PlatformClassLoader PLATFORM_LOADER> = $r14;
+
+        $r15 = <jdk.internal.loader.ClassLoaders: jdk.internal.loader.ClassLoaders$PlatformClassLoader PLATFORM_LOADER>;
+
+        staticinvoke <jdk.internal.loader.ClassLoaders: void setArchivedServicesCatalog(java.lang.ClassLoader)>($r15);
+
+        goto label04;
+
+     label01:
+        r16 = staticinvoke <jdk.internal.misc.VM: java.lang.String getSavedProperty(java.lang.String)>("jdk.boot.class.path.append");
+
+        if r16 == null goto label02;
+
+        $z1 = virtualinvoke r16.<java.lang.String: boolean isEmpty()>();
+
+        if $z1 != 0 goto label02;
+
+        $r9 = new jdk.internal.loader.URLClassPath;
+
+        $r17 = $r9;
+
+        specialinvoke $r9.<jdk.internal.loader.URLClassPath: void <init>(java.lang.String,boolean)>(r16, 1);
+
+        goto label03;
+
+     label02:
+        $r17 = null;
+
+     label03:
+        $r18 = new jdk.internal.loader.ClassLoaders$BootClassLoader;
+
+        specialinvoke $r18.<jdk.internal.loader.ClassLoaders$BootClassLoader: void <init>(jdk.internal.loader.URLClassPath)>($r17);
+
+        <jdk.internal.loader.ClassLoaders: jdk.internal.loader.ClassLoaders$BootClassLoader BOOT_LOADER> = $r18;
+
+        $r19 = new jdk.internal.loader.ClassLoaders$PlatformClassLoader;
+
+        $r20 = <jdk.internal.loader.ClassLoaders: jdk.internal.loader.ClassLoaders$BootClassLoader BOOT_LOADER>;
+
+        specialinvoke $r19.<jdk.internal.loader.ClassLoaders$PlatformClassLoader: void <init>(jdk.internal.loader.ClassLoaders$BootClassLoader)>($r20);
+
+        <jdk.internal.loader.ClassLoaders: jdk.internal.loader.ClassLoaders$PlatformClassLoader PLATFORM_LOADER> = $r19;
+
+     label04:
+        $r21 = staticinvoke <java.lang.System: java.lang.String getProperty(java.lang.String)>("java.class.path");
+
+        r22 = $r21;
+
+        if $r21 == null goto label05;
+
+        $z0 = virtualinvoke $r21.<java.lang.String: boolean isEmpty()>();
+
+        if $z0 == false goto label08;
+
+     label05:
+        $r8 = staticinvoke <java.lang.System: java.lang.String getProperty(java.lang.String)>("jdk.module.main");
+
+        if $r8 != null goto label06;
+
+        $r23 = "";
+
+        goto label07;
+
+     label06:
+        $r23 = null;
+
+     label07:
+        r22 = $r23;
+
+     label08:
+        $r24 = new jdk.internal.loader.URLClassPath;
+
+        specialinvoke $r24.<jdk.internal.loader.URLClassPath: void <init>(java.lang.String,boolean)>(r22, 0);
+
+        if r1 == null goto label09;
+
+        $r4 = virtualinvoke r1.<jdk.internal.loader.ArchivedClassLoaders: java.lang.ClassLoader appLoader()>();
+
+        $r5 = (jdk.internal.loader.ClassLoaders$AppClassLoader) $r4;
+
+        <jdk.internal.loader.ClassLoaders: jdk.internal.loader.ClassLoaders$AppClassLoader APP_LOADER> = $r5;
+
+        $r6 = <jdk.internal.loader.ClassLoaders: jdk.internal.loader.ClassLoaders$AppClassLoader APP_LOADER>;
+
+        staticinvoke <jdk.internal.loader.ClassLoaders: void setArchivedServicesCatalog(java.lang.ClassLoader)>($r6);
+
+        $r7 = <jdk.internal.loader.ClassLoaders: jdk.internal.loader.ClassLoaders$AppClassLoader APP_LOADER>;
+
+        virtualinvoke $r7.<jdk.internal.loader.ClassLoaders$AppClassLoader: void setClassPath(jdk.internal.loader.URLClassPath)>($r24);
+
+        goto label10;
+
+     label09:
+        $r2 = new jdk.internal.loader.ClassLoaders$AppClassLoader;
+
+        $r3 = <jdk.internal.loader.ClassLoaders: jdk.internal.loader.ClassLoaders$PlatformClassLoader PLATFORM_LOADER>;
+
+        specialinvoke $r2.<jdk.internal.loader.ClassLoaders$AppClassLoader: void <init>(jdk.internal.loader.BuiltinClassLoader,jdk.internal.loader.URLClassPath)>($r3, $r24);
+
+        <jdk.internal.loader.ClassLoaders: jdk.internal.loader.ClassLoaders$AppClassLoader APP_LOADER> = $r2;
+
+        staticinvoke <jdk.internal.loader.ArchivedClassLoaders: void archive()>();
+
+     label10:
+        return;
+    }
+}

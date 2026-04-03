@@ -1,0 +1,830 @@
+public final class jdk.internal.icu.impl.ICUBinary extends java.lang.Object
+{
+    private static final byte BIG_ENDIAN_;
+    private static final byte MAGIC1;
+    private static final byte MAGIC2;
+    private static final byte CHAR_SET_;
+    private static final byte CHAR_SIZE_;
+    private static final java.lang.String MAGIC_NUMBER_AUTHENTICATION_FAILED_;
+    private static final java.lang.String HEADER_AUTHENTICATION_FAILED_;
+    static final boolean $assertionsDisabled;
+
+    public void <init>()
+    {
+        jdk.internal.icu.impl.ICUBinary r0;
+
+        r0 := @this: jdk.internal.icu.impl.ICUBinary;
+
+        specialinvoke r0.<java.lang.Object: void <init>()>();
+
+        return;
+    }
+
+    public static java.nio.ByteBuffer getRequiredData(java.lang.String)
+    {
+        java.lang.Throwable $r6, $r7;
+        byte[] r9, $r10;
+        java.nio.ByteBuffer $r3;
+        byte $b10;
+        int $i0, $i1, $i2, i3, i4, $i5, i6, i7, i8, $i9;
+        java.lang.String r1;
+        jdk.internal.icu.impl.ICUBinary$1 $r0;
+        java.io.IOException $r4;
+        java.io.UncheckedIOException $r5;
+        java.lang.Object $r2;
+        java.io.InputStream r8;
+
+        r1 := @parameter0: java.lang.String;
+
+     label01:
+        $r0 = new jdk.internal.icu.impl.ICUBinary$1;
+
+        specialinvoke $r0.<jdk.internal.icu.impl.ICUBinary$1: void <init>(java.lang.Class,java.lang.String)>(class "Ljdk/internal/icu/impl/ICUBinary;", r1);
+
+        $r2 = staticinvoke <java.security.AccessController: java.lang.Object doPrivileged(java.security.PrivilegedAction)>($r0);
+
+        r8 = (java.io.InputStream) $r2;
+
+     label02:
+        i3 = virtualinvoke r8.<java.io.InputStream: int available()>();
+
+        if i3 <= 32 goto label03;
+
+        r9 = newarray (byte)[i3];
+
+        goto label04;
+
+     label03:
+        r9 = newarray (byte)[128];
+
+     label04:
+        i4 = 0;
+
+     label05:
+        $i5 = lengthof r9;
+
+        if i4 >= $i5 goto label07;
+
+        $i1 = lengthof r9;
+
+        $i2 = $i1 - i4;
+
+        i6 = virtualinvoke r8.<java.io.InputStream: int read(byte[],int,int)>(r9, i4, $i2);
+
+        if i6 >= 0 goto label06;
+
+        goto label11;
+
+     label06:
+        i4 = i4 + i6;
+
+        goto label05;
+
+     label07:
+        i7 = virtualinvoke r8.<java.io.InputStream: int read()>();
+
+        if i7 >= 0 goto label08;
+
+        goto label11;
+
+     label08:
+        $i0 = lengthof r9;
+
+        i8 = 2 * $i0;
+
+        if i8 >= 128 goto label09;
+
+        i8 = 128;
+
+        goto label10;
+
+     label09:
+        if i8 >= 16384 goto label10;
+
+        i8 = i8 * 2;
+
+     label10:
+        $r10 = staticinvoke <java.util.Arrays: byte[] copyOf(byte[],int)>(r9, i8);
+
+        r9 = $r10;
+
+        $i9 = i4;
+
+        i4 = i4 + 1;
+
+        $b10 = (byte) i7;
+
+        $r10[$i9] = $b10;
+
+        goto label05;
+
+     label11:
+        $r3 = staticinvoke <java.nio.ByteBuffer: java.nio.ByteBuffer wrap(byte[],int,int)>(r9, 0, i4);
+
+     label12:
+        if r8 == null goto label13;
+
+        virtualinvoke r8.<java.io.InputStream: void close()>();
+
+     label13:
+        return $r3;
+
+     label14:
+        $r7 := @caughtexception;
+
+        if r8 == null goto label18;
+
+     label15:
+        virtualinvoke r8.<java.io.InputStream: void close()>();
+
+     label16:
+        goto label18;
+
+     label17:
+        $r6 := @caughtexception;
+
+        virtualinvoke $r7.<java.lang.Throwable: void addSuppressed(java.lang.Throwable)>($r6);
+
+     label18:
+        throw $r7;
+
+     label19:
+        $r4 := @caughtexception;
+
+        $r5 = new java.io.UncheckedIOException;
+
+        specialinvoke $r5.<java.io.UncheckedIOException: void <init>(java.io.IOException)>($r4);
+
+        throw $r5;
+
+        catch java.lang.Throwable from label02 to label12 with label14;
+        catch java.lang.Throwable from label15 to label16 with label17;
+        catch java.io.IOException from label01 to label13 with label19;
+        catch java.io.IOException from label14 to label19 with label19;
+    }
+
+    public static jdk.internal.icu.util.VersionInfo readHeaderAndDataVersion(java.nio.ByteBuffer, int, jdk.internal.icu.impl.ICUBinary$Authenticate) throws java.io.IOException
+    {
+        jdk.internal.icu.impl.ICUBinary$Authenticate r1;
+        int i0, $i1;
+        jdk.internal.icu.util.VersionInfo $r2;
+        java.nio.ByteBuffer r0;
+
+        r0 := @parameter0: java.nio.ByteBuffer;
+
+        i0 := @parameter1: int;
+
+        r1 := @parameter2: jdk.internal.icu.impl.ICUBinary$Authenticate;
+
+        $i1 = staticinvoke <jdk.internal.icu.impl.ICUBinary: int readHeader(java.nio.ByteBuffer,int,jdk.internal.icu.impl.ICUBinary$Authenticate)>(r0, i0, r1);
+
+        $r2 = staticinvoke <jdk.internal.icu.impl.ICUBinary: jdk.internal.icu.util.VersionInfo getVersionInfoFromCompactInt(int)>($i1);
+
+        return $r2;
+    }
+
+    public static final byte[] readHeader(java.io.InputStream, byte[], jdk.internal.icu.impl.ICUBinary$Authenticate) throws java.io.IOException
+    {
+        byte[] r3, r4, r5, r6;
+        java.io.DataInputStream $r10;
+        byte b1, b2, b3, b4, b5;
+        jdk.internal.icu.impl.ICUBinary$Authenticate r7;
+        int $i6, $i7, $i9, $i10, $i11, $i12, $i13;
+        boolean $z0, $z1;
+        char c0;
+        java.io.IOException $r11, $r12, $r13;
+        java.io.InputStream r1;
+
+        r1 := @parameter0: java.io.InputStream;
+
+        r6 := @parameter1: byte[];
+
+        r7 := @parameter2: jdk.internal.icu.impl.ICUBinary$Authenticate;
+
+        $r10 = new java.io.DataInputStream;
+
+        specialinvoke $r10.<java.io.DataInputStream: void <init>(java.io.InputStream)>(r1);
+
+        c0 = virtualinvoke $r10.<java.io.DataInputStream: char readChar()>();
+
+        b1 = virtualinvoke $r10.<java.io.DataInputStream: byte readByte()>();
+
+        b2 = virtualinvoke $r10.<java.io.DataInputStream: byte readByte()>();
+
+        $i7 = (int) b1;
+
+        $i9 = (int) -38;
+
+        if $i7 != $i9 goto label1;
+
+        $i10 = (int) b2;
+
+        if $i10 == 39 goto label2;
+
+     label1:
+        $r11 = new java.io.IOException;
+
+        specialinvoke $r11.<java.io.IOException: void <init>(java.lang.String)>("ICUBinary data file error: Magic number authentication failed");
+
+        throw $r11;
+
+     label2:
+        virtualinvoke $r10.<java.io.DataInputStream: char readChar()>();
+
+        virtualinvoke $r10.<java.io.DataInputStream: char readChar()>();
+
+        b3 = virtualinvoke $r10.<java.io.DataInputStream: byte readByte()>();
+
+        b4 = virtualinvoke $r10.<java.io.DataInputStream: byte readByte()>();
+
+        b5 = virtualinvoke $r10.<java.io.DataInputStream: byte readByte()>();
+
+        virtualinvoke $r10.<java.io.DataInputStream: byte readByte()>();
+
+        r3 = newarray (byte)[4];
+
+        virtualinvoke $r10.<java.io.DataInputStream: void readFully(byte[])>(r3);
+
+        r4 = newarray (byte)[4];
+
+        virtualinvoke $r10.<java.io.DataInputStream: void readFully(byte[])>(r4);
+
+        r5 = newarray (byte)[4];
+
+        virtualinvoke $r10.<java.io.DataInputStream: void readFully(byte[])>(r5);
+
+        $i11 = (int) c0;
+
+        if $i11 >= 24 goto label3;
+
+        $r12 = new java.io.IOException;
+
+        specialinvoke $r12.<java.io.IOException: void <init>(java.lang.String)>("Internal Error: Header size error");
+
+        throw $r12;
+
+     label3:
+        $i12 = (int) c0;
+
+        $i6 = $i12 - 24;
+
+        virtualinvoke $r10.<java.io.DataInputStream: int skipBytes(int)>($i6);
+
+        if b3 != 1 goto label4;
+
+        if b4 != 0 goto label4;
+
+        $i13 = (int) b5;
+
+        if $i13 != 2 goto label4;
+
+        $z0 = staticinvoke <java.util.Arrays: boolean equals(byte[],byte[])>(r6, r3);
+
+        if $z0 == false goto label4;
+
+        if r7 == null goto label5;
+
+        $z1 = interfaceinvoke r7.<jdk.internal.icu.impl.ICUBinary$Authenticate: boolean isDataVersionAcceptable(byte[])>(r4);
+
+        if $z1 != 0 goto label5;
+
+     label4:
+        $r13 = new java.io.IOException;
+
+        specialinvoke $r13.<java.io.IOException: void <init>(java.lang.String)>("ICUBinary data file error: Header authentication failed");
+
+        throw $r13;
+
+     label5:
+        return r5;
+    }
+
+    public static int readHeader(java.nio.ByteBuffer, int, jdk.internal.icu.impl.ICUBinary$Authenticate) throws java.io.IOException
+    {
+        byte[] $r3;
+        java.lang.Integer $r16, $r17, $r18, $r19;
+        byte b0, b1, b2, $b4, $b5, $b6, $b7, $b10, $b11, $b13, $b14, $b16, $b17, $b18, $b19, $b20, $b21, $b25, $b29, $b36, $b37, $b38, $b39, $b40, $b41, $b42, $b44, $b46, $b48;
+        java.nio.ByteOrder $r7;
+        java.lang.StringBuilder $r10, $r21, $r27;
+        java.lang.Object[] $r11;
+        java.lang.AssertionError $r23;
+        short $s22, $s26, $s30, $s43, $s45, $s47, $s49, $s68, $s70, $s72, $s74, $s78, $s80, $s82;
+        jdk.internal.icu.impl.ICUBinary$Authenticate r4;
+        java.lang.String $r20, $r22;
+        java.io.IOException $r24, $r25, $r26, $r28;
+        java.nio.ByteBuffer r0;
+        java.lang.Byte $r12, $r13, $r14, $r15;
+        boolean $z0, $z1;
+        int $i3, i8, $i9, $i12, $i15, $i23, $i24, $i27, $i28, $i31, $i32, $i35, $i50, $i52, $i53, $i54, $i55, $i56, $i57, $i58, $i59, $i60, $i61, $i62, $i63, $i64, $i65, $i66, $i67, $i69, $i71, $i73, $i75, $i76, $i77, $i79, $i81, $i83;
+        char $c33, $c34;
+
+        r0 := @parameter0: java.nio.ByteBuffer;
+
+        i8 := @parameter1: int;
+
+        r4 := @parameter2: jdk.internal.icu.impl.ICUBinary$Authenticate;
+
+        $z0 = <jdk.internal.icu.impl.ICUBinary: boolean $assertionsDisabled>;
+
+        if $z0 != 0 goto label01;
+
+        $i35 = virtualinvoke r0.<java.nio.ByteBuffer: int position()>();
+
+        if $i35 == false goto label01;
+
+        $r23 = new java.lang.AssertionError;
+
+        specialinvoke $r23.<java.lang.AssertionError: void <init>()>();
+
+        throw $r23;
+
+     label01:
+        $b36 = virtualinvoke r0.<java.nio.ByteBuffer: byte get(int)>(2);
+
+        $b37 = virtualinvoke r0.<java.nio.ByteBuffer: byte get(int)>(3);
+
+        $i50 = (int) $b36;
+
+        $i52 = (int) -38;
+
+        if $i50 != $i52 goto label02;
+
+        $i53 = (int) $b37;
+
+        if $i53 == 39 goto label03;
+
+     label02:
+        $r24 = new java.io.IOException;
+
+        specialinvoke $r24.<java.io.IOException: void <init>(java.lang.String)>("ICUBinary data file error: Magic number authentication failed");
+
+        throw $r24;
+
+     label03:
+        b0 = virtualinvoke r0.<java.nio.ByteBuffer: byte get(int)>(8);
+
+        b1 = virtualinvoke r0.<java.nio.ByteBuffer: byte get(int)>(9);
+
+        b2 = virtualinvoke r0.<java.nio.ByteBuffer: byte get(int)>(10);
+
+        $i54 = (int) b0;
+
+        if $i54 < 0 goto label04;
+
+        $i55 = (int) b0;
+
+        if 1 < $i55 goto label04;
+
+        if b1 != 0 goto label04;
+
+        $i56 = (int) b2;
+
+        if $i56 == 2 goto label05;
+
+     label04:
+        $r25 = new java.io.IOException;
+
+        specialinvoke $r25.<java.io.IOException: void <init>(java.lang.String)>("ICUBinary data file error: Header authentication failed");
+
+        throw $r25;
+
+     label05:
+        if b0 == false goto label06;
+
+        $r7 = <java.nio.ByteOrder: java.nio.ByteOrder BIG_ENDIAN>;
+
+        goto label07;
+
+     label06:
+        $r7 = <java.nio.ByteOrder: java.nio.ByteOrder LITTLE_ENDIAN>;
+
+     label07:
+        virtualinvoke r0.<java.nio.ByteBuffer: java.nio.ByteBuffer order(java.nio.ByteOrder)>($r7);
+
+        $c33 = virtualinvoke r0.<java.nio.ByteBuffer: char getChar(int)>(0);
+
+        $c34 = virtualinvoke r0.<java.nio.ByteBuffer: char getChar(int)>(4);
+
+        $i57 = (int) $c34;
+
+        if $i57 < 20 goto label08;
+
+        $i58 = (int) $c34;
+
+        $i3 = $i58 + 4;
+
+        $i59 = (int) $c33;
+
+        if $i59 >= $i3 goto label09;
+
+     label08:
+        $r26 = new java.io.IOException;
+
+        specialinvoke $r26.<java.io.IOException: void <init>(java.lang.String)>("Internal Error: Header size error");
+
+        throw $r26;
+
+     label09:
+        $r3 = newarray (byte)[4];
+
+        $b4 = virtualinvoke r0.<java.nio.ByteBuffer: byte get(int)>(16);
+
+        $r3[0] = $b4;
+
+        $b5 = virtualinvoke r0.<java.nio.ByteBuffer: byte get(int)>(17);
+
+        $r3[1] = $b5;
+
+        $b6 = virtualinvoke r0.<java.nio.ByteBuffer: byte get(int)>(18);
+
+        $r3[2] = $b6;
+
+        $b7 = virtualinvoke r0.<java.nio.ByteBuffer: byte get(int)>(19);
+
+        $r3[3] = $b7;
+
+        $b11 = virtualinvoke r0.<java.nio.ByteBuffer: byte get(int)>(12);
+
+        $i9 = i8 >> 24;
+
+        $b10 = (byte) $i9;
+
+        $i60 = (int) $b11;
+
+        $i61 = (int) $b10;
+
+        if $i60 != $i61 goto label10;
+
+        $b14 = virtualinvoke r0.<java.nio.ByteBuffer: byte get(int)>(13);
+
+        $i12 = i8 >> 16;
+
+        $b13 = (byte) $i12;
+
+        $i62 = (int) $b14;
+
+        $i63 = (int) $b13;
+
+        if $i62 != $i63 goto label10;
+
+        $b17 = virtualinvoke r0.<java.nio.ByteBuffer: byte get(int)>(14);
+
+        $i15 = i8 >> 8;
+
+        $b16 = (byte) $i15;
+
+        $i64 = (int) $b17;
+
+        $i65 = (int) $b16;
+
+        if $i64 != $i65 goto label10;
+
+        $b19 = virtualinvoke r0.<java.nio.ByteBuffer: byte get(int)>(15);
+
+        $b18 = (byte) i8;
+
+        $i66 = (int) $b19;
+
+        $i67 = (int) $b18;
+
+        if $i66 != $i67 goto label10;
+
+        if r4 == null goto label11;
+
+        $z1 = interfaceinvoke r4.<jdk.internal.icu.impl.ICUBinary$Authenticate: boolean isDataVersionAcceptable(byte[])>($r3);
+
+        if $z1 != 0 goto label11;
+
+     label10:
+        $r28 = new java.io.IOException;
+
+        $r27 = new java.lang.StringBuilder;
+
+        specialinvoke $r27.<java.lang.StringBuilder: void <init>()>();
+
+        $r10 = virtualinvoke $r27.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("ICUBinary data file error: Header authentication failed");
+
+        $r11 = newarray (java.lang.Object)[8];
+
+        $b38 = virtualinvoke r0.<java.nio.ByteBuffer: byte get(int)>(12);
+
+        $r12 = staticinvoke <java.lang.Byte: java.lang.Byte valueOf(byte)>($b38);
+
+        $r11[0] = $r12;
+
+        $b39 = virtualinvoke r0.<java.nio.ByteBuffer: byte get(int)>(13);
+
+        $r13 = staticinvoke <java.lang.Byte: java.lang.Byte valueOf(byte)>($b39);
+
+        $r11[1] = $r13;
+
+        $b40 = virtualinvoke r0.<java.nio.ByteBuffer: byte get(int)>(14);
+
+        $r14 = staticinvoke <java.lang.Byte: java.lang.Byte valueOf(byte)>($b40);
+
+        $r11[2] = $r14;
+
+        $b41 = virtualinvoke r0.<java.nio.ByteBuffer: byte get(int)>(15);
+
+        $r15 = staticinvoke <java.lang.Byte: java.lang.Byte valueOf(byte)>($b41);
+
+        $r11[3] = $r15;
+
+        $b42 = $r3[0];
+
+        $s68 = (short) $b42;
+
+        $s43 = $s68 & 255;
+
+        $i69 = (int) $s43;
+
+        $r16 = staticinvoke <java.lang.Integer: java.lang.Integer valueOf(int)>($i69);
+
+        $r11[4] = $r16;
+
+        $b44 = $r3[1];
+
+        $s70 = (short) $b44;
+
+        $s45 = $s70 & 255;
+
+        $i71 = (int) $s45;
+
+        $r17 = staticinvoke <java.lang.Integer: java.lang.Integer valueOf(int)>($i71);
+
+        $r11[5] = $r17;
+
+        $b46 = $r3[2];
+
+        $s72 = (short) $b46;
+
+        $s47 = $s72 & 255;
+
+        $i73 = (int) $s47;
+
+        $r18 = staticinvoke <java.lang.Integer: java.lang.Integer valueOf(int)>($i73);
+
+        $r11[6] = $r18;
+
+        $b48 = $r3[3];
+
+        $s74 = (short) $b48;
+
+        $s49 = $s74 & 255;
+
+        $i75 = (int) $s49;
+
+        $r19 = staticinvoke <java.lang.Integer: java.lang.Integer valueOf(int)>($i75);
+
+        $r11[7] = $r19;
+
+        $r20 = staticinvoke <java.lang.String: java.lang.String format(java.lang.String,java.lang.Object[])>("; data format %02x%02x%02x%02x, format version %d.%d.%d.%d", $r11);
+
+        $r21 = virtualinvoke $r10.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>($r20);
+
+        $r22 = virtualinvoke $r21.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        specialinvoke $r28.<java.io.IOException: void <init>(java.lang.String)>($r22);
+
+        throw $r28;
+
+     label11:
+        $i76 = (int) $c33;
+
+        virtualinvoke r0.<java.nio.ByteBuffer: java.nio.ByteBuffer position(int)>($i76);
+
+        $b20 = virtualinvoke r0.<java.nio.ByteBuffer: byte get(int)>(20);
+
+        $i77 = (int) $b20;
+
+        $i24 = $i77 << 24;
+
+        $b21 = virtualinvoke r0.<java.nio.ByteBuffer: byte get(int)>(21);
+
+        $s78 = (short) $b21;
+
+        $s22 = $s78 & 255;
+
+        $i79 = (int) $s22;
+
+        $i23 = $i79 << 16;
+
+        $i28 = $i24 | $i23;
+
+        $b25 = virtualinvoke r0.<java.nio.ByteBuffer: byte get(int)>(22);
+
+        $s80 = (short) $b25;
+
+        $s26 = $s80 & 255;
+
+        $i81 = (int) $s26;
+
+        $i27 = $i81 << 8;
+
+        $i31 = $i28 | $i27;
+
+        $b29 = virtualinvoke r0.<java.nio.ByteBuffer: byte get(int)>(23);
+
+        $s82 = (short) $b29;
+
+        $s30 = $s82 & 255;
+
+        $i83 = (int) $s30;
+
+        $i32 = $i31 | $i83;
+
+        return $i32;
+    }
+
+    public static void skipBytes(java.nio.ByteBuffer, int)
+    {
+        int i0, $i1, $i2;
+        java.nio.ByteBuffer r0;
+
+        r0 := @parameter0: java.nio.ByteBuffer;
+
+        i0 := @parameter1: int;
+
+        if i0 <= 0 goto label1;
+
+        $i1 = virtualinvoke r0.<java.nio.ByteBuffer: int position()>();
+
+        $i2 = $i1 + i0;
+
+        virtualinvoke r0.<java.nio.ByteBuffer: java.nio.ByteBuffer position(int)>($i2);
+
+     label1:
+        return;
+    }
+
+    public static byte[] getBytes(java.nio.ByteBuffer, int, int)
+    {
+        byte[] r0;
+        int i0, i1;
+        java.nio.ByteBuffer r1;
+
+        r1 := @parameter0: java.nio.ByteBuffer;
+
+        i0 := @parameter1: int;
+
+        i1 := @parameter2: int;
+
+        r0 = newarray (byte)[i0];
+
+        virtualinvoke r1.<java.nio.ByteBuffer: java.nio.ByteBuffer get(byte[])>(r0);
+
+        if i1 <= 0 goto label1;
+
+        staticinvoke <jdk.internal.icu.impl.ICUBinary: void skipBytes(java.nio.ByteBuffer,int)>(r1, i1);
+
+     label1:
+        return r0;
+    }
+
+    public static java.lang.String getString(java.nio.ByteBuffer, int, int)
+    {
+        java.lang.CharSequence $r2;
+        java.nio.CharBuffer r1;
+        java.nio.ByteBuffer r0;
+        int i0, i1, $i2, $i3;
+        java.lang.String r3;
+
+        r0 := @parameter0: java.nio.ByteBuffer;
+
+        i0 := @parameter1: int;
+
+        i1 := @parameter2: int;
+
+        r1 = virtualinvoke r0.<java.nio.ByteBuffer: java.nio.CharBuffer asCharBuffer()>();
+
+        $r2 = interfaceinvoke r1.<java.lang.CharSequence: java.lang.CharSequence subSequence(int,int)>(0, i0);
+
+        r3 = interfaceinvoke $r2.<java.lang.CharSequence: java.lang.String toString()>();
+
+        $i2 = i0 * 2;
+
+        $i3 = $i2 + i1;
+
+        staticinvoke <jdk.internal.icu.impl.ICUBinary: void skipBytes(java.nio.ByteBuffer,int)>(r0, $i3);
+
+        return r3;
+    }
+
+    public static char[] getChars(java.nio.ByteBuffer, int, int)
+    {
+        java.nio.CharBuffer $r2;
+        int i0, i1, $i2, $i3;
+        char[] r0;
+        java.nio.ByteBuffer r1;
+
+        r1 := @parameter0: java.nio.ByteBuffer;
+
+        i0 := @parameter1: int;
+
+        i1 := @parameter2: int;
+
+        r0 = newarray (char)[i0];
+
+        $r2 = virtualinvoke r1.<java.nio.ByteBuffer: java.nio.CharBuffer asCharBuffer()>();
+
+        virtualinvoke $r2.<java.nio.CharBuffer: java.nio.CharBuffer get(char[])>(r0);
+
+        $i2 = i0 * 2;
+
+        $i3 = $i2 + i1;
+
+        staticinvoke <jdk.internal.icu.impl.ICUBinary: void skipBytes(java.nio.ByteBuffer,int)>(r1, $i3);
+
+        return r0;
+    }
+
+    public static int[] getInts(java.nio.ByteBuffer, int, int)
+    {
+        int[] r0;
+        java.nio.IntBuffer $r2;
+        int i0, i1, $i2, $i3;
+        java.nio.ByteBuffer r1;
+
+        r1 := @parameter0: java.nio.ByteBuffer;
+
+        i0 := @parameter1: int;
+
+        i1 := @parameter2: int;
+
+        r0 = newarray (int)[i0];
+
+        $r2 = virtualinvoke r1.<java.nio.ByteBuffer: java.nio.IntBuffer asIntBuffer()>();
+
+        virtualinvoke $r2.<java.nio.IntBuffer: java.nio.IntBuffer get(int[])>(r0);
+
+        $i2 = i0 * 4;
+
+        $i3 = $i2 + i1;
+
+        staticinvoke <jdk.internal.icu.impl.ICUBinary: void skipBytes(java.nio.ByteBuffer,int)>(r1, $i3);
+
+        return r0;
+    }
+
+    public static jdk.internal.icu.util.VersionInfo getVersionInfoFromCompactInt(int)
+    {
+        int i0, $i1, $i2, $i3, $i4, $i5, $i6;
+        jdk.internal.icu.util.VersionInfo $r0;
+
+        i0 := @parameter0: int;
+
+        $i6 = i0 >>> 24;
+
+        $i1 = i0 >> 16;
+
+        $i5 = $i1 & 255;
+
+        $i2 = i0 >> 8;
+
+        $i4 = $i2 & 255;
+
+        $i3 = i0 & 255;
+
+        $r0 = staticinvoke <jdk.internal.icu.util.VersionInfo: jdk.internal.icu.util.VersionInfo getInstance(int,int,int,int)>($i6, $i5, $i4, $i3);
+
+        return $r0;
+    }
+
+    static void <clinit>()
+    {
+        java.lang.Class $r0;
+        boolean $z0, $z1;
+
+        <jdk.internal.icu.impl.ICUBinary: java.lang.String HEADER_AUTHENTICATION_FAILED_> = "ICUBinary data file error: Header authentication failed";
+
+        <jdk.internal.icu.impl.ICUBinary: java.lang.String MAGIC_NUMBER_AUTHENTICATION_FAILED_> = "ICUBinary data file error: Magic number authentication failed";
+
+        <jdk.internal.icu.impl.ICUBinary: byte CHAR_SIZE_> = 2;
+
+        <jdk.internal.icu.impl.ICUBinary: byte CHAR_SET_> = 0;
+
+        <jdk.internal.icu.impl.ICUBinary: byte MAGIC2> = 39;
+
+        <jdk.internal.icu.impl.ICUBinary: byte MAGIC1> = -38;
+
+        <jdk.internal.icu.impl.ICUBinary: byte BIG_ENDIAN_> = 1;
+
+        $r0 = class "Ljdk/internal/icu/impl/ICUBinary;";
+
+        $z0 = virtualinvoke $r0.<java.lang.Class: boolean desiredAssertionStatus()>();
+
+        if $z0 != 0 goto label1;
+
+        $z1 = 1;
+
+        goto label2;
+
+     label1:
+        $z1 = 0;
+
+     label2:
+        <jdk.internal.icu.impl.ICUBinary: boolean $assertionsDisabled> = $z1;
+
+        return;
+    }
+}

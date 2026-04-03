@@ -1,0 +1,105 @@
+public final enum class jdk.internal.icu.util.CodePointMap$RangeOption extends java.lang.Enum
+{
+    public static final enum jdk.internal.icu.util.CodePointMap$RangeOption NORMAL;
+    public static final enum jdk.internal.icu.util.CodePointMap$RangeOption FIXED_LEAD_SURROGATES;
+    public static final enum jdk.internal.icu.util.CodePointMap$RangeOption FIXED_ALL_SURROGATES;
+    private static final jdk.internal.icu.util.CodePointMap$RangeOption[] $VALUES;
+
+    public static jdk.internal.icu.util.CodePointMap$RangeOption[] values()
+    {
+        jdk.internal.icu.util.CodePointMap$RangeOption[] $r0, $r2;
+        java.lang.Object $r1;
+
+        $r0 = <jdk.internal.icu.util.CodePointMap$RangeOption: jdk.internal.icu.util.CodePointMap$RangeOption[] $VALUES>;
+
+        $r1 = virtualinvoke $r0.<java.lang.Object: java.lang.Object clone()>();
+
+        $r2 = (jdk.internal.icu.util.CodePointMap$RangeOption[]) $r1;
+
+        return $r2;
+    }
+
+    public static jdk.internal.icu.util.CodePointMap$RangeOption valueOf(java.lang.String)
+    {
+        jdk.internal.icu.util.CodePointMap$RangeOption $r2;
+        java.lang.String r0;
+        java.lang.Enum $r1;
+
+        r0 := @parameter0: java.lang.String;
+
+        $r1 = staticinvoke <java.lang.Enum: java.lang.Enum valueOf(java.lang.Class,java.lang.String)>(class "Ljdk/internal/icu/util/CodePointMap$RangeOption;", r0);
+
+        $r2 = (jdk.internal.icu.util.CodePointMap$RangeOption) $r1;
+
+        return $r2;
+    }
+
+    private void <init>(java.lang.String, int)
+    {
+        int i0;
+        jdk.internal.icu.util.CodePointMap$RangeOption r0;
+        java.lang.String r1;
+
+        r0 := @this: jdk.internal.icu.util.CodePointMap$RangeOption;
+
+        r1 := @parameter0: java.lang.String;
+
+        i0 := @parameter1: int;
+
+        specialinvoke r0.<java.lang.Enum: void <init>(java.lang.String,int)>(r1, i0);
+
+        return;
+    }
+
+    private static jdk.internal.icu.util.CodePointMap$RangeOption[] $values()
+    {
+        jdk.internal.icu.util.CodePointMap$RangeOption[] $r0;
+        jdk.internal.icu.util.CodePointMap$RangeOption $r1, $r2, $r3;
+
+        $r0 = newarray (jdk.internal.icu.util.CodePointMap$RangeOption)[3];
+
+        $r1 = <jdk.internal.icu.util.CodePointMap$RangeOption: jdk.internal.icu.util.CodePointMap$RangeOption NORMAL>;
+
+        $r0[0] = $r1;
+
+        $r2 = <jdk.internal.icu.util.CodePointMap$RangeOption: jdk.internal.icu.util.CodePointMap$RangeOption FIXED_LEAD_SURROGATES>;
+
+        $r0[1] = $r2;
+
+        $r3 = <jdk.internal.icu.util.CodePointMap$RangeOption: jdk.internal.icu.util.CodePointMap$RangeOption FIXED_ALL_SURROGATES>;
+
+        $r0[2] = $r3;
+
+        return $r0;
+    }
+
+    static void <clinit>()
+    {
+        jdk.internal.icu.util.CodePointMap$RangeOption[] $r3;
+        jdk.internal.icu.util.CodePointMap$RangeOption $r0, $r1, $r2;
+
+        $r0 = new jdk.internal.icu.util.CodePointMap$RangeOption;
+
+        specialinvoke $r0.<jdk.internal.icu.util.CodePointMap$RangeOption: void <init>(java.lang.String,int)>("NORMAL", 0);
+
+        <jdk.internal.icu.util.CodePointMap$RangeOption: jdk.internal.icu.util.CodePointMap$RangeOption NORMAL> = $r0;
+
+        $r1 = new jdk.internal.icu.util.CodePointMap$RangeOption;
+
+        specialinvoke $r1.<jdk.internal.icu.util.CodePointMap$RangeOption: void <init>(java.lang.String,int)>("FIXED_LEAD_SURROGATES", 1);
+
+        <jdk.internal.icu.util.CodePointMap$RangeOption: jdk.internal.icu.util.CodePointMap$RangeOption FIXED_LEAD_SURROGATES> = $r1;
+
+        $r2 = new jdk.internal.icu.util.CodePointMap$RangeOption;
+
+        specialinvoke $r2.<jdk.internal.icu.util.CodePointMap$RangeOption: void <init>(java.lang.String,int)>("FIXED_ALL_SURROGATES", 2);
+
+        <jdk.internal.icu.util.CodePointMap$RangeOption: jdk.internal.icu.util.CodePointMap$RangeOption FIXED_ALL_SURROGATES> = $r2;
+
+        $r3 = staticinvoke <jdk.internal.icu.util.CodePointMap$RangeOption: jdk.internal.icu.util.CodePointMap$RangeOption[] $values()>();
+
+        <jdk.internal.icu.util.CodePointMap$RangeOption: jdk.internal.icu.util.CodePointMap$RangeOption[] $VALUES> = $r3;
+
+        return;
+    }
+}

@@ -1,0 +1,5 @@
+public interface  jdk.internal.vm.vector.VectorSupport$LoadVectorOperationWithMap extends java.lang.Object
+{
+
+    public abstract jdk.internal.vm.vector.VectorSupport$Vector loadWithMap(java.lang.Object, int, int[], int, jdk.internal.vm.vector.VectorSupport$VectorSpecies);
+}

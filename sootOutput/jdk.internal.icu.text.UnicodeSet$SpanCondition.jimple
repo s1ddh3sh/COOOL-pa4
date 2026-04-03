@@ -1,0 +1,105 @@
+public final enum class jdk.internal.icu.text.UnicodeSet$SpanCondition extends java.lang.Enum
+{
+    public static final enum jdk.internal.icu.text.UnicodeSet$SpanCondition NOT_CONTAINED;
+    public static final enum jdk.internal.icu.text.UnicodeSet$SpanCondition CONTAINED;
+    public static final enum jdk.internal.icu.text.UnicodeSet$SpanCondition SIMPLE;
+    private static final jdk.internal.icu.text.UnicodeSet$SpanCondition[] $VALUES;
+
+    public static jdk.internal.icu.text.UnicodeSet$SpanCondition[] values()
+    {
+        java.lang.Object $r1;
+        jdk.internal.icu.text.UnicodeSet$SpanCondition[] $r0, $r2;
+
+        $r0 = <jdk.internal.icu.text.UnicodeSet$SpanCondition: jdk.internal.icu.text.UnicodeSet$SpanCondition[] $VALUES>;
+
+        $r1 = virtualinvoke $r0.<java.lang.Object: java.lang.Object clone()>();
+
+        $r2 = (jdk.internal.icu.text.UnicodeSet$SpanCondition[]) $r1;
+
+        return $r2;
+    }
+
+    public static jdk.internal.icu.text.UnicodeSet$SpanCondition valueOf(java.lang.String)
+    {
+        java.lang.String r0;
+        java.lang.Enum $r1;
+        jdk.internal.icu.text.UnicodeSet$SpanCondition $r2;
+
+        r0 := @parameter0: java.lang.String;
+
+        $r1 = staticinvoke <java.lang.Enum: java.lang.Enum valueOf(java.lang.Class,java.lang.String)>(class "Ljdk/internal/icu/text/UnicodeSet$SpanCondition;", r0);
+
+        $r2 = (jdk.internal.icu.text.UnicodeSet$SpanCondition) $r1;
+
+        return $r2;
+    }
+
+    private void <init>(java.lang.String, int)
+    {
+        int i0;
+        java.lang.String r1;
+        jdk.internal.icu.text.UnicodeSet$SpanCondition r0;
+
+        r0 := @this: jdk.internal.icu.text.UnicodeSet$SpanCondition;
+
+        r1 := @parameter0: java.lang.String;
+
+        i0 := @parameter1: int;
+
+        specialinvoke r0.<java.lang.Enum: void <init>(java.lang.String,int)>(r1, i0);
+
+        return;
+    }
+
+    private static jdk.internal.icu.text.UnicodeSet$SpanCondition[] $values()
+    {
+        jdk.internal.icu.text.UnicodeSet$SpanCondition $r1, $r2, $r3;
+        jdk.internal.icu.text.UnicodeSet$SpanCondition[] $r0;
+
+        $r0 = newarray (jdk.internal.icu.text.UnicodeSet$SpanCondition)[3];
+
+        $r1 = <jdk.internal.icu.text.UnicodeSet$SpanCondition: jdk.internal.icu.text.UnicodeSet$SpanCondition NOT_CONTAINED>;
+
+        $r0[0] = $r1;
+
+        $r2 = <jdk.internal.icu.text.UnicodeSet$SpanCondition: jdk.internal.icu.text.UnicodeSet$SpanCondition CONTAINED>;
+
+        $r0[1] = $r2;
+
+        $r3 = <jdk.internal.icu.text.UnicodeSet$SpanCondition: jdk.internal.icu.text.UnicodeSet$SpanCondition SIMPLE>;
+
+        $r0[2] = $r3;
+
+        return $r0;
+    }
+
+    static void <clinit>()
+    {
+        jdk.internal.icu.text.UnicodeSet$SpanCondition $r0, $r1, $r2;
+        jdk.internal.icu.text.UnicodeSet$SpanCondition[] $r3;
+
+        $r0 = new jdk.internal.icu.text.UnicodeSet$SpanCondition;
+
+        specialinvoke $r0.<jdk.internal.icu.text.UnicodeSet$SpanCondition: void <init>(java.lang.String,int)>("NOT_CONTAINED", 0);
+
+        <jdk.internal.icu.text.UnicodeSet$SpanCondition: jdk.internal.icu.text.UnicodeSet$SpanCondition NOT_CONTAINED> = $r0;
+
+        $r1 = new jdk.internal.icu.text.UnicodeSet$SpanCondition;
+
+        specialinvoke $r1.<jdk.internal.icu.text.UnicodeSet$SpanCondition: void <init>(java.lang.String,int)>("CONTAINED", 1);
+
+        <jdk.internal.icu.text.UnicodeSet$SpanCondition: jdk.internal.icu.text.UnicodeSet$SpanCondition CONTAINED> = $r1;
+
+        $r2 = new jdk.internal.icu.text.UnicodeSet$SpanCondition;
+
+        specialinvoke $r2.<jdk.internal.icu.text.UnicodeSet$SpanCondition: void <init>(java.lang.String,int)>("SIMPLE", 2);
+
+        <jdk.internal.icu.text.UnicodeSet$SpanCondition: jdk.internal.icu.text.UnicodeSet$SpanCondition SIMPLE> = $r2;
+
+        $r3 = staticinvoke <jdk.internal.icu.text.UnicodeSet$SpanCondition: jdk.internal.icu.text.UnicodeSet$SpanCondition[] $values()>();
+
+        <jdk.internal.icu.text.UnicodeSet$SpanCondition: jdk.internal.icu.text.UnicodeSet$SpanCondition[] $VALUES> = $r3;
+
+        return;
+    }
+}

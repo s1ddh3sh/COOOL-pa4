@@ -1,0 +1,19 @@
+public annotation interface  jdk.internal.util.random.RandomSupport$RandomGeneratorProperties extends java.lang.Object implements java.lang.'annotation'.Annotation
+{
+
+    public abstract java.lang.String name();
+
+    public abstract java.lang.String group();
+
+    public abstract int i();
+
+    public abstract int j();
+
+    public abstract int k();
+
+    public abstract int equidistribution();
+
+    public abstract boolean isStochastic();
+
+    public abstract boolean isHardware();
+}

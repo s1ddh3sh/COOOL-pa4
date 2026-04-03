@@ -1,0 +1,47 @@
+class jdk.internal.misc.VM$BufferPoolsHolder extends java.lang.Object
+{
+    static final java.util.List BUFFER_POOLS;
+
+    private void <init>()
+    {
+        jdk.internal.misc.VM$BufferPoolsHolder r0;
+
+        r0 := @this: jdk.internal.misc.VM$BufferPoolsHolder;
+
+        specialinvoke r0.<java.lang.Object: void <init>()>();
+
+        return;
+    }
+
+    static void <clinit>()
+    {
+        java.util.List $r5;
+        jdk.internal.access.JavaNioAccess $r1;
+        jdk.internal.misc.VM$BufferPool $r2, $r3, $r4;
+        java.util.ArrayList $r0;
+
+        $r0 = new java.util.ArrayList;
+
+        specialinvoke $r0.<java.util.ArrayList: void <init>(int)>(3);
+
+        $r1 = staticinvoke <jdk.internal.access.SharedSecrets: jdk.internal.access.JavaNioAccess getJavaNioAccess()>();
+
+        $r2 = interfaceinvoke $r1.<jdk.internal.access.JavaNioAccess: jdk.internal.misc.VM$BufferPool getDirectBufferPool()>();
+
+        virtualinvoke $r0.<java.util.ArrayList: boolean add(java.lang.Object)>($r2);
+
+        $r3 = staticinvoke <sun.nio.ch.FileChannelImpl: jdk.internal.misc.VM$BufferPool getMappedBufferPool()>();
+
+        virtualinvoke $r0.<java.util.ArrayList: boolean add(java.lang.Object)>($r3);
+
+        $r4 = staticinvoke <sun.nio.ch.FileChannelImpl: jdk.internal.misc.VM$BufferPool getSyncMappedBufferPool()>();
+
+        virtualinvoke $r0.<java.util.ArrayList: boolean add(java.lang.Object)>($r4);
+
+        $r5 = staticinvoke <java.util.Collections: java.util.List unmodifiableList(java.util.List)>($r0);
+
+        <jdk.internal.misc.VM$BufferPoolsHolder: java.util.List BUFFER_POOLS> = $r5;
+
+        return;
+    }
+}

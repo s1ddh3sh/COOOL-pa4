@@ -1,0 +1,21 @@
+class jdk.internal.icu.impl.Trie2$UTrie2Header extends java.lang.Object
+{
+    int signature;
+    int options;
+    int indexLength;
+    int shiftedDataLength;
+    int index2NullOffset;
+    int dataNullOffset;
+    int shiftedHighStart;
+
+    void <init>()
+    {
+        jdk.internal.icu.impl.Trie2$UTrie2Header r0;
+
+        r0 := @this: jdk.internal.icu.impl.Trie2$UTrie2Header;
+
+        specialinvoke r0.<java.lang.Object: void <init>()>();
+
+        return;
+    }
+}

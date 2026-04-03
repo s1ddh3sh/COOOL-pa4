@@ -1,0 +1,28 @@
+class jdk.internal.event.EventHelper$ThreadTrackHolder extends java.lang.Object
+{
+    static final jdk.internal.misc.ThreadTracker TRACKER;
+
+    private void <init>()
+    {
+        jdk.internal.event.EventHelper$ThreadTrackHolder r0;
+
+        r0 := @this: jdk.internal.event.EventHelper$ThreadTrackHolder;
+
+        specialinvoke r0.<java.lang.Object: void <init>()>();
+
+        return;
+    }
+
+    static void <clinit>()
+    {
+        jdk.internal.misc.ThreadTracker $r0;
+
+        $r0 = new jdk.internal.misc.ThreadTracker;
+
+        specialinvoke $r0.<jdk.internal.misc.ThreadTracker: void <init>()>();
+
+        <jdk.internal.event.EventHelper$ThreadTrackHolder: jdk.internal.misc.ThreadTracker TRACKER> = $r0;
+
+        return;
+    }
+}

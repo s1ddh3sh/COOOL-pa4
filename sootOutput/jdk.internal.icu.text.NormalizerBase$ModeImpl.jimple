@@ -1,0 +1,20 @@
+final class jdk.internal.icu.text.NormalizerBase$ModeImpl extends java.lang.Object
+{
+    private final jdk.internal.icu.text.Normalizer2 normalizer2;
+
+    private void <init>(jdk.internal.icu.text.Normalizer2)
+    {
+        jdk.internal.icu.text.Normalizer2 r1;
+        jdk.internal.icu.text.NormalizerBase$ModeImpl r0;
+
+        r0 := @this: jdk.internal.icu.text.NormalizerBase$ModeImpl;
+
+        r1 := @parameter0: jdk.internal.icu.text.Normalizer2;
+
+        specialinvoke r0.<java.lang.Object: void <init>()>();
+
+        r0.<jdk.internal.icu.text.NormalizerBase$ModeImpl: jdk.internal.icu.text.Normalizer2 normalizer2> = r1;
+
+        return;
+    }
+}

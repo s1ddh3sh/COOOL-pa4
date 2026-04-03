@@ -1,0 +1,35 @@
+public interface  jdk.internal.access.JavaLangInvokeAccess extends java.lang.Object
+{
+
+    public abstract java.lang.Object newMemberName();
+
+    public abstract java.lang.String getName(java.lang.Object);
+
+    public abstract java.lang.invoke.MethodType getMethodType(java.lang.Object);
+
+    public abstract java.lang.String getMethodDescriptor(java.lang.Object);
+
+    public abstract boolean isNative(java.lang.Object);
+
+    public abstract java.lang.Class getDeclaringClass(java.lang.Object);
+
+    public abstract java.util.Map generateHolderClasses(java.util.stream.Stream);
+
+    public abstract java.lang.invoke.VarHandle memoryAccessVarHandle(java.lang.Class, boolean, long, java.nio.ByteOrder);
+
+    public abstract java.lang.invoke.VarHandle filterValue(java.lang.invoke.VarHandle, java.lang.invoke.MethodHandle, java.lang.invoke.MethodHandle);
+
+    public abstract transient java.lang.invoke.VarHandle filterCoordinates(java.lang.invoke.VarHandle, int, java.lang.invoke.MethodHandle[]);
+
+    public abstract transient java.lang.invoke.VarHandle dropCoordinates(java.lang.invoke.VarHandle, int, java.lang.Class[]);
+
+    public abstract transient java.lang.invoke.VarHandle permuteCoordinates(java.lang.invoke.VarHandle, java.util.List, int[]);
+
+    public abstract java.lang.invoke.VarHandle collectCoordinates(java.lang.invoke.VarHandle, int, java.lang.invoke.MethodHandle);
+
+    public abstract transient java.lang.invoke.VarHandle insertCoordinates(java.lang.invoke.VarHandle, int, java.lang.Object[]);
+
+    public abstract java.lang.invoke.MethodHandle nativeMethodHandle(jdk.internal.invoke.NativeEntryPoint, java.lang.invoke.MethodHandle);
+
+    public abstract void ensureCustomized(java.lang.invoke.MethodHandle);
+}

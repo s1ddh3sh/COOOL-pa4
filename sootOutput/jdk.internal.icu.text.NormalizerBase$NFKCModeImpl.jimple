@@ -1,0 +1,31 @@
+final class jdk.internal.icu.text.NormalizerBase$NFKCModeImpl extends java.lang.Object
+{
+    private static final jdk.internal.icu.text.NormalizerBase$ModeImpl INSTANCE;
+
+    private void <init>()
+    {
+        jdk.internal.icu.text.NormalizerBase$NFKCModeImpl r0;
+
+        r0 := @this: jdk.internal.icu.text.NormalizerBase$NFKCModeImpl;
+
+        specialinvoke r0.<java.lang.Object: void <init>()>();
+
+        return;
+    }
+
+    static void <clinit>()
+    {
+        jdk.internal.icu.text.Normalizer2 $r1;
+        jdk.internal.icu.text.NormalizerBase$ModeImpl $r0;
+
+        $r0 = new jdk.internal.icu.text.NormalizerBase$ModeImpl;
+
+        $r1 = staticinvoke <jdk.internal.icu.text.Normalizer2: jdk.internal.icu.text.Normalizer2 getNFKCInstance()>();
+
+        specialinvoke $r0.<jdk.internal.icu.text.NormalizerBase$ModeImpl: void <init>(jdk.internal.icu.text.Normalizer2)>($r1);
+
+        <jdk.internal.icu.text.NormalizerBase$NFKCModeImpl: jdk.internal.icu.text.NormalizerBase$ModeImpl INSTANCE> = $r0;
+
+        return;
+    }
+}

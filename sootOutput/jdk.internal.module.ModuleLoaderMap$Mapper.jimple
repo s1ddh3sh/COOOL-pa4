@@ -1,0 +1,160 @@
+final class jdk.internal.module.ModuleLoaderMap$Mapper extends java.lang.Object implements java.util.function.Function
+{
+    private static final java.lang.ClassLoader PLATFORM_CLASSLOADER;
+    private static final java.lang.ClassLoader APP_CLASSLOADER;
+    private static final java.lang.Integer PLATFORM_LOADER_INDEX;
+    private static final java.lang.Integer APP_LOADER_INDEX;
+    private final java.util.Map map;
+
+    void <init>(java.lang.module.Configuration)
+    {
+        java.util.Iterator r4;
+        java.util.Set $r3, $r8, $r9;
+        java.util.HashMap $r1;
+        java.lang.module.Configuration r2;
+        jdk.internal.module.ModuleLoaderMap$Mapper r0;
+        java.lang.Integer $r10, $r11;
+        java.lang.module.ResolvedModule r6;
+        java.lang.Object $r5;
+        java.lang.String r7;
+        boolean $z0, $z1, $z2;
+
+        r0 := @this: jdk.internal.module.ModuleLoaderMap$Mapper;
+
+        r2 := @parameter0: java.lang.module.Configuration;
+
+        specialinvoke r0.<java.lang.Object: void <init>()>();
+
+        $r1 = new java.util.HashMap;
+
+        specialinvoke $r1.<java.util.HashMap: void <init>()>();
+
+        $r3 = virtualinvoke r2.<java.lang.module.Configuration: java.util.Set modules()>();
+
+        r4 = interfaceinvoke $r3.<java.util.Set: java.util.Iterator iterator()>();
+
+     label1:
+        $z0 = interfaceinvoke r4.<java.util.Iterator: boolean hasNext()>();
+
+        if $z0 == false goto label4;
+
+        $r5 = interfaceinvoke r4.<java.util.Iterator: java.lang.Object next()>();
+
+        r6 = (java.lang.module.ResolvedModule) $r5;
+
+        r7 = virtualinvoke r6.<java.lang.module.ResolvedModule: java.lang.String name()>();
+
+        $r8 = <jdk.internal.module.ModuleLoaderMap$Modules: java.util.Set bootModules>;
+
+        $z1 = interfaceinvoke $r8.<java.util.Set: boolean contains(java.lang.Object)>(r7);
+
+        if $z1 != 0 goto label3;
+
+        $r9 = <jdk.internal.module.ModuleLoaderMap$Modules: java.util.Set platformModules>;
+
+        $z2 = interfaceinvoke $r9.<java.util.Set: boolean contains(java.lang.Object)>(r7);
+
+        if $z2 == false goto label2;
+
+        $r11 = <jdk.internal.module.ModuleLoaderMap$Mapper: java.lang.Integer PLATFORM_LOADER_INDEX>;
+
+        virtualinvoke $r1.<java.util.HashMap: java.lang.Object put(java.lang.Object,java.lang.Object)>(r7, $r11);
+
+        goto label3;
+
+     label2:
+        $r10 = <jdk.internal.module.ModuleLoaderMap$Mapper: java.lang.Integer APP_LOADER_INDEX>;
+
+        virtualinvoke $r1.<java.util.HashMap: java.lang.Object put(java.lang.Object,java.lang.Object)>(r7, $r10);
+
+     label3:
+        goto label1;
+
+     label4:
+        r0.<jdk.internal.module.ModuleLoaderMap$Mapper: java.util.Map map> = $r1;
+
+        return;
+    }
+
+    public java.lang.ClassLoader apply(java.lang.String)
+    {
+        jdk.internal.module.ModuleLoaderMap$Mapper r0;
+        java.lang.Integer r4, $r5, $r6;
+        java.util.Map $r2;
+        java.lang.Object $r3;
+        java.lang.String r1;
+        java.lang.ClassLoader $r7, $r8;
+
+        r0 := @this: jdk.internal.module.ModuleLoaderMap$Mapper;
+
+        r1 := @parameter0: java.lang.String;
+
+        $r2 = r0.<jdk.internal.module.ModuleLoaderMap$Mapper: java.util.Map map>;
+
+        $r3 = interfaceinvoke $r2.<java.util.Map: java.lang.Object get(java.lang.Object)>(r1);
+
+        r4 = (java.lang.Integer) $r3;
+
+        $r5 = <jdk.internal.module.ModuleLoaderMap$Mapper: java.lang.Integer APP_LOADER_INDEX>;
+
+        if r4 != $r5 goto label1;
+
+        $r8 = <jdk.internal.module.ModuleLoaderMap$Mapper: java.lang.ClassLoader APP_CLASSLOADER>;
+
+        return $r8;
+
+     label1:
+        $r6 = <jdk.internal.module.ModuleLoaderMap$Mapper: java.lang.Integer PLATFORM_LOADER_INDEX>;
+
+        if r4 != $r6 goto label2;
+
+        $r7 = <jdk.internal.module.ModuleLoaderMap$Mapper: java.lang.ClassLoader PLATFORM_CLASSLOADER>;
+
+        return $r7;
+
+     label2:
+        return null;
+    }
+
+    public volatile java.lang.Object apply(java.lang.Object)
+    {
+        java.lang.Object r1;
+        java.lang.String $r2;
+        java.lang.ClassLoader $r3;
+        jdk.internal.module.ModuleLoaderMap$Mapper r0;
+
+        r0 := @this: jdk.internal.module.ModuleLoaderMap$Mapper;
+
+        r1 := @parameter0: java.lang.Object;
+
+        $r2 = (java.lang.String) r1;
+
+        $r3 = virtualinvoke r0.<jdk.internal.module.ModuleLoaderMap$Mapper: java.lang.ClassLoader apply(java.lang.String)>($r2);
+
+        return $r3;
+    }
+
+    static void <clinit>()
+    {
+        java.lang.ClassLoader $r0, $r1;
+        java.lang.Integer $r2, $r3;
+
+        $r0 = staticinvoke <jdk.internal.loader.ClassLoaders: java.lang.ClassLoader platformClassLoader()>();
+
+        <jdk.internal.module.ModuleLoaderMap$Mapper: java.lang.ClassLoader PLATFORM_CLASSLOADER> = $r0;
+
+        $r1 = staticinvoke <jdk.internal.loader.ClassLoaders: java.lang.ClassLoader appClassLoader()>();
+
+        <jdk.internal.module.ModuleLoaderMap$Mapper: java.lang.ClassLoader APP_CLASSLOADER> = $r1;
+
+        $r2 = staticinvoke <java.lang.Integer: java.lang.Integer valueOf(int)>(1);
+
+        <jdk.internal.module.ModuleLoaderMap$Mapper: java.lang.Integer PLATFORM_LOADER_INDEX> = $r2;
+
+        $r3 = staticinvoke <java.lang.Integer: java.lang.Integer valueOf(int)>(2);
+
+        <jdk.internal.module.ModuleLoaderMap$Mapper: java.lang.Integer APP_LOADER_INDEX> = $r3;
+
+        return;
+    }
+}

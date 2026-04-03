@@ -1,0 +1,5 @@
+public interface  jdk.internal.access.JavaSecuritySpecAccess extends java.lang.Object
+{
+
+    public abstract void clearEncodedKeySpec(java.security.spec.EncodedKeySpec);
+}

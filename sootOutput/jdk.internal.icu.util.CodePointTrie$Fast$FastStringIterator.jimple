@@ -1,0 +1,248 @@
+final class jdk.internal.icu.util.CodePointTrie$Fast$FastStringIterator extends jdk.internal.icu.util.CodePointMap$StringIterator
+{
+    final jdk.internal.icu.util.CodePointTrie$Fast this$0;
+
+    private void <init>(jdk.internal.icu.util.CodePointTrie$Fast, java.lang.CharSequence, int)
+    {
+        java.lang.CharSequence r2;
+        jdk.internal.icu.util.CodePointTrie$Fast r1;
+        int i0;
+        jdk.internal.icu.util.CodePointTrie$Fast$FastStringIterator r0;
+
+        r0 := @this: jdk.internal.icu.util.CodePointTrie$Fast$FastStringIterator;
+
+        r1 := @parameter0: jdk.internal.icu.util.CodePointTrie$Fast;
+
+        r2 := @parameter1: java.lang.CharSequence;
+
+        i0 := @parameter2: int;
+
+        r0.<jdk.internal.icu.util.CodePointTrie$Fast$FastStringIterator: jdk.internal.icu.util.CodePointTrie$Fast this$0> = r1;
+
+        specialinvoke r0.<jdk.internal.icu.util.CodePointMap$StringIterator: void <init>(jdk.internal.icu.util.CodePointMap,java.lang.CharSequence,int)>(r1, r2, i0);
+
+        return;
+    }
+
+    public boolean next()
+    {
+        jdk.internal.icu.util.CodePointTrie$Fast $r6, $r7, $r8, $r9;
+        boolean $z0, $z1, $z2;
+        java.lang.CharSequence $r1, $r2, $r3, $r4;
+        jdk.internal.icu.util.CodePointTrie$Fast$FastStringIterator r0;
+        int $i0, $i1, $i2, $i3, $i5, $i6, $i7, $i9, $i10, $i11, $i12, $i13, i14, $i15, $i16, $i17, $i18;
+        jdk.internal.icu.util.CodePointTrie$Data $r10;
+        char c4, $c8;
+        jdk.internal.icu.util.CodePointTrie$Type $r5;
+
+        r0 := @this: jdk.internal.icu.util.CodePointTrie$Fast$FastStringIterator;
+
+        $i0 = r0.<jdk.internal.icu.util.CodePointTrie$Fast$FastStringIterator: int sIndex>;
+
+        $r1 = r0.<jdk.internal.icu.util.CodePointTrie$Fast$FastStringIterator: java.lang.CharSequence s>;
+
+        $i1 = interfaceinvoke $r1.<java.lang.CharSequence: int length()>();
+
+        if $i0 < $i1 goto label1;
+
+        return 0;
+
+     label1:
+        $r2 = r0.<jdk.internal.icu.util.CodePointTrie$Fast$FastStringIterator: java.lang.CharSequence s>;
+
+        $i2 = r0.<jdk.internal.icu.util.CodePointTrie$Fast$FastStringIterator: int sIndex>;
+
+        $i3 = $i2 + 1;
+
+        r0.<jdk.internal.icu.util.CodePointTrie$Fast$FastStringIterator: int sIndex> = $i3;
+
+        c4 = interfaceinvoke $r2.<java.lang.CharSequence: char charAt(int)>($i2);
+
+        $i17 = (int) c4;
+
+        r0.<jdk.internal.icu.util.CodePointTrie$Fast$FastStringIterator: int c> = $i17;
+
+        $z0 = staticinvoke <java.lang.Character: boolean isSurrogate(char)>(c4);
+
+        if $z0 != 0 goto label2;
+
+        $r7 = r0.<jdk.internal.icu.util.CodePointTrie$Fast$FastStringIterator: jdk.internal.icu.util.CodePointTrie$Fast this$0>;
+
+        $i13 = r0.<jdk.internal.icu.util.CodePointTrie$Fast$FastStringIterator: int c>;
+
+        i14 = virtualinvoke $r7.<jdk.internal.icu.util.CodePointTrie$Fast: int fastIndex(int)>($i13);
+
+        goto label4;
+
+     label2:
+        $i18 = (int) c4;
+
+        $z1 = staticinvoke <jdk.internal.icu.impl.NormalizerImpl$UTF16Plus: boolean isSurrogateLead(int)>($i18);
+
+        if $z1 == false goto label3;
+
+        $i5 = r0.<jdk.internal.icu.util.CodePointTrie$Fast$FastStringIterator: int sIndex>;
+
+        $r3 = r0.<jdk.internal.icu.util.CodePointTrie$Fast$FastStringIterator: java.lang.CharSequence s>;
+
+        $i6 = interfaceinvoke $r3.<java.lang.CharSequence: int length()>();
+
+        if $i5 >= $i6 goto label3;
+
+        $r4 = r0.<jdk.internal.icu.util.CodePointTrie$Fast$FastStringIterator: java.lang.CharSequence s>;
+
+        $i7 = r0.<jdk.internal.icu.util.CodePointTrie$Fast$FastStringIterator: int sIndex>;
+
+        $c8 = interfaceinvoke $r4.<java.lang.CharSequence: char charAt(int)>($i7);
+
+        $z2 = staticinvoke <java.lang.Character: boolean isLowSurrogate(char)>($c8);
+
+        if $z2 == false goto label3;
+
+        $i9 = r0.<jdk.internal.icu.util.CodePointTrie$Fast$FastStringIterator: int sIndex>;
+
+        $i10 = $i9 + 1;
+
+        r0.<jdk.internal.icu.util.CodePointTrie$Fast$FastStringIterator: int sIndex> = $i10;
+
+        $i11 = staticinvoke <java.lang.Character: int toCodePoint(char,char)>(c4, $c8);
+
+        r0.<jdk.internal.icu.util.CodePointTrie$Fast$FastStringIterator: int c> = $i11;
+
+        $r6 = r0.<jdk.internal.icu.util.CodePointTrie$Fast$FastStringIterator: jdk.internal.icu.util.CodePointTrie$Fast this$0>;
+
+        $r5 = <jdk.internal.icu.util.CodePointTrie$Type: jdk.internal.icu.util.CodePointTrie$Type FAST>;
+
+        $i12 = r0.<jdk.internal.icu.util.CodePointTrie$Fast$FastStringIterator: int c>;
+
+        i14 = virtualinvoke $r6.<jdk.internal.icu.util.CodePointTrie$Fast: int smallIndex(jdk.internal.icu.util.CodePointTrie$Type,int)>($r5, $i12);
+
+        goto label4;
+
+     label3:
+        $r8 = r0.<jdk.internal.icu.util.CodePointTrie$Fast$FastStringIterator: jdk.internal.icu.util.CodePointTrie$Fast this$0>;
+
+        $i15 = $r8.<jdk.internal.icu.util.CodePointTrie$Fast: int dataLength>;
+
+        i14 = $i15 - 1;
+
+     label4:
+        $r9 = r0.<jdk.internal.icu.util.CodePointTrie$Fast$FastStringIterator: jdk.internal.icu.util.CodePointTrie$Fast this$0>;
+
+        $r10 = $r9.<jdk.internal.icu.util.CodePointTrie$Fast: jdk.internal.icu.util.CodePointTrie$Data data>;
+
+        $i16 = virtualinvoke $r10.<jdk.internal.icu.util.CodePointTrie$Data: int getFromIndex(int)>(i14);
+
+        r0.<jdk.internal.icu.util.CodePointTrie$Fast$FastStringIterator: int value> = $i16;
+
+        return 1;
+    }
+
+    public boolean previous()
+    {
+        jdk.internal.icu.util.CodePointTrie$Fast $r4, $r5, $r6, $r7;
+        int $i0, $i1, $i2, $i4, $i5, $i6, $i8, $i9, $i10, $i11, $i12, i13, $i14, $i15, $i16, $i17;
+        jdk.internal.icu.util.CodePointTrie$Data $r8;
+        boolean $z0, $z1, $z2;
+        java.lang.CharSequence $r1, $r2;
+        char c3, $c7;
+        jdk.internal.icu.util.CodePointTrie$Type $r3;
+        jdk.internal.icu.util.CodePointTrie$Fast$FastStringIterator r0;
+
+        r0 := @this: jdk.internal.icu.util.CodePointTrie$Fast$FastStringIterator;
+
+        $i0 = r0.<jdk.internal.icu.util.CodePointTrie$Fast$FastStringIterator: int sIndex>;
+
+        if $i0 > 0 goto label1;
+
+        return 0;
+
+     label1:
+        $r1 = r0.<jdk.internal.icu.util.CodePointTrie$Fast$FastStringIterator: java.lang.CharSequence s>;
+
+        $i1 = r0.<jdk.internal.icu.util.CodePointTrie$Fast$FastStringIterator: int sIndex>;
+
+        $i2 = $i1 - 1;
+
+        r0.<jdk.internal.icu.util.CodePointTrie$Fast$FastStringIterator: int sIndex> = $i2;
+
+        c3 = interfaceinvoke $r1.<java.lang.CharSequence: char charAt(int)>($i2);
+
+        $i16 = (int) c3;
+
+        r0.<jdk.internal.icu.util.CodePointTrie$Fast$FastStringIterator: int c> = $i16;
+
+        $z0 = staticinvoke <java.lang.Character: boolean isSurrogate(char)>(c3);
+
+        if $z0 != 0 goto label2;
+
+        $r5 = r0.<jdk.internal.icu.util.CodePointTrie$Fast$FastStringIterator: jdk.internal.icu.util.CodePointTrie$Fast this$0>;
+
+        $i12 = r0.<jdk.internal.icu.util.CodePointTrie$Fast$FastStringIterator: int c>;
+
+        i13 = virtualinvoke $r5.<jdk.internal.icu.util.CodePointTrie$Fast: int fastIndex(int)>($i12);
+
+        goto label4;
+
+     label2:
+        $i17 = (int) c3;
+
+        $z1 = staticinvoke <jdk.internal.icu.impl.NormalizerImpl$UTF16Plus: boolean isSurrogateLead(int)>($i17);
+
+        if $z1 != 0 goto label3;
+
+        $i4 = r0.<jdk.internal.icu.util.CodePointTrie$Fast$FastStringIterator: int sIndex>;
+
+        if $i4 <= 0 goto label3;
+
+        $r2 = r0.<jdk.internal.icu.util.CodePointTrie$Fast$FastStringIterator: java.lang.CharSequence s>;
+
+        $i5 = r0.<jdk.internal.icu.util.CodePointTrie$Fast$FastStringIterator: int sIndex>;
+
+        $i6 = $i5 - 1;
+
+        $c7 = interfaceinvoke $r2.<java.lang.CharSequence: char charAt(int)>($i6);
+
+        $z2 = staticinvoke <java.lang.Character: boolean isHighSurrogate(char)>($c7);
+
+        if $z2 == false goto label3;
+
+        $i8 = r0.<jdk.internal.icu.util.CodePointTrie$Fast$FastStringIterator: int sIndex>;
+
+        $i9 = $i8 - 1;
+
+        r0.<jdk.internal.icu.util.CodePointTrie$Fast$FastStringIterator: int sIndex> = $i9;
+
+        $i10 = staticinvoke <java.lang.Character: int toCodePoint(char,char)>($c7, c3);
+
+        r0.<jdk.internal.icu.util.CodePointTrie$Fast$FastStringIterator: int c> = $i10;
+
+        $r4 = r0.<jdk.internal.icu.util.CodePointTrie$Fast$FastStringIterator: jdk.internal.icu.util.CodePointTrie$Fast this$0>;
+
+        $r3 = <jdk.internal.icu.util.CodePointTrie$Type: jdk.internal.icu.util.CodePointTrie$Type FAST>;
+
+        $i11 = r0.<jdk.internal.icu.util.CodePointTrie$Fast$FastStringIterator: int c>;
+
+        i13 = virtualinvoke $r4.<jdk.internal.icu.util.CodePointTrie$Fast: int smallIndex(jdk.internal.icu.util.CodePointTrie$Type,int)>($r3, $i11);
+
+        goto label4;
+
+     label3:
+        $r6 = r0.<jdk.internal.icu.util.CodePointTrie$Fast$FastStringIterator: jdk.internal.icu.util.CodePointTrie$Fast this$0>;
+
+        $i14 = $r6.<jdk.internal.icu.util.CodePointTrie$Fast: int dataLength>;
+
+        i13 = $i14 - 1;
+
+     label4:
+        $r7 = r0.<jdk.internal.icu.util.CodePointTrie$Fast$FastStringIterator: jdk.internal.icu.util.CodePointTrie$Fast this$0>;
+
+        $r8 = $r7.<jdk.internal.icu.util.CodePointTrie$Fast: jdk.internal.icu.util.CodePointTrie$Data data>;
+
+        $i15 = virtualinvoke $r8.<jdk.internal.icu.util.CodePointTrie$Data: int getFromIndex(int)>(i13);
+
+        r0.<jdk.internal.icu.util.CodePointTrie$Fast$FastStringIterator: int value> = $i15;
+
+        return 1;
+    }
+}

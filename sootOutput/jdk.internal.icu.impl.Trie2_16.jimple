@@ -1,0 +1,258 @@
+public final class jdk.internal.icu.impl.Trie2_16 extends jdk.internal.icu.impl.Trie2
+{
+
+    void <init>()
+    {
+        jdk.internal.icu.impl.Trie2_16 r0;
+
+        r0 := @this: jdk.internal.icu.impl.Trie2_16;
+
+        specialinvoke r0.<jdk.internal.icu.impl.Trie2: void <init>()>();
+
+        return;
+    }
+
+    public static jdk.internal.icu.impl.Trie2_16 createFromSerialized(java.nio.ByteBuffer) throws java.io.IOException
+    {
+        jdk.internal.icu.impl.Trie2_16 $r2;
+        jdk.internal.icu.impl.Trie2 $r1;
+        java.nio.ByteBuffer r0;
+
+        r0 := @parameter0: java.nio.ByteBuffer;
+
+        $r1 = staticinvoke <jdk.internal.icu.impl.Trie2: jdk.internal.icu.impl.Trie2 createFromSerialized(java.nio.ByteBuffer)>(r0);
+
+        $r2 = (jdk.internal.icu.impl.Trie2_16) $r1;
+
+        return $r2;
+    }
+
+    public final int get(int)
+    {
+        jdk.internal.icu.impl.Trie2_16 r0;
+        int i0, $i1, $i2, $i3, $i4, $i5, $i6, $i7, $i8, $i9, $i10, $i11, $i12, $i13, $i14, $i15, $i16, $i18, i21, i23, i25, i27, $i31, $i33, $i35, $i36, $i37, $i39, $i41, $i42, $i43, $i44, $i45, $i46, $i47;
+        char $c17, $c19, c20, c22, c24, c26, c28, c29;
+        char[] $r1, $r2, $r3, $r4, $r5, $r6, $r7, $r8;
+
+        r0 := @this: jdk.internal.icu.impl.Trie2_16;
+
+        i0 := @parameter0: int;
+
+        if i0 < 0 goto label5;
+
+        $i31 = (int) 55296;
+
+        if i0 < $i31 goto label1;
+
+        $i33 = (int) 56319;
+
+        if i0 <= $i33 goto label2;
+
+        $i35 = (int) 65535;
+
+        if i0 > $i35 goto label2;
+
+     label1:
+        $r1 = r0.<jdk.internal.icu.impl.Trie2_16: char[] index>;
+
+        $i2 = i0 >> 5;
+
+        $c17 = $r1[$i2];
+
+        $i36 = (int) $c17;
+
+        $i4 = $i36 << 2;
+
+        $i3 = i0 & 31;
+
+        $i18 = $i4 + $i3;
+
+        $r2 = r0.<jdk.internal.icu.impl.Trie2_16: char[] index>;
+
+        $c19 = $r2[$i18];
+
+        $i37 = (int) $c19;
+
+        return $i37;
+
+     label2:
+        $i39 = (int) 65535;
+
+        if i0 > $i39 goto label3;
+
+        $r7 = r0.<jdk.internal.icu.impl.Trie2_16: char[] index>;
+
+        $i41 = (int) 55296;
+
+        $i12 = i0 - $i41;
+
+        $i13 = $i12 >> 5;
+
+        $i14 = 2048 + $i13;
+
+        c20 = $r7[$i14];
+
+        $i42 = (int) c20;
+
+        $i16 = $i42 << 2;
+
+        $i15 = i0 & 31;
+
+        i21 = $i16 + $i15;
+
+        $r8 = r0.<jdk.internal.icu.impl.Trie2_16: char[] index>;
+
+        c22 = $r8[i21];
+
+        $i43 = (int) c22;
+
+        return $i43;
+
+     label3:
+        $i5 = r0.<jdk.internal.icu.impl.Trie2_16: int highStart>;
+
+        if i0 >= $i5 goto label4;
+
+        $i7 = i0 >> 11;
+
+        i23 = 2080 + $i7;
+
+        $r4 = r0.<jdk.internal.icu.impl.Trie2_16: char[] index>;
+
+        c24 = $r4[i23];
+
+        $i8 = i0 >> 5;
+
+        $i9 = $i8 & 63;
+
+        $i44 = (int) c24;
+
+        i25 = $i44 + $i9;
+
+        $r5 = r0.<jdk.internal.icu.impl.Trie2_16: char[] index>;
+
+        c26 = $r5[i25];
+
+        $i45 = (int) c26;
+
+        $i11 = $i45 << 2;
+
+        $i10 = i0 & 31;
+
+        i27 = $i11 + $i10;
+
+        $r6 = r0.<jdk.internal.icu.impl.Trie2_16: char[] index>;
+
+        c28 = $r6[i27];
+
+        $i46 = (int) c28;
+
+        return $i46;
+
+     label4:
+        if i0 > 1114111 goto label5;
+
+        $r3 = r0.<jdk.internal.icu.impl.Trie2_16: char[] index>;
+
+        $i6 = r0.<jdk.internal.icu.impl.Trie2_16: int highValueIndex>;
+
+        c29 = $r3[$i6];
+
+        $i47 = (int) c29;
+
+        return $i47;
+
+     label5:
+        $i1 = r0.<jdk.internal.icu.impl.Trie2_16: int errorValue>;
+
+        return $i1;
+    }
+
+    public int getFromU16SingleLead(char)
+    {
+        char c0, $c2, c4, c5;
+        int $i1, $i3, i6, $i7, $i8, $i9, $i10;
+        char[] $r1, $r2;
+        jdk.internal.icu.impl.Trie2_16 r0;
+
+        r0 := @this: jdk.internal.icu.impl.Trie2_16;
+
+        c0 := @parameter0: char;
+
+        $r1 = r0.<jdk.internal.icu.impl.Trie2_16: char[] index>;
+
+        $i7 = (int) c0;
+
+        $i1 = $i7 >> 5;
+
+        c5 = $r1[$i1];
+
+        $i8 = (int) c5;
+
+        $i3 = $i8 << 2;
+
+        $c2 = c0 & 31;
+
+        $i9 = (int) $c2;
+
+        i6 = $i3 + $i9;
+
+        $r2 = r0.<jdk.internal.icu.impl.Trie2_16: char[] index>;
+
+        c4 = $r2[i6];
+
+        $i10 = (int) c4;
+
+        return $i10;
+    }
+
+    public int getSerializedLength()
+    {
+        jdk.internal.icu.impl.Trie2$UTrie2Header $r1;
+        int $i0, $i1, $i2, $i3, $i4;
+        jdk.internal.icu.impl.Trie2_16 r0;
+
+        r0 := @this: jdk.internal.icu.impl.Trie2_16;
+
+        $r1 = r0.<jdk.internal.icu.impl.Trie2_16: jdk.internal.icu.impl.Trie2$UTrie2Header header>;
+
+        $i1 = $r1.<jdk.internal.icu.impl.Trie2$UTrie2Header: int indexLength>;
+
+        $i0 = r0.<jdk.internal.icu.impl.Trie2_16: int dataLength>;
+
+        $i2 = $i1 + $i0;
+
+        $i3 = $i2 * 2;
+
+        $i4 = 16 + $i3;
+
+        return $i4;
+    }
+
+    public volatile java.util.Iterator iterator(jdk.internal.icu.impl.Trie2$ValueMapper)
+    {
+        jdk.internal.icu.impl.Trie2$ValueMapper r1;
+        jdk.internal.icu.impl.Trie2_16 r0;
+        java.util.Iterator $r2;
+
+        r0 := @this: jdk.internal.icu.impl.Trie2_16;
+
+        r1 := @parameter0: jdk.internal.icu.impl.Trie2$ValueMapper;
+
+        $r2 = specialinvoke r0.<jdk.internal.icu.impl.Trie2: java.util.Iterator iterator(jdk.internal.icu.impl.Trie2$ValueMapper)>(r1);
+
+        return $r2;
+    }
+
+    public volatile java.util.Iterator iterator()
+    {
+        jdk.internal.icu.impl.Trie2_16 r0;
+        java.util.Iterator $r1;
+
+        r0 := @this: jdk.internal.icu.impl.Trie2_16;
+
+        $r1 = specialinvoke r0.<jdk.internal.icu.impl.Trie2: java.util.Iterator iterator()>();
+
+        return $r1;
+    }
+}

@@ -1,0 +1,72 @@
+public final class jdk.internal.misc.CDS$lambda_drainOutput_0__34 extends java.lang.Object implements java.lang.Runnable
+{
+    java.io.InputStream cap0;
+    java.lang.String cap1;
+    java.util.List cap2;
+
+    public static java.lang.Runnable bootstrap$(java.io.InputStream, java.lang.String, java.util.List)
+    {
+        java.util.List $r2;
+        jdk.internal.misc.CDS$lambda_drainOutput_0__34 $r3;
+        java.lang.String $r1;
+        java.io.InputStream $r0;
+
+        $r0 := @parameter0: java.io.InputStream;
+
+        $r1 := @parameter1: java.lang.String;
+
+        $r2 := @parameter2: java.util.List;
+
+        $r3 = new jdk.internal.misc.CDS$lambda_drainOutput_0__34;
+
+        specialinvoke $r3.<jdk.internal.misc.CDS$lambda_drainOutput_0__34: void <init>(java.io.InputStream,java.lang.String,java.util.List)>($r0, $r1, $r2);
+
+        return $r3;
+    }
+
+    public void <init>(java.io.InputStream, java.lang.String, java.util.List)
+    {
+        java.util.List $r3;
+        jdk.internal.misc.CDS$lambda_drainOutput_0__34 $r0;
+        java.lang.String $r2;
+        java.io.InputStream $r1;
+
+        $r0 := @this: jdk.internal.misc.CDS$lambda_drainOutput_0__34;
+
+        $r1 := @parameter0: java.io.InputStream;
+
+        $r2 := @parameter1: java.lang.String;
+
+        $r3 := @parameter2: java.util.List;
+
+        specialinvoke $r0.<java.lang.Object: void <init>()>();
+
+        $r0.<jdk.internal.misc.CDS$lambda_drainOutput_0__34: java.io.InputStream cap0> = $r1;
+
+        $r0.<jdk.internal.misc.CDS$lambda_drainOutput_0__34: java.lang.String cap1> = $r2;
+
+        $r0.<jdk.internal.misc.CDS$lambda_drainOutput_0__34: java.util.List cap2> = $r3;
+
+        return;
+    }
+
+    public void run()
+    {
+        java.util.List $r3;
+        jdk.internal.misc.CDS$lambda_drainOutput_0__34 $r0;
+        java.lang.String $r2;
+        java.io.InputStream $r1;
+
+        $r0 := @this: jdk.internal.misc.CDS$lambda_drainOutput_0__34;
+
+        $r1 = $r0.<jdk.internal.misc.CDS$lambda_drainOutput_0__34: java.io.InputStream cap0>;
+
+        $r2 = $r0.<jdk.internal.misc.CDS$lambda_drainOutput_0__34: java.lang.String cap1>;
+
+        $r3 = $r0.<jdk.internal.misc.CDS$lambda_drainOutput_0__34: java.util.List cap2>;
+
+        staticinvoke <jdk.internal.misc.CDS: void lambda$drainOutput$0(java.io.InputStream,java.lang.String,java.util.List)>($r1, $r2, $r3);
+
+        return;
+    }
+}

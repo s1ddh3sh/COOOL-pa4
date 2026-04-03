@@ -1,0 +1,160 @@
+class jdk.internal.reflect.NativeConstructorAccessorImpl extends jdk.internal.reflect.ConstructorAccessorImpl
+{
+    private static final jdk.internal.misc.Unsafe U;
+    private static final long GENERATED_OFFSET;
+    private final java.lang.reflect.Constructor c;
+    private jdk.internal.reflect.DelegatingConstructorAccessorImpl parent;
+    private int numInvocations;
+    private volatile int generated;
+
+    void <init>(java.lang.reflect.Constructor)
+    {
+        java.lang.reflect.Constructor r1;
+        jdk.internal.reflect.NativeConstructorAccessorImpl r0;
+
+        r0 := @this: jdk.internal.reflect.NativeConstructorAccessorImpl;
+
+        r1 := @parameter0: java.lang.reflect.Constructor;
+
+        specialinvoke r0.<jdk.internal.reflect.ConstructorAccessorImpl: void <init>()>();
+
+        r0.<jdk.internal.reflect.NativeConstructorAccessorImpl: java.lang.reflect.Constructor c> = r1;
+
+        return;
+    }
+
+    public java.lang.Object newInstance(java.lang.Object[]) throws java.lang.InstantiationException, java.lang.IllegalArgumentException, java.lang.reflect.InvocationTargetException
+    {
+        jdk.internal.reflect.DelegatingConstructorAccessorImpl $r14;
+        java.lang.Throwable $r15;
+        java.lang.Object[] r1;
+        long $l4;
+        java.lang.reflect.Constructor $r2, $r6, $r7, $r8, $r9, $r17;
+        int $i0, $i1, $i2, $i3, $i5;
+        jdk.internal.reflect.ConstructorAccessor $r13;
+        boolean $z0, $z1;
+        jdk.internal.misc.Unsafe $r4;
+        java.lang.Class[] $r10, $r11;
+        jdk.internal.reflect.NativeConstructorAccessorImpl r0;
+        jdk.internal.reflect.MethodAccessorGenerator $r5;
+        java.lang.Class $r3, $r12;
+        java.lang.Object $r18;
+        jdk.internal.reflect.ConstructorAccessorImpl r16;
+
+        r0 := @this: jdk.internal.reflect.NativeConstructorAccessorImpl;
+
+        r1 := @parameter0: java.lang.Object[];
+
+        $i0 = r0.<jdk.internal.reflect.NativeConstructorAccessorImpl: int numInvocations>;
+
+        $i1 = $i0 + 1;
+
+        r0.<jdk.internal.reflect.NativeConstructorAccessorImpl: int numInvocations> = $i1;
+
+        $i2 = staticinvoke <jdk.internal.reflect.ReflectionFactory: int inflationThreshold()>();
+
+        if $i1 <= $i2 goto label4;
+
+        $r2 = r0.<jdk.internal.reflect.NativeConstructorAccessorImpl: java.lang.reflect.Constructor c>;
+
+        $r3 = virtualinvoke $r2.<java.lang.reflect.Constructor: java.lang.Class getDeclaringClass()>();
+
+        $z0 = virtualinvoke $r3.<java.lang.Class: boolean isHidden()>();
+
+        if $z0 != 0 goto label4;
+
+        $i3 = r0.<jdk.internal.reflect.NativeConstructorAccessorImpl: int generated>;
+
+        if $i3 != 0 goto label4;
+
+        $r4 = <jdk.internal.reflect.NativeConstructorAccessorImpl: jdk.internal.misc.Unsafe U>;
+
+        $l4 = <jdk.internal.reflect.NativeConstructorAccessorImpl: long GENERATED_OFFSET>;
+
+        $z1 = virtualinvoke $r4.<jdk.internal.misc.Unsafe: boolean compareAndSetInt(java.lang.Object,long,int,int)>(r0, $l4, 0, 1);
+
+        if $z1 == false goto label4;
+
+     label1:
+        $r5 = new jdk.internal.reflect.MethodAccessorGenerator;
+
+        specialinvoke $r5.<jdk.internal.reflect.MethodAccessorGenerator: void <init>()>();
+
+        $r6 = r0.<jdk.internal.reflect.NativeConstructorAccessorImpl: java.lang.reflect.Constructor c>;
+
+        $r12 = virtualinvoke $r6.<java.lang.reflect.Constructor: java.lang.Class getDeclaringClass()>();
+
+        $r7 = r0.<jdk.internal.reflect.NativeConstructorAccessorImpl: java.lang.reflect.Constructor c>;
+
+        $r11 = virtualinvoke $r7.<java.lang.reflect.Constructor: java.lang.Class[] getParameterTypes()>();
+
+        $r8 = r0.<jdk.internal.reflect.NativeConstructorAccessorImpl: java.lang.reflect.Constructor c>;
+
+        $r10 = virtualinvoke $r8.<java.lang.reflect.Constructor: java.lang.Class[] getExceptionTypes()>();
+
+        $r9 = r0.<jdk.internal.reflect.NativeConstructorAccessorImpl: java.lang.reflect.Constructor c>;
+
+        $i5 = virtualinvoke $r9.<java.lang.reflect.Constructor: int getModifiers()>();
+
+        $r13 = virtualinvoke $r5.<jdk.internal.reflect.MethodAccessorGenerator: jdk.internal.reflect.ConstructorAccessor generateConstructor(java.lang.Class,java.lang.Class[],java.lang.Class[],int)>($r12, $r11, $r10, $i5);
+
+        r16 = (jdk.internal.reflect.ConstructorAccessorImpl) $r13;
+
+        $r14 = r0.<jdk.internal.reflect.NativeConstructorAccessorImpl: jdk.internal.reflect.DelegatingConstructorAccessorImpl parent>;
+
+        virtualinvoke $r14.<jdk.internal.reflect.DelegatingConstructorAccessorImpl: void setDelegate(jdk.internal.reflect.ConstructorAccessorImpl)>(r16);
+
+     label2:
+        goto label4;
+
+     label3:
+        $r15 := @caughtexception;
+
+        r0.<jdk.internal.reflect.NativeConstructorAccessorImpl: int generated> = 0;
+
+        throw $r15;
+
+     label4:
+        $r17 = r0.<jdk.internal.reflect.NativeConstructorAccessorImpl: java.lang.reflect.Constructor c>;
+
+        $r18 = staticinvoke <jdk.internal.reflect.NativeConstructorAccessorImpl: java.lang.Object newInstance0(java.lang.reflect.Constructor,java.lang.Object[])>($r17, r1);
+
+        return $r18;
+
+        catch java.lang.Throwable from label1 to label2 with label3;
+    }
+
+    void setParent(jdk.internal.reflect.DelegatingConstructorAccessorImpl)
+    {
+        jdk.internal.reflect.DelegatingConstructorAccessorImpl r1;
+        jdk.internal.reflect.NativeConstructorAccessorImpl r0;
+
+        r0 := @this: jdk.internal.reflect.NativeConstructorAccessorImpl;
+
+        r1 := @parameter0: jdk.internal.reflect.DelegatingConstructorAccessorImpl;
+
+        r0.<jdk.internal.reflect.NativeConstructorAccessorImpl: jdk.internal.reflect.DelegatingConstructorAccessorImpl parent> = r1;
+
+        return;
+    }
+
+    private static native java.lang.Object newInstance0(java.lang.reflect.Constructor, java.lang.Object[]) throws java.lang.InstantiationException, java.lang.IllegalArgumentException, java.lang.reflect.InvocationTargetException;
+
+    static void <clinit>()
+    {
+        jdk.internal.misc.Unsafe $r0, $r1;
+        long $l0;
+
+        $r0 = staticinvoke <jdk.internal.misc.Unsafe: jdk.internal.misc.Unsafe getUnsafe()>();
+
+        <jdk.internal.reflect.NativeConstructorAccessorImpl: jdk.internal.misc.Unsafe U> = $r0;
+
+        $r1 = <jdk.internal.reflect.NativeConstructorAccessorImpl: jdk.internal.misc.Unsafe U>;
+
+        $l0 = virtualinvoke $r1.<jdk.internal.misc.Unsafe: long objectFieldOffset(java.lang.Class,java.lang.String)>(class "Ljdk/internal/reflect/NativeConstructorAccessorImpl;", "generated");
+
+        <jdk.internal.reflect.NativeConstructorAccessorImpl: long GENERATED_OFFSET> = $l0;
+
+        return;
+    }
+}

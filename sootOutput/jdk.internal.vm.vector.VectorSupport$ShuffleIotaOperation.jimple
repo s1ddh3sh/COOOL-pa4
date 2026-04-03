@@ -1,0 +1,5 @@
+public interface  jdk.internal.vm.vector.VectorSupport$ShuffleIotaOperation extends java.lang.Object
+{
+
+    public abstract jdk.internal.vm.vector.VectorSupport$VectorShuffle apply(int, int, int, jdk.internal.vm.vector.VectorSupport$VectorSpecies);
+}

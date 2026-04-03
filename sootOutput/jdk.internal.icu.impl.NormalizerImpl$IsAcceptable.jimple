@@ -1,0 +1,43 @@
+final class jdk.internal.icu.impl.NormalizerImpl$IsAcceptable extends java.lang.Object implements jdk.internal.icu.impl.ICUBinary$Authenticate
+{
+
+    private void <init>()
+    {
+        jdk.internal.icu.impl.NormalizerImpl$IsAcceptable r0;
+
+        r0 := @this: jdk.internal.icu.impl.NormalizerImpl$IsAcceptable;
+
+        specialinvoke r0.<java.lang.Object: void <init>()>();
+
+        return;
+    }
+
+    public boolean isDataVersionAcceptable(byte[])
+    {
+        byte[] r0;
+        byte $b0;
+        jdk.internal.icu.impl.NormalizerImpl$IsAcceptable r1;
+        int $i1;
+        boolean $z0;
+
+        r1 := @this: jdk.internal.icu.impl.NormalizerImpl$IsAcceptable;
+
+        r0 := @parameter0: byte[];
+
+        $b0 = r0[0];
+
+        $i1 = (int) $b0;
+
+        if $i1 != 4 goto label1;
+
+        $z0 = 1;
+
+        goto label2;
+
+     label1:
+        $z0 = 0;
+
+     label2:
+        return $z0;
+    }
+}

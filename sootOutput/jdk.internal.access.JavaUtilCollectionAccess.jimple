@@ -1,0 +1,7 @@
+public interface  jdk.internal.access.JavaUtilCollectionAccess extends java.lang.Object
+{
+
+    public abstract java.util.List listFromTrustedArray(java.lang.Object[]);
+
+    public abstract java.util.List listFromTrustedArrayNullsAllowed(java.lang.Object[]);
+}

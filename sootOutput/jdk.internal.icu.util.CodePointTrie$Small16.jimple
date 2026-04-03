@@ -1,0 +1,52 @@
+public final class jdk.internal.icu.util.CodePointTrie$Small16 extends jdk.internal.icu.util.CodePointTrie$Small
+{
+
+    void <init>(char[], char[], int, int, int)
+    {
+        jdk.internal.icu.util.CodePointTrie$Data16 $r2;
+        jdk.internal.icu.util.CodePointTrie$Small16 r0;
+        int i0, i1, i2;
+        char[] r1, r3;
+
+        r0 := @this: jdk.internal.icu.util.CodePointTrie$Small16;
+
+        r1 := @parameter0: char[];
+
+        r3 := @parameter1: char[];
+
+        i0 := @parameter2: int;
+
+        i1 := @parameter3: int;
+
+        i2 := @parameter4: int;
+
+        $r2 = new jdk.internal.icu.util.CodePointTrie$Data16;
+
+        specialinvoke $r2.<jdk.internal.icu.util.CodePointTrie$Data16: void <init>(char[])>(r3);
+
+        specialinvoke r0.<jdk.internal.icu.util.CodePointTrie$Small: void <init>(char[],jdk.internal.icu.util.CodePointTrie$Data,int,int,int)>(r1, $r2, i0, i1, i2);
+
+        return;
+    }
+
+    public static jdk.internal.icu.util.CodePointTrie$Small16 fromBinary(java.nio.ByteBuffer)
+    {
+        jdk.internal.icu.util.CodePointTrie$ValueWidth $r1;
+        jdk.internal.icu.util.CodePointTrie$Type $r2;
+        jdk.internal.icu.util.CodePointTrie $r3;
+        jdk.internal.icu.util.CodePointTrie$Small16 $r4;
+        java.nio.ByteBuffer r0;
+
+        r0 := @parameter0: java.nio.ByteBuffer;
+
+        $r2 = <jdk.internal.icu.util.CodePointTrie$Type: jdk.internal.icu.util.CodePointTrie$Type SMALL>;
+
+        $r1 = <jdk.internal.icu.util.CodePointTrie$ValueWidth: jdk.internal.icu.util.CodePointTrie$ValueWidth BITS_16>;
+
+        $r3 = staticinvoke <jdk.internal.icu.util.CodePointTrie: jdk.internal.icu.util.CodePointTrie fromBinary(jdk.internal.icu.util.CodePointTrie$Type,jdk.internal.icu.util.CodePointTrie$ValueWidth,java.nio.ByteBuffer)>($r2, $r1, r0);
+
+        $r4 = (jdk.internal.icu.util.CodePointTrie$Small16) $r3;
+
+        return $r4;
+    }
+}

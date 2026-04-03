@@ -1,0 +1,28 @@
+class C extends tests.Test1.A
+{
+
+    void <init>()
+    {
+        C r0;
+
+        r0 := @this: C;
+
+        specialinvoke r0.<tests.Test1.A: void <init>()>();
+
+        return;
+    }
+
+    void foo()
+    {
+        java.io.PrintStream $r0;
+        C r1;
+
+        r1 := @this: C;
+
+        $r0 = <java.lang.System: java.io.PrintStream out>;
+
+        virtualinvoke $r0.<java.io.PrintStream: void println(java.lang.String)>("C.foo");
+
+        return;
+    }
+}

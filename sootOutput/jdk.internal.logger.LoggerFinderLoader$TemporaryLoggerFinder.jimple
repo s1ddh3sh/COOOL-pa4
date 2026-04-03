@@ -1,0 +1,142 @@
+public final class jdk.internal.logger.LoggerFinderLoader$TemporaryLoggerFinder extends java.lang.System$LoggerFinder
+{
+    private java.lang.System$LoggerFinder loadedService;
+    private static final java.util.function.BooleanSupplier isLoadingThread;
+    private static final jdk.internal.logger.LoggerFinderLoader$TemporaryLoggerFinder INSTANCE;
+    static final boolean $assertionsDisabled;
+
+    private void <init>()
+    {
+        jdk.internal.logger.LoggerFinderLoader$TemporaryLoggerFinder r0;
+
+        r0 := @this: jdk.internal.logger.LoggerFinderLoader$TemporaryLoggerFinder;
+
+        specialinvoke r0.<java.lang.System$LoggerFinder: void <init>()>();
+
+        return;
+    }
+
+    public java.lang.System$Logger getLogger(java.lang.String, java.lang.Module)
+    {
+        java.lang.AssertionError $r6, $r7, $r9;
+        java.util.function.BooleanSupplier $r12;
+        java.lang.String r2;
+        boolean $z0, $z1, $z2, $z3;
+        java.lang.System$Logger $r4, $r13;
+        jdk.internal.logger.LoggerFinderLoader$TemporaryLoggerFinder r0;
+        java.lang.Module r3;
+        java.lang.System$LoggerFinder $r1, $r5, $r8, $r10, $r11;
+
+        r0 := @this: jdk.internal.logger.LoggerFinderLoader$TemporaryLoggerFinder;
+
+        r2 := @parameter0: java.lang.String;
+
+        r3 := @parameter1: java.lang.Module;
+
+        $r1 = r0.<jdk.internal.logger.LoggerFinderLoader$TemporaryLoggerFinder: java.lang.System$LoggerFinder loadedService>;
+
+        if $r1 != null goto label1;
+
+        $r10 = <jdk.internal.logger.LoggerFinderLoader: java.lang.System$LoggerFinder service>;
+
+        r0.<jdk.internal.logger.LoggerFinderLoader$TemporaryLoggerFinder: java.lang.System$LoggerFinder loadedService> = $r10;
+
+        $r11 = r0.<jdk.internal.logger.LoggerFinderLoader$TemporaryLoggerFinder: java.lang.System$LoggerFinder loadedService>;
+
+        if $r11 != null goto label1;
+
+        $r12 = <jdk.internal.logger.LoggerFinderLoader$TemporaryLoggerFinder: java.util.function.BooleanSupplier isLoadingThread>;
+
+        $r13 = staticinvoke <jdk.internal.logger.LazyLoggers: java.lang.System$Logger makeLazyLogger(java.lang.String,java.lang.Module,java.util.function.BooleanSupplier)>(r2, r3, $r12);
+
+        return $r13;
+
+     label1:
+        $z0 = <jdk.internal.logger.LoggerFinderLoader$TemporaryLoggerFinder: boolean $assertionsDisabled>;
+
+        if $z0 != 0 goto label2;
+
+        $r8 = r0.<jdk.internal.logger.LoggerFinderLoader$TemporaryLoggerFinder: java.lang.System$LoggerFinder loadedService>;
+
+        if $r8 != null goto label2;
+
+        $r9 = new java.lang.AssertionError;
+
+        specialinvoke $r9.<java.lang.AssertionError: void <init>()>();
+
+        throw $r9;
+
+     label2:
+        $z1 = <jdk.internal.logger.LoggerFinderLoader$TemporaryLoggerFinder: boolean $assertionsDisabled>;
+
+        if $z1 != 0 goto label3;
+
+        $z3 = staticinvoke <jdk.internal.logger.LoggerFinderLoader: boolean isLoadingThread()>();
+
+        if $z3 == false goto label3;
+
+        $r7 = new java.lang.AssertionError;
+
+        specialinvoke $r7.<java.lang.AssertionError: void <init>()>();
+
+        throw $r7;
+
+     label3:
+        $z2 = <jdk.internal.logger.LoggerFinderLoader$TemporaryLoggerFinder: boolean $assertionsDisabled>;
+
+        if $z2 != 0 goto label4;
+
+        $r5 = r0.<jdk.internal.logger.LoggerFinderLoader$TemporaryLoggerFinder: java.lang.System$LoggerFinder loadedService>;
+
+        if $r5 != r0 goto label4;
+
+        $r6 = new java.lang.AssertionError;
+
+        specialinvoke $r6.<java.lang.AssertionError: void <init>()>();
+
+        throw $r6;
+
+     label4:
+        $r4 = staticinvoke <jdk.internal.logger.LazyLoggers: java.lang.System$Logger getLogger(java.lang.String,java.lang.Module)>(r2, r3);
+
+        return $r4;
+    }
+
+    static void <clinit>()
+    {
+        jdk.internal.logger.LoggerFinderLoader$TemporaryLoggerFinder$1 $r1;
+        java.lang.Class $r0;
+        jdk.internal.logger.LoggerFinderLoader$TemporaryLoggerFinder $r2;
+        boolean $z0, $z1;
+
+        $r0 = class "Ljdk/internal/logger/LoggerFinderLoader;";
+
+        $z0 = virtualinvoke $r0.<java.lang.Class: boolean desiredAssertionStatus()>();
+
+        if $z0 != 0 goto label1;
+
+        $z1 = 1;
+
+        goto label2;
+
+     label1:
+        $z1 = 0;
+
+     label2:
+        <jdk.internal.logger.LoggerFinderLoader$TemporaryLoggerFinder: boolean $assertionsDisabled> = $z1;
+
+        $r1 = new jdk.internal.logger.LoggerFinderLoader$TemporaryLoggerFinder$1;
+
+        specialinvoke $r1.<jdk.internal.logger.LoggerFinderLoader$TemporaryLoggerFinder$1: void <init>()>();
+
+        <jdk.internal.logger.LoggerFinderLoader$TemporaryLoggerFinder: java.util.function.BooleanSupplier isLoadingThread> = $r1;
+
+        $r2 = new jdk.internal.logger.LoggerFinderLoader$TemporaryLoggerFinder;
+
+        specialinvoke $r2.<jdk.internal.logger.LoggerFinderLoader$TemporaryLoggerFinder: void <init>()>();
+
+        <jdk.internal.logger.LoggerFinderLoader$TemporaryLoggerFinder: jdk.internal.logger.LoggerFinderLoader$TemporaryLoggerFinder INSTANCE> = $r2;
+
+        return;
+    }
+}

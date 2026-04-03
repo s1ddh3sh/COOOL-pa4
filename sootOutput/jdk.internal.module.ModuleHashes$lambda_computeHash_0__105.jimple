@@ -1,0 +1,78 @@
+public final class jdk.internal.module.ModuleHashes$lambda_computeHash_0__105 extends java.lang.Object implements java.util.function.Consumer
+{
+    java.security.MessageDigest cap0;
+    java.lang.module.ModuleReader cap1;
+    byte[] cap2;
+
+    public static java.util.function.Consumer bootstrap$(java.security.MessageDigest, java.lang.module.ModuleReader, byte[])
+    {
+        byte[] $r2;
+        jdk.internal.module.ModuleHashes$lambda_computeHash_0__105 $r3;
+        java.security.MessageDigest $r0;
+        java.lang.module.ModuleReader $r1;
+
+        $r0 := @parameter0: java.security.MessageDigest;
+
+        $r1 := @parameter1: java.lang.module.ModuleReader;
+
+        $r2 := @parameter2: byte[];
+
+        $r3 = new jdk.internal.module.ModuleHashes$lambda_computeHash_0__105;
+
+        specialinvoke $r3.<jdk.internal.module.ModuleHashes$lambda_computeHash_0__105: void <init>(java.security.MessageDigest,java.lang.module.ModuleReader,byte[])>($r0, $r1, $r2);
+
+        return $r3;
+    }
+
+    public void <init>(java.security.MessageDigest, java.lang.module.ModuleReader, byte[])
+    {
+        byte[] $r3;
+        jdk.internal.module.ModuleHashes$lambda_computeHash_0__105 $r0;
+        java.security.MessageDigest $r1;
+        java.lang.module.ModuleReader $r2;
+
+        $r0 := @this: jdk.internal.module.ModuleHashes$lambda_computeHash_0__105;
+
+        $r1 := @parameter0: java.security.MessageDigest;
+
+        $r2 := @parameter1: java.lang.module.ModuleReader;
+
+        $r3 := @parameter2: byte[];
+
+        specialinvoke $r0.<java.lang.Object: void <init>()>();
+
+        $r0.<jdk.internal.module.ModuleHashes$lambda_computeHash_0__105: java.security.MessageDigest cap0> = $r1;
+
+        $r0.<jdk.internal.module.ModuleHashes$lambda_computeHash_0__105: java.lang.module.ModuleReader cap1> = $r2;
+
+        $r0.<jdk.internal.module.ModuleHashes$lambda_computeHash_0__105: byte[] cap2> = $r3;
+
+        return;
+    }
+
+    public void accept(java.lang.Object)
+    {
+        byte[] $r5;
+        jdk.internal.module.ModuleHashes$lambda_computeHash_0__105 $r0;
+        java.security.MessageDigest $r3;
+        java.lang.Object $r1;
+        java.lang.String $r2;
+        java.lang.module.ModuleReader $r4;
+
+        $r0 := @this: jdk.internal.module.ModuleHashes$lambda_computeHash_0__105;
+
+        $r1 := @parameter0: java.lang.Object;
+
+        $r2 = (java.lang.String) $r1;
+
+        $r3 = $r0.<jdk.internal.module.ModuleHashes$lambda_computeHash_0__105: java.security.MessageDigest cap0>;
+
+        $r4 = $r0.<jdk.internal.module.ModuleHashes$lambda_computeHash_0__105: java.lang.module.ModuleReader cap1>;
+
+        $r5 = $r0.<jdk.internal.module.ModuleHashes$lambda_computeHash_0__105: byte[] cap2>;
+
+        staticinvoke <jdk.internal.module.ModuleHashes: void lambda$computeHash$0(java.security.MessageDigest,java.lang.module.ModuleReader,byte[],java.lang.String)>($r3, $r4, $r5, $r2);
+
+        return;
+    }
+}

@@ -1,0 +1,5 @@
+public interface  jdk.internal.misc.ScopedMemoryAccess$Scope$Handle extends java.lang.Object
+{
+
+    public abstract jdk.internal.misc.ScopedMemoryAccess$Scope scope();
+}

@@ -1,0 +1,23 @@
+public interface  jdk.internal.icu.lang.UCharacter$NumericType extends java.lang.Object
+{
+    public static final int NONE;
+    public static final int DECIMAL;
+    public static final int DIGIT;
+    public static final int NUMERIC;
+    public static final int COUNT;
+
+    public static void <clinit>()
+    {
+        <jdk.internal.icu.lang.UCharacter$NumericType: int COUNT> = 4;
+
+        <jdk.internal.icu.lang.UCharacter$NumericType: int NUMERIC> = 3;
+
+        <jdk.internal.icu.lang.UCharacter$NumericType: int DIGIT> = 2;
+
+        <jdk.internal.icu.lang.UCharacter$NumericType: int DECIMAL> = 1;
+
+        <jdk.internal.icu.lang.UCharacter$NumericType: int NONE> = 0;
+
+        return;
+    }
+}

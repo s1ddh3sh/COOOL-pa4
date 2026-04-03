@@ -1,0 +1,13 @@
+public interface  jdk.internal.misc.ScopedMemoryAccess$Scope extends java.lang.Object
+{
+
+    public abstract void checkValidState();
+
+    public abstract java.lang.Thread ownerThread();
+
+    public abstract boolean isImplicit();
+
+    public abstract jdk.internal.misc.ScopedMemoryAccess$Scope$Handle acquire();
+
+    public abstract void release(jdk.internal.misc.ScopedMemoryAccess$Scope$Handle);
+}

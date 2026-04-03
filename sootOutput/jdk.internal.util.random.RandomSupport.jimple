@@ -1,0 +1,1736 @@
+public class jdk.internal.util.random.RandomSupport extends java.lang.Object
+{
+    public static final java.lang.String BAD_SIZE;
+    public static final java.lang.String BAD_DISTANCE;
+    public static final java.lang.String BAD_BOUND;
+    public static final java.lang.String BAD_FLOATING_BOUND;
+    public static final java.lang.String BAD_RANGE;
+    private static final boolean useSecureRandomSeed;
+    public static final int GOLDEN_RATIO_32;
+    public static final long GOLDEN_RATIO_64;
+    public static final int SILVER_RATIO_32;
+    public static final long SILVER_RATIO_64;
+
+    protected void <init>()
+    {
+        jdk.internal.util.random.RandomSupport r0;
+
+        r0 := @this: jdk.internal.util.random.RandomSupport;
+
+        specialinvoke r0.<java.lang.Object: void <init>()>();
+
+        return;
+    }
+
+    public static void checkStreamSize(long)
+    {
+        byte $b1;
+        int $i2;
+        long l0;
+        java.lang.IllegalArgumentException $r1;
+
+        l0 := @parameter0: long;
+
+        $b1 = l0 cmp 0L;
+
+        $i2 = (int) $b1;
+
+        if $i2 >= 0 goto label1;
+
+        $r1 = new java.lang.IllegalArgumentException;
+
+        specialinvoke $r1.<java.lang.IllegalArgumentException: void <init>(java.lang.String)>("size must be non-negative");
+
+        throw $r1;
+
+     label1:
+        return;
+    }
+
+    public static void checkBound(float)
+    {
+        byte $b0, $b1;
+        int $i2, $i3;
+        float f0;
+        java.lang.IllegalArgumentException $r1;
+        double $d0;
+
+        f0 := @parameter0: float;
+
+        $d0 = (double) f0;
+
+        $b0 = $d0 cmpl 0.0;
+
+        $i2 = (int) $b0;
+
+        if $i2 <= 0 goto label1;
+
+        $b1 = f0 cmpg #InfinityF;
+
+        $i3 = (int) $b1;
+
+        if $i3 < 0 goto label2;
+
+     label1:
+        $r1 = new java.lang.IllegalArgumentException;
+
+        specialinvoke $r1.<java.lang.IllegalArgumentException: void <init>(java.lang.String)>("bound must be finite and positive");
+
+        throw $r1;
+
+     label2:
+        return;
+    }
+
+    public static void checkBound(double)
+    {
+        byte $b0, $b1;
+        int $i2, $i3;
+        java.lang.IllegalArgumentException $r1;
+        double d0;
+
+        d0 := @parameter0: double;
+
+        $b0 = d0 cmpl 0.0;
+
+        $i2 = (int) $b0;
+
+        if $i2 <= 0 goto label1;
+
+        $b1 = d0 cmpg #Infinity;
+
+        $i3 = (int) $b1;
+
+        if $i3 < 0 goto label2;
+
+     label1:
+        $r1 = new java.lang.IllegalArgumentException;
+
+        specialinvoke $r1.<java.lang.IllegalArgumentException: void <init>(java.lang.String)>("bound must be finite and positive");
+
+        throw $r1;
+
+     label2:
+        return;
+    }
+
+    public static void checkBound(int)
+    {
+        int i0;
+        java.lang.IllegalArgumentException $r0;
+
+        i0 := @parameter0: int;
+
+        if i0 > 0 goto label1;
+
+        $r0 = new java.lang.IllegalArgumentException;
+
+        specialinvoke $r0.<java.lang.IllegalArgumentException: void <init>(java.lang.String)>("bound must be positive");
+
+        throw $r0;
+
+     label1:
+        return;
+    }
+
+    public static void checkBound(long)
+    {
+        byte $b1;
+        int $i2;
+        long l0;
+        java.lang.IllegalArgumentException $r1;
+
+        l0 := @parameter0: long;
+
+        $b1 = l0 cmp 0L;
+
+        $i2 = (int) $b1;
+
+        if $i2 > 0 goto label1;
+
+        $r1 = new java.lang.IllegalArgumentException;
+
+        specialinvoke $r1.<java.lang.IllegalArgumentException: void <init>(java.lang.String)>("bound must be positive");
+
+        throw $r1;
+
+     label1:
+        return;
+    }
+
+    public static void checkRange(float, float)
+    {
+        java.lang.IllegalArgumentException $r1;
+        byte $b0, $b1;
+        int $i2, $i3;
+        float f0, f1, $f2;
+
+        f0 := @parameter0: float;
+
+        f1 := @parameter1: float;
+
+        $b0 = f0 cmpg f1;
+
+        $i2 = (int) $b0;
+
+        if $i2 >= 0 goto label1;
+
+        $f2 = f1 - f0;
+
+        $b1 = $f2 cmpg #InfinityF;
+
+        $i3 = (int) $b1;
+
+        if $i3 < 0 goto label2;
+
+     label1:
+        $r1 = new java.lang.IllegalArgumentException;
+
+        specialinvoke $r1.<java.lang.IllegalArgumentException: void <init>(java.lang.String)>("bound must be greater than origin");
+
+        throw $r1;
+
+     label2:
+        return;
+    }
+
+    public static void checkRange(double, double)
+    {
+        java.lang.IllegalArgumentException $r1;
+        byte $b0, $b1;
+        int $i2, $i3;
+        double d0, d1, $d2;
+
+        d0 := @parameter0: double;
+
+        d1 := @parameter1: double;
+
+        $b0 = d0 cmpg d1;
+
+        $i2 = (int) $b0;
+
+        if $i2 >= 0 goto label1;
+
+        $d2 = d1 - d0;
+
+        $b1 = $d2 cmpg #Infinity;
+
+        $i3 = (int) $b1;
+
+        if $i3 < 0 goto label2;
+
+     label1:
+        $r1 = new java.lang.IllegalArgumentException;
+
+        specialinvoke $r1.<java.lang.IllegalArgumentException: void <init>(java.lang.String)>("bound must be greater than origin");
+
+        throw $r1;
+
+     label2:
+        return;
+    }
+
+    public static void checkRange(int, int)
+    {
+        int i0, i1;
+        java.lang.IllegalArgumentException $r0;
+
+        i0 := @parameter0: int;
+
+        i1 := @parameter1: int;
+
+        if i0 < i1 goto label1;
+
+        $r0 = new java.lang.IllegalArgumentException;
+
+        specialinvoke $r0.<java.lang.IllegalArgumentException: void <init>(java.lang.String)>("bound must be greater than origin");
+
+        throw $r0;
+
+     label1:
+        return;
+    }
+
+    public static void checkRange(long, long)
+    {
+        byte $b2;
+        int $i3;
+        long l0, l1;
+        java.lang.IllegalArgumentException $r1;
+
+        l0 := @parameter0: long;
+
+        l1 := @parameter1: long;
+
+        $b2 = l0 cmp l1;
+
+        $i3 = (int) $b2;
+
+        if $i3 < 0 goto label1;
+
+        $r1 = new java.lang.IllegalArgumentException;
+
+        specialinvoke $r1.<java.lang.IllegalArgumentException: void <init>(java.lang.String)>("bound must be greater than origin");
+
+        throw $r1;
+
+     label1:
+        return;
+    }
+
+    public static long[] convertSeedBytesToLongs(byte[], int, int)
+    {
+        byte[] r1;
+        long $l6, $l7, $l8, $l9, $l11, $l12, $l14, $l17, $l18, $l19, l22, l25;
+        short $s16, $s27;
+        long[] r0;
+        byte $b10, $b15;
+        int i0, $i1, $i2, i3, $i4, i5, $i13, $i20, i21, i23, i24, i26;
+
+        r1 := @parameter0: byte[];
+
+        i0 := @parameter1: int;
+
+        i5 := @parameter2: int;
+
+        r0 = newarray (long)[i0];
+
+        $i2 = lengthof r1;
+
+        $i1 = i0 << 3;
+
+        i3 = staticinvoke <java.lang.Math: int min(int,int)>($i2, $i1);
+
+        i21 = 0;
+
+     label1:
+        if i21 >= i3 goto label2;
+
+        $i20 = i21 >> 3;
+
+        $i13 = i21 >> 3;
+
+        $l14 = r0[$i13];
+
+        $l18 = $l14 << 8;
+
+        $b15 = r1[i21];
+
+        $s27 = (short) $b15;
+
+        $s16 = $s27 & 255;
+
+        $l17 = (long) $s16;
+
+        $l19 = $l18 | $l17;
+
+        r0[$i20] = $l19;
+
+        i21 = i21 + 1;
+
+        goto label1;
+
+     label2:
+        l22 = r0[0];
+
+        $i4 = i3 + 7;
+
+        i23 = $i4 >> 3;
+
+     label3:
+        if i23 >= i0 goto label4;
+
+        $l11 = l22 + 7640891576956012809L;
+
+        l22 = $l11;
+
+        $l12 = staticinvoke <jdk.internal.util.random.RandomSupport: long mixMurmur64(long)>($l11);
+
+        r0[i23] = $l12;
+
+        i23 = i23 + 1;
+
+        goto label3;
+
+     label4:
+        i24 = i0 - i5;
+
+     label5:
+        if i24 >= i0 goto label7;
+
+        $l9 = r0[i24];
+
+        $b10 = $l9 cmp 0L;
+
+        if $b10 == false goto label6;
+
+        goto label9;
+
+     label6:
+        i24 = i24 + 1;
+
+        goto label5;
+
+     label7:
+        $l6 = r0[0];
+
+        l25 = $l6 & -2L;
+
+        i26 = i0 - i5;
+
+     label8:
+        if i26 >= i0 goto label9;
+
+        $l7 = l25 + 7640891576956012809L;
+
+        l25 = $l7;
+
+        $l8 = staticinvoke <jdk.internal.util.random.RandomSupport: long mixMurmur64(long)>($l7);
+
+        r0[i26] = $l8;
+
+        i26 = i26 + 1;
+
+        goto label8;
+
+     label9:
+        return r0;
+    }
+
+    public static int[] convertSeedBytesToInts(byte[], int, int)
+    {
+        byte[] r1;
+        short $s13, $s23;
+        byte $b12;
+        int[] r0;
+        int i0, $i1, $i2, i3, $i4, i5, $i6, $i7, $i8, $i9, $i10, $i11, $i14, $i15, $i16, i17, i18, i19, i20, i21, i22, $i24, $i26;
+
+        r1 := @parameter0: byte[];
+
+        i0 := @parameter1: int;
+
+        i5 := @parameter2: int;
+
+        r0 = newarray (int)[i0];
+
+        $i2 = lengthof r1;
+
+        $i1 = i0 << 2;
+
+        i3 = staticinvoke <java.lang.Math: int min(int,int)>($i2, $i1);
+
+        i17 = 0;
+
+     label1:
+        if i17 >= i3 goto label2;
+
+        $i16 = i17 >> 2;
+
+        $i10 = i17 >> 2;
+
+        $i11 = r0[$i10];
+
+        $i14 = $i11 << 8;
+
+        $b12 = r1[i17];
+
+        $s23 = (short) $b12;
+
+        $s13 = $s23 & 255;
+
+        $i24 = (int) $s13;
+
+        $i15 = $i14 | $i24;
+
+        r0[$i16] = $i15;
+
+        i17 = i17 + 1;
+
+        goto label1;
+
+     label2:
+        i18 = r0[0];
+
+        $i4 = i3 + 3;
+
+        i19 = $i4 >> 2;
+
+     label3:
+        if i19 >= i0 goto label4;
+
+        i18 = i18 + 1779033703;
+
+        $i9 = staticinvoke <jdk.internal.util.random.RandomSupport: int mixMurmur32(int)>(i18);
+
+        r0[i19] = $i9;
+
+        i19 = i19 + 1;
+
+        goto label3;
+
+     label4:
+        i20 = i0 - i5;
+
+     label5:
+        if i20 >= i0 goto label7;
+
+        $i8 = r0[i20];
+
+        if $i8 == false goto label6;
+
+        goto label9;
+
+     label6:
+        i20 = i20 + 1;
+
+        goto label5;
+
+     label7:
+        $i6 = r0[0];
+
+        $i26 = (int) -2;
+
+        i21 = $i6 & $i26;
+
+        i22 = i0 - i5;
+
+     label8:
+        if i22 >= i0 goto label9;
+
+        i21 = i21 + 1779033703;
+
+        $i7 = staticinvoke <jdk.internal.util.random.RandomSupport: int mixMurmur32(int)>(i21);
+
+        r0[i22] = $i7;
+
+        i22 = i22 + 1;
+
+        goto label8;
+
+     label9:
+        return r0;
+    }
+
+    public static long boundedNextLong(java.util.random.RandomGenerator, long, long)
+    {
+        java.util.random.RandomGenerator r0;
+        long l0, l1, l3, l4, $l5, $l10, $l11, $l12, $l14, $l15, l16, l17;
+        byte $b2, $b6, $b7, $b8, $b9, $b13;
+        int $i18, $i19, $i20, $i21, $i22;
+
+        r0 := @parameter0: java.util.random.RandomGenerator;
+
+        l0 := @parameter1: long;
+
+        l1 := @parameter2: long;
+
+        l16 = interfaceinvoke r0.<java.util.random.RandomGenerator: long nextLong()>();
+
+        $b2 = l0 cmp l1;
+
+        $i18 = (int) $b2;
+
+        if $i18 >= 0 goto label6;
+
+        l3 = l1 - l0;
+
+        l4 = l3 - 1L;
+
+        $l5 = l3 & l4;
+
+        $b6 = $l5 cmp 0L;
+
+        if $b6 != 0 goto label1;
+
+        $l15 = l16 & l4;
+
+        l16 = $l15 + l0;
+
+        goto label6;
+
+     label1:
+        $b7 = l3 cmp 0L;
+
+        $i19 = (int) $b7;
+
+        if $i19 <= 0 goto label4;
+
+        l17 = l16 >>> 1;
+
+     label2:
+        $l11 = l17 + l4;
+
+        $l10 = l17 % l3;
+
+        $l12 = $l11 - $l10;
+
+        $b13 = $l12 cmp 0L;
+
+        $i20 = (int) $b13;
+
+        if $i20 >= 0 goto label3;
+
+        $l14 = interfaceinvoke r0.<java.util.random.RandomGenerator: long nextLong()>();
+
+        l17 = $l14 >>> 1;
+
+        goto label2;
+
+     label3:
+        l16 = $l10 + l0;
+
+        goto label6;
+
+     label4:
+        $b8 = l16 cmp l0;
+
+        $i21 = (int) $b8;
+
+        if $i21 < 0 goto label5;
+
+        $b9 = l16 cmp l1;
+
+        $i22 = (int) $b9;
+
+        if $i22 < 0 goto label6;
+
+     label5:
+        l16 = interfaceinvoke r0.<java.util.random.RandomGenerator: long nextLong()>();
+
+        goto label4;
+
+     label6:
+        return l16;
+    }
+
+    public static long boundedNextLong(java.util.random.RandomGenerator, long)
+    {
+        java.util.random.RandomGenerator r0;
+        long l0, l1, $l2, $l4, $l5, $l6, $l8, l9, l10, l11;
+        byte $b3, $b7;
+        int $i12;
+
+        r0 := @parameter0: java.util.random.RandomGenerator;
+
+        l0 := @parameter1: long;
+
+        l1 = l0 - 1L;
+
+        l9 = interfaceinvoke r0.<java.util.random.RandomGenerator: long nextLong()>();
+
+        $l2 = l0 & l1;
+
+        $b3 = $l2 cmp 0L;
+
+        if $b3 != 0 goto label1;
+
+        l10 = l9 & l1;
+
+        goto label3;
+
+     label1:
+        l11 = l9 >>> 1;
+
+     label2:
+        $l5 = l11 + l1;
+
+        $l4 = l11 % l0;
+
+        l10 = $l4;
+
+        $l6 = $l5 - $l4;
+
+        $b7 = $l6 cmp 0L;
+
+        $i12 = (int) $b7;
+
+        if $i12 >= 0 goto label3;
+
+        $l8 = interfaceinvoke r0.<java.util.random.RandomGenerator: long nextLong()>();
+
+        l11 = $l8 >>> 1;
+
+        goto label2;
+
+     label3:
+        return l10;
+    }
+
+    public static int boundedNextInt(java.util.random.RandomGenerator, int, int)
+    {
+        java.util.random.RandomGenerator r0;
+        int i0, i1, i2, i3, $i4, $i5, $i6, $i7, $i8, $i9, i10, i11;
+
+        r0 := @parameter0: java.util.random.RandomGenerator;
+
+        i0 := @parameter1: int;
+
+        i1 := @parameter2: int;
+
+        i10 = interfaceinvoke r0.<java.util.random.RandomGenerator: int nextInt()>();
+
+        if i0 >= i1 goto label6;
+
+        i2 = i1 - i0;
+
+        i3 = i2 - 1;
+
+        $i4 = i2 & i3;
+
+        if $i4 != 0 goto label1;
+
+        $i9 = i10 & i3;
+
+        i10 = $i9 + i0;
+
+        goto label6;
+
+     label1:
+        if i2 <= 0 goto label4;
+
+        i11 = i10 >>> 1;
+
+     label2:
+        $i6 = i11 + i3;
+
+        $i5 = i11 % i2;
+
+        $i7 = $i6 - $i5;
+
+        if $i7 >= 0 goto label3;
+
+        $i8 = interfaceinvoke r0.<java.util.random.RandomGenerator: int nextInt()>();
+
+        i11 = $i8 >>> 1;
+
+        goto label2;
+
+     label3:
+        i10 = $i5 + i0;
+
+        goto label6;
+
+     label4:
+        if i10 < i0 goto label5;
+
+        if i10 < i1 goto label6;
+
+     label5:
+        i10 = interfaceinvoke r0.<java.util.random.RandomGenerator: int nextInt()>();
+
+        goto label4;
+
+     label6:
+        return i10;
+    }
+
+    public static int boundedNextInt(java.util.random.RandomGenerator, int)
+    {
+        java.util.random.RandomGenerator r0;
+        int i0, i1, $i2, $i3, $i4, $i5, $i6, i7, i8, i9;
+
+        r0 := @parameter0: java.util.random.RandomGenerator;
+
+        i0 := @parameter1: int;
+
+        i1 = i0 - 1;
+
+        i7 = interfaceinvoke r0.<java.util.random.RandomGenerator: int nextInt()>();
+
+        $i2 = i0 & i1;
+
+        if $i2 != 0 goto label1;
+
+        i8 = i7 & i1;
+
+        goto label3;
+
+     label1:
+        i9 = i7 >>> 1;
+
+     label2:
+        $i4 = i9 + i1;
+
+        $i3 = i9 % i0;
+
+        i8 = $i3;
+
+        $i5 = $i4 - $i3;
+
+        if $i5 >= 0 goto label3;
+
+        $i6 = interfaceinvoke r0.<java.util.random.RandomGenerator: int nextInt()>();
+
+        i9 = $i6 >>> 1;
+
+        goto label2;
+
+     label3:
+        return i8;
+    }
+
+    public static double boundedNextDouble(java.util.random.RandomGenerator, double, double)
+    {
+        java.util.random.RandomGenerator r0;
+        byte $b0, $b1;
+        int $i2, $i3;
+        double d0, d1, $d2, $d3, d4;
+
+        r0 := @parameter0: java.util.random.RandomGenerator;
+
+        d0 := @parameter1: double;
+
+        d1 := @parameter2: double;
+
+        d4 = interfaceinvoke r0.<java.util.random.RandomGenerator: double nextDouble()>();
+
+        $b0 = d0 cmpg d1;
+
+        $i2 = (int) $b0;
+
+        if $i2 >= 0 goto label1;
+
+        $d2 = d1 - d0;
+
+        $d3 = d4 * $d2;
+
+        d4 = $d3 + d0;
+
+        $b1 = d4 cmpl d1;
+
+        $i3 = (int) $b1;
+
+        if $i3 < 0 goto label1;
+
+        d4 = staticinvoke <java.lang.Math: double nextAfter(double,double)>(d1, d0);
+
+     label1:
+        return d4;
+    }
+
+    public static double boundedNextDouble(java.util.random.RandomGenerator, double)
+    {
+        java.util.random.RandomGenerator r0;
+        byte $b0;
+        int $i1;
+        double d0, d1, d2;
+
+        r0 := @parameter0: java.util.random.RandomGenerator;
+
+        d0 := @parameter1: double;
+
+        d1 = interfaceinvoke r0.<java.util.random.RandomGenerator: double nextDouble()>();
+
+        d2 = d1 * d0;
+
+        $b0 = d2 cmpl d0;
+
+        $i1 = (int) $b0;
+
+        if $i1 < 0 goto label1;
+
+        d2 = staticinvoke <java.lang.Math: double nextDown(double)>(d0);
+
+     label1:
+        return d2;
+    }
+
+    public static float boundedNextFloat(java.util.random.RandomGenerator, float, float)
+    {
+        java.util.random.RandomGenerator r0;
+        byte $b0, $b1;
+        int $i2, $i3, $i4, $i5;
+        float f0, f1, $f2, $f3, f4;
+
+        r0 := @parameter0: java.util.random.RandomGenerator;
+
+        f0 := @parameter1: float;
+
+        f1 := @parameter2: float;
+
+        f4 = interfaceinvoke r0.<java.util.random.RandomGenerator: float nextFloat()>();
+
+        $b0 = f0 cmpg f1;
+
+        $i4 = (int) $b0;
+
+        if $i4 >= 0 goto label1;
+
+        $f2 = f1 - f0;
+
+        $f3 = f4 * $f2;
+
+        f4 = $f3 + f0;
+
+        $b1 = f4 cmpl f1;
+
+        $i5 = (int) $b1;
+
+        if $i5 < 0 goto label1;
+
+        $i2 = staticinvoke <java.lang.Float: int floatToIntBits(float)>(f1);
+
+        $i3 = $i2 - 1;
+
+        f4 = staticinvoke <java.lang.Float: float intBitsToFloat(int)>($i3);
+
+     label1:
+        return f4;
+    }
+
+    public static float boundedNextFloat(java.util.random.RandomGenerator, float)
+    {
+        java.util.random.RandomGenerator r0;
+        byte $b0;
+        int $i1, $i2, $i3;
+        float f0, f1, f2;
+
+        r0 := @parameter0: java.util.random.RandomGenerator;
+
+        f0 := @parameter1: float;
+
+        f1 = interfaceinvoke r0.<java.util.random.RandomGenerator: float nextFloat()>();
+
+        f2 = f1 * f0;
+
+        $b0 = f2 cmpl f0;
+
+        $i3 = (int) $b0;
+
+        if $i3 < 0 goto label1;
+
+        $i1 = staticinvoke <java.lang.Float: int floatToIntBits(float)>(f0);
+
+        $i2 = $i1 - 1;
+
+        f2 = staticinvoke <java.lang.Float: float intBitsToFloat(int)>($i2);
+
+     label1:
+        return f2;
+    }
+
+    private static boolean secureRandomSeedRequested()
+    {
+        java.lang.Object $r1;
+        java.lang.String r2;
+        sun.security.action.GetPropertyAction $r0;
+        boolean $z0, $z1;
+
+        $r0 = new sun.security.action.GetPropertyAction;
+
+        specialinvoke $r0.<sun.security.action.GetPropertyAction: void <init>(java.lang.String)>("java.util.secureRandomSeed");
+
+        $r1 = staticinvoke <java.security.AccessController: java.lang.Object doPrivileged(java.security.PrivilegedAction)>($r0);
+
+        r2 = (java.lang.String) $r1;
+
+        if r2 == null goto label1;
+
+        $z0 = virtualinvoke r2.<java.lang.String: boolean equalsIgnoreCase(java.lang.String)>("true");
+
+        if $z0 == false goto label1;
+
+        $z1 = 1;
+
+        goto label2;
+
+     label1:
+        $z1 = 0;
+
+     label2:
+        return $z1;
+    }
+
+    public static long initialSeed()
+    {
+        byte[] r0;
+        long $l0, $l1, $l2, $l3, $l4, $l6, $l8, $l9, $l10, l11;
+        byte $b5, $b7;
+        int i12;
+        boolean $z0;
+
+        $z0 = <jdk.internal.util.random.RandomSupport: boolean useSecureRandomSeed>;
+
+        if $z0 == false goto label3;
+
+        r0 = staticinvoke <java.security.SecureRandom: byte[] getSeed(int)>(8);
+
+        $b5 = r0[0];
+
+        $l6 = (long) $b5;
+
+        l11 = $l6 & 255L;
+
+        i12 = 1;
+
+     label1:
+        if i12 >= 8 goto label2;
+
+        $l10 = l11 << 8;
+
+        $b7 = r0[i12];
+
+        $l8 = (long) $b7;
+
+        $l9 = $l8 & 255L;
+
+        l11 = $l10 | $l9;
+
+        i12 = i12 + 1;
+
+        goto label1;
+
+     label2:
+        return l11;
+
+     label3:
+        $l0 = staticinvoke <java.lang.System: long currentTimeMillis()>();
+
+        $l3 = staticinvoke <jdk.internal.util.random.RandomSupport: long mixStafford13(long)>($l0);
+
+        $l1 = staticinvoke <java.lang.System: long nanoTime()>();
+
+        $l2 = staticinvoke <jdk.internal.util.random.RandomSupport: long mixStafford13(long)>($l1);
+
+        $l4 = $l3 ^ $l2;
+
+        return $l4;
+    }
+
+    public static long mixMurmur64(long)
+    {
+        long $l0, $l1, $l2, $l3, $l4, $l5, l6, l7, l8;
+
+        l6 := @parameter0: long;
+
+        $l0 = l6 >>> 33;
+
+        $l1 = l6 ^ $l0;
+
+        l7 = $l1 * -49064778989728563L;
+
+        $l2 = l7 >>> 33;
+
+        $l3 = l7 ^ $l2;
+
+        l8 = $l3 * -4265267296055464877L;
+
+        $l4 = l8 >>> 33;
+
+        $l5 = l8 ^ $l4;
+
+        return $l5;
+    }
+
+    public static long mixStafford13(long)
+    {
+        long $l0, $l1, $l2, $l3, $l4, $l5, l6, l7, l8;
+
+        l6 := @parameter0: long;
+
+        $l0 = l6 >>> 30;
+
+        $l1 = l6 ^ $l0;
+
+        l7 = $l1 * -4658895280553007687L;
+
+        $l2 = l7 >>> 27;
+
+        $l3 = l7 ^ $l2;
+
+        l8 = $l3 * -7723592293110705685L;
+
+        $l4 = l8 >>> 31;
+
+        $l5 = l8 ^ $l4;
+
+        return $l5;
+    }
+
+    public static long mixLea64(long)
+    {
+        long $l0, $l1, $l2, $l3, $l4, $l5, l6, l7, l8;
+
+        l6 := @parameter0: long;
+
+        $l0 = l6 >>> 32;
+
+        $l1 = l6 ^ $l0;
+
+        l7 = $l1 * -2685821657736338717L;
+
+        $l2 = l7 >>> 32;
+
+        $l3 = l7 ^ $l2;
+
+        l8 = $l3 * -2685821657736338717L;
+
+        $l4 = l8 >>> 32;
+
+        $l5 = l8 ^ $l4;
+
+        return $l5;
+    }
+
+    public static int mixMurmur32(int)
+    {
+        int $i0, $i1, $i2, $i3, $i4, $i5, i6, i7, i8;
+
+        i6 := @parameter0: int;
+
+        $i0 = i6 >>> 16;
+
+        $i1 = i6 ^ $i0;
+
+        i7 = $i1 * -2048144789;
+
+        $i2 = i7 >>> 13;
+
+        $i3 = i7 ^ $i2;
+
+        i8 = $i3 * -1028477387;
+
+        $i4 = i8 >>> 16;
+
+        $i5 = i8 ^ $i4;
+
+        return $i5;
+    }
+
+    public static int mixLea32(int)
+    {
+        int $i0, $i1, $i2, $i3, $i4, $i5, i6, i7, i8;
+
+        i6 := @parameter0: int;
+
+        $i0 = i6 >>> 16;
+
+        $i1 = i6 ^ $i0;
+
+        i7 = $i1 * -747796405;
+
+        $i2 = i7 >>> 16;
+
+        $i3 = i7 ^ $i2;
+
+        i8 = $i3 * -747796405;
+
+        $i4 = i8 >>> 16;
+
+        $i5 = i8 ^ $i4;
+
+        return $i5;
+    }
+
+    public static double computeNextExponential(java.util.random.RandomGenerator)
+    {
+        byte[] $r5;
+        byte $b0, $b3, $b4, $b10, $b12, $b14, $b18;
+        java.util.random.RandomGenerator r0;
+        double[] $r2, r3, r4, $r6;
+        long $l2, $l5, $l8, $l9, $l15, $l16, $l17, $l20, l21, l22, l24, l25, l26, l27;
+        long[] $r1;
+        int $i1, $i6, $i7, $i11, $i13, $i19, i23, $i28, $i29, $i30, $i31, $i32, $i33, $i34;
+        double $d0, $d1, $d2, $d3, $d4, $d5, $d6, $d7, $d8, $d9, $d10, $d11, $d12, $d13, $d14, $d15, $d16, $d17, d18, $d19, $d20, $d21, $d22, $d23, $d24, $d25, $d26, d27;
+
+        r0 := @parameter0: java.util.random.RandomGenerator;
+
+        l21 = interfaceinvoke r0.<java.util.random.RandomGenerator: long nextLong()>();
+
+        l22 = l21 & 255L;
+
+        $b0 = l22 cmp 252L;
+
+        $i28 = (int) $b0;
+
+        if $i28 >= 0 goto label1;
+
+        $r6 = <jdk.internal.util.random.RandomSupport$DoubleZigguratTables: double[] exponentialX>;
+
+        $i19 = (int) l22;
+
+        $d25 = $r6[$i19];
+
+        $l20 = l21 >>> 1;
+
+        $d24 = (double) $l20;
+
+        $d26 = $d25 * $d24;
+
+        return $d26;
+
+     label1:
+        d27 = 0.0;
+
+     label2:
+        $l5 = interfaceinvoke r0.<java.util.random.RandomGenerator: long nextLong()>();
+
+        $i1 = (int) $l5;
+
+        $i6 = $i1 & 255;
+
+        i23 = $i6;
+
+        $r1 = <jdk.internal.util.random.RandomSupport$DoubleZigguratTables: long[] exponentialAliasThreshold>;
+
+        $l2 = $r1[$i6];
+
+        $b3 = $l5 cmp $l2;
+
+        $i29 = (int) $b3;
+
+        if $i29 < 0 goto label3;
+
+        $r5 = <jdk.internal.util.random.RandomSupport$DoubleZigguratTables: byte[] exponentialAliasMap>;
+
+        $b18 = $r5[$i6];
+
+        $i30 = (int) $b18;
+
+        i23 = $i30 & 255;
+
+     label3:
+        if i23 <= 0 goto label8;
+
+        r3 = <jdk.internal.util.random.RandomSupport$DoubleZigguratTables: double[] exponentialX>;
+
+        r4 = <jdk.internal.util.random.RandomSupport$DoubleZigguratTables: double[] exponentialY>;
+
+        l24 = l21 >>> 1;
+
+     label4:
+        $l9 = interfaceinvoke r0.<java.util.random.RandomGenerator: long nextLong()>();
+
+        $l16 = $l9 >>> 1;
+
+        l25 = $l16;
+
+        $l17 = $l16 - l24;
+
+        l26 = $l17;
+
+        $b10 = $l17 cmp 0L;
+
+        $i31 = (int) $b10;
+
+        if $i31 >= 0 goto label5;
+
+        l26 = neg $l17;
+
+        l25 = l24;
+
+        l24 = l24 - l26;
+
+     label5:
+        $d4 = r3[i23];
+
+        $d10 = $d4 * 9.223372036854776E18;
+
+        $i11 = i23 - 1;
+
+        $d6 = r3[$i11];
+
+        $d5 = r3[i23];
+
+        $d8 = $d6 - $d5;
+
+        $d7 = (double) l24;
+
+        $d9 = $d8 * $d7;
+
+        $d23 = $d10 + $d9;
+
+        $b12 = l26 cmp 853965788476313645L;
+
+        $i32 = (int) $b12;
+
+        if $i32 < 0 goto label6;
+
+        $d22 = $d23 + d27;
+
+        return $d22;
+
+     label6:
+        $d11 = r4[i23];
+
+        $d17 = $d11 * 9.223372036854776E18;
+
+        $i13 = i23 - 1;
+
+        $d13 = r4[$i13];
+
+        $d12 = r4[i23];
+
+        $d15 = $d13 - $d12;
+
+        $d14 = (double) l25;
+
+        $d16 = $d15 * $d14;
+
+        d18 = $d17 + $d16;
+
+        $d19 = neg $d23;
+
+        $d20 = staticinvoke <java.lang.Math: double exp(double)>($d19);
+
+        $b14 = d18 cmpg $d20;
+
+        $i33 = (int) $b14;
+
+        if $i33 > 0 goto label7;
+
+        $d21 = $d23 + d27;
+
+        return $d21;
+
+     label7:
+        $l15 = interfaceinvoke r0.<java.util.random.RandomGenerator: long nextLong()>();
+
+        l24 = $l15 >>> 1;
+
+        goto label4;
+
+     label8:
+        d27 = d27 + 7.569274694148063;
+
+        l21 = interfaceinvoke r0.<java.util.random.RandomGenerator: long nextLong()>();
+
+        l27 = l21 & 255L;
+
+        $b4 = l27 cmp 252L;
+
+        $i34 = (int) $b4;
+
+        if $i34 >= 0 goto label9;
+
+        $r2 = <jdk.internal.util.random.RandomSupport$DoubleZigguratTables: double[] exponentialX>;
+
+        $i7 = (int) l27;
+
+        $d1 = $r2[$i7];
+
+        $l8 = l21 >>> 1;
+
+        $d0 = (double) $l8;
+
+        $d2 = $d1 * $d0;
+
+        $d3 = $d2 + d27;
+
+        return $d3;
+
+     label9:
+        goto label2;
+    }
+
+    public static double computeNextGaussian(java.util.random.RandomGenerator)
+    {
+        byte[] $r2;
+        byte $b1, $b2, $b6, $b9, $b10, $b12, $b17, $b19, $b21, $b25, $b28, $b29, $b31, $b35;
+        java.util.random.RandomGenerator r0;
+        long l0, $l3, $l5, $l7, $l13, $l14, $l15, $l16, $l22, $l23, $l24, $l26, $l32, $l33, $l34, $l36, l39, l40, l42, l43;
+        long[] $r1;
+        int $i4, $i8, $i11, $i18, $i20, $i27, $i30, $i37, $i38, i41, $i44, $i45, $i46, $i47, $i48, $i49, $i50, $i51, $i52, $i53, $i54, $i55, $i56, $i57;
+        double[] $r3, $r4, $r5;
+        double d0, $d1, $d2, $d3, $d4, $d5, $d6, $d7, $d8, $d9, $d10, $d11, $d12, $d13, $d14, $d15, $d16, $d17, $d18, $d19, $d20, $d21, $d22, $d23, $d24, $d25, $d26, $d27, $d28, $d29, $d30, $d31, $d32, $d33, $d34, $d35, $d36, $d37, $d38, $d39, $d40, $d41, $d42, $d43, $d44, $d45, $d46, $d47, $d48, $d49, $d50, $d51, $d52, $d53, $d54, $d55, $d56, $d57, $d58, $d59, $d60, $d61, $d62, $d63, d64, d65, d66, d67, $d68;
+
+        r0 := @parameter0: java.util.random.RandomGenerator;
+
+        l39 = interfaceinvoke r0.<java.util.random.RandomGenerator: long nextLong()>();
+
+        l0 = l39 & 255L;
+
+        $b1 = l0 cmp 253L;
+
+        $i44 = (int) $b1;
+
+        if $i44 >= 0 goto label01;
+
+        $r5 = <jdk.internal.util.random.RandomSupport$DoubleZigguratTables: double[] normalX>;
+
+        $i38 = (int) l0;
+
+        $d61 = $r5[$i38];
+
+        $d60 = (double) l39;
+
+        $d62 = $d61 * $d60;
+
+        return $d62;
+
+     label01:
+        $b2 = l39 cmp 0L;
+
+        $i45 = (int) $b2;
+
+        if $i45 < 0 goto label02;
+
+        $d63 = 1.0;
+
+        goto label03;
+
+     label02:
+        $d63 = -1.0;
+
+     label03:
+        d0 = $d63;
+
+        $l3 = l39 << 1;
+
+        l40 = $l3 >>> 1;
+
+        $l36 = interfaceinvoke r0.<java.util.random.RandomGenerator: long nextLong()>();
+
+        $i4 = (int) $l36;
+
+        $i37 = $i4 & 255;
+
+        i41 = $i37;
+
+        $r1 = <jdk.internal.util.random.RandomSupport$DoubleZigguratTables: long[] normalAliasThreshold>;
+
+        $l5 = $r1[$i37];
+
+        $b6 = $l36 cmp $l5;
+
+        $i46 = (int) $b6;
+
+        if $i46 < 0 goto label04;
+
+        $r2 = <jdk.internal.util.random.RandomSupport$DoubleZigguratTables: byte[] normalAliasMap>;
+
+        $b35 = $r2[$i37];
+
+        $i47 = (int) $b35;
+
+        i41 = $i47 & 255;
+
+     label04:
+        $r3 = <jdk.internal.util.random.RandomSupport$DoubleZigguratTables: double[] normalX>;
+
+        $r4 = <jdk.internal.util.random.RandomSupport$DoubleZigguratTables: double[] normalY>;
+
+        if i41 <= 204 goto label09;
+
+     label05:
+        $l26 = interfaceinvoke r0.<java.util.random.RandomGenerator: long nextLong()>();
+
+        $l33 = $l26 >>> 1;
+
+        $d42 = $r3[i41];
+
+        $d48 = $d42 * 9.223372036854776E18;
+
+        $i27 = i41 - 1;
+
+        $d44 = $r3[$i27];
+
+        $d43 = $r3[i41];
+
+        $d46 = $d44 - $d43;
+
+        $d45 = (double) l40;
+
+        $d47 = $d46 * $d45;
+
+        $d59 = $d48 + $d47;
+
+        d64 = $d59;
+
+        $l34 = $l33 - l40;
+
+        $b28 = $l34 cmp 0L;
+
+        $i48 = (int) $b28;
+
+        if $i48 < 0 goto label06;
+
+        goto label20;
+
+     label06:
+        $b29 = $l34 cmp -2269182951627976012L;
+
+        $i49 = (int) $b29;
+
+        if $i49 > 0 goto label07;
+
+        goto label08;
+
+     label07:
+        $d49 = $r4[i41];
+
+        $d55 = $d49 * 9.223372036854776E18;
+
+        $i30 = i41 - 1;
+
+        $d51 = $r4[$i30];
+
+        $d50 = $r4[i41];
+
+        $d53 = $d51 - $d50;
+
+        $d52 = (double) $l33;
+
+        $d54 = $d53 * $d52;
+
+        d65 = $d55 + $d54;
+
+        $d56 = -0.5 * $d59;
+
+        $d57 = $d56 * $d59;
+
+        $d58 = staticinvoke <java.lang.Math: double exp(double)>($d57);
+
+        $b31 = d65 cmpg $d58;
+
+        $i50 = (int) $b31;
+
+        if $i50 > 0 goto label08;
+
+        goto label20;
+
+     label08:
+        $l32 = interfaceinvoke r0.<java.util.random.RandomGenerator: long nextLong()>();
+
+        l40 = $l32 >>> 1;
+
+        goto label05;
+
+     label09:
+        if i41 != 0 goto label11;
+
+     label10:
+        $d37 = staticinvoke <jdk.internal.util.random.RandomSupport: double computeNextExponential(java.util.random.RandomGenerator)>(r0);
+
+        $d41 = 0.27502700159745347 * $d37;
+
+        $d40 = staticinvoke <jdk.internal.util.random.RandomSupport: double computeNextExponential(java.util.random.RandomGenerator)>(r0);
+
+        $d38 = 0.5 * $d41;
+
+        $d39 = $d38 * $d41;
+
+        $b25 = $d40 cmpg $d39;
+
+        $i51 = (int) $b25;
+
+        if $i51 < 0 goto label10;
+
+        d64 = $d41 + 3.6360066255009458;
+
+        goto label20;
+
+     label11:
+        if i41 >= 204 goto label16;
+
+     label12:
+        $l16 = interfaceinvoke r0.<java.util.random.RandomGenerator: long nextLong()>();
+
+        $l23 = $l16 >>> 1;
+
+        l42 = $l23;
+
+        $l24 = $l23 - l40;
+
+        l43 = $l24;
+
+        $b17 = $l24 cmp 0L;
+
+        $i52 = (int) $b17;
+
+        if $i52 >= 0 goto label13;
+
+        l43 = neg $l24;
+
+        l42 = l40;
+
+        l40 = l40 - l43;
+
+     label13:
+        $d19 = $r3[i41];
+
+        $d25 = $d19 * 9.223372036854776E18;
+
+        $i18 = i41 - 1;
+
+        $d21 = $r3[$i18];
+
+        $d20 = $r3[i41];
+
+        $d23 = $d21 - $d20;
+
+        $d22 = (double) l40;
+
+        $d24 = $d23 * $d22;
+
+        $d36 = $d25 + $d24;
+
+        d64 = $d36;
+
+        $b19 = l43 cmp 760463704284035183L;
+
+        $i53 = (int) $b19;
+
+        if $i53 < 0 goto label14;
+
+        goto label20;
+
+     label14:
+        $d26 = $r4[i41];
+
+        $d32 = $d26 * 9.223372036854776E18;
+
+        $i20 = i41 - 1;
+
+        $d28 = $r4[$i20];
+
+        $d27 = $r4[i41];
+
+        $d30 = $d28 - $d27;
+
+        $d29 = (double) l42;
+
+        $d31 = $d30 * $d29;
+
+        d66 = $d32 + $d31;
+
+        $d33 = -0.5 * $d36;
+
+        $d34 = $d33 * $d36;
+
+        $d35 = staticinvoke <java.lang.Math: double exp(double)>($d34);
+
+        $b21 = d66 cmpg $d35;
+
+        $i54 = (int) $b21;
+
+        if $i54 > 0 goto label15;
+
+        goto label20;
+
+     label15:
+        $l22 = interfaceinvoke r0.<java.util.random.RandomGenerator: long nextLong()>();
+
+        l40 = $l22 >>> 1;
+
+        goto label12;
+
+     label16:
+        $l7 = interfaceinvoke r0.<java.util.random.RandomGenerator: long nextLong()>();
+
+        $l14 = $l7 >>> 1;
+
+        $d1 = $r3[i41];
+
+        $d7 = $d1 * 9.223372036854776E18;
+
+        $i8 = i41 - 1;
+
+        $d3 = $r3[$i8];
+
+        $d2 = $r3[i41];
+
+        $d5 = $d3 - $d2;
+
+        $d4 = (double) l40;
+
+        $d6 = $d5 * $d4;
+
+        $d18 = $d7 + $d6;
+
+        d64 = $d18;
+
+        $l15 = $l14 - l40;
+
+        $b9 = $l15 cmp 760463704284035183L;
+
+        $i55 = (int) $b9;
+
+        if $i55 < 0 goto label17;
+
+        goto label20;
+
+     label17:
+        $b10 = $l15 cmp -2269182951627976012L;
+
+        $i56 = (int) $b10;
+
+        if $i56 > 0 goto label18;
+
+        goto label19;
+
+     label18:
+        $d8 = $r4[i41];
+
+        $d14 = $d8 * 9.223372036854776E18;
+
+        $i11 = i41 - 1;
+
+        $d10 = $r4[$i11];
+
+        $d9 = $r4[i41];
+
+        $d12 = $d10 - $d9;
+
+        $d11 = (double) $l14;
+
+        $d13 = $d12 * $d11;
+
+        d67 = $d14 + $d13;
+
+        $d15 = -0.5 * $d18;
+
+        $d16 = $d15 * $d18;
+
+        $d17 = staticinvoke <java.lang.Math: double exp(double)>($d16);
+
+        $b12 = d67 cmpg $d17;
+
+        $i57 = (int) $b12;
+
+        if $i57 > 0 goto label19;
+
+        goto label20;
+
+     label19:
+        $l13 = interfaceinvoke r0.<java.util.random.RandomGenerator: long nextLong()>();
+
+        l40 = $l13 >>> 1;
+
+        goto label16;
+
+     label20:
+        $d68 = d0 * d64;
+
+        return $d68;
+    }
+
+    static void <clinit>()
+    {
+        boolean $z0;
+
+        <jdk.internal.util.random.RandomSupport: long SILVER_RATIO_64> = 7640891576956012809L;
+
+        <jdk.internal.util.random.RandomSupport: int SILVER_RATIO_32> = 1779033703;
+
+        <jdk.internal.util.random.RandomSupport: long GOLDEN_RATIO_64> = -7046029254386353131L;
+
+        <jdk.internal.util.random.RandomSupport: int GOLDEN_RATIO_32> = -1640531527;
+
+        <jdk.internal.util.random.RandomSupport: java.lang.String BAD_RANGE> = "bound must be greater than origin";
+
+        <jdk.internal.util.random.RandomSupport: java.lang.String BAD_FLOATING_BOUND> = "bound must be finite and positive";
+
+        <jdk.internal.util.random.RandomSupport: java.lang.String BAD_BOUND> = "bound must be positive";
+
+        <jdk.internal.util.random.RandomSupport: java.lang.String BAD_DISTANCE> = "jump distance must be finite, positive, and an exact integer";
+
+        <jdk.internal.util.random.RandomSupport: java.lang.String BAD_SIZE> = "size must be non-negative";
+
+        $z0 = staticinvoke <jdk.internal.util.random.RandomSupport: boolean secureRandomSeedRequested()>();
+
+        <jdk.internal.util.random.RandomSupport: boolean useSecureRandomSeed> = $z0;
+
+        return;
+    }
+}

@@ -1,0 +1,170 @@
+public final class jdk.internal.icu.impl.NormalizerImpl$Hangul extends java.lang.Object
+{
+    public static final int JAMO_L_BASE;
+    public static final int JAMO_V_BASE;
+    public static final int JAMO_T_BASE;
+    public static final int HANGUL_BASE;
+    public static final int HANGUL_END;
+    public static final int JAMO_L_COUNT;
+    public static final int JAMO_V_COUNT;
+    public static final int JAMO_T_COUNT;
+    public static final int HANGUL_COUNT;
+    public static final int HANGUL_LIMIT;
+
+    public void <init>()
+    {
+        jdk.internal.icu.impl.NormalizerImpl$Hangul r0;
+
+        r0 := @this: jdk.internal.icu.impl.NormalizerImpl$Hangul;
+
+        specialinvoke r0.<java.lang.Object: void <init>()>();
+
+        return;
+    }
+
+    public static boolean isHangul(int)
+    {
+        int i0, $i2, $i4;
+        boolean $z0;
+
+        i0 := @parameter0: int;
+
+        $i2 = (int) 44032;
+
+        if $i2 > i0 goto label1;
+
+        $i4 = (int) 55204;
+
+        if i0 >= $i4 goto label1;
+
+        $z0 = 1;
+
+        goto label2;
+
+     label1:
+        $z0 = 0;
+
+     label2:
+        return $z0;
+    }
+
+    public static boolean isHangulLV(int)
+    {
+        int $i0, i1, i2, $i4;
+        boolean $z0;
+
+        i1 := @parameter0: int;
+
+        $i4 = (int) 44032;
+
+        i2 = i1 - $i4;
+
+        if 0 > i2 goto label1;
+
+        if i2 >= 11172 goto label1;
+
+        $i0 = i2 % 28;
+
+        if $i0 != 0 goto label1;
+
+        $z0 = 1;
+
+        goto label2;
+
+     label1:
+        $z0 = 0;
+
+     label2:
+        return $z0;
+    }
+
+    public static int decompose(int, java.lang.Appendable)
+    {
+        int $i0, $i1, $i3, $i4, $i6, i8, i9, i10, i11, $i13;
+        java.lang.InternalError $r3;
+        java.lang.Appendable r0;
+        char $c2, $c5, $c7;
+        java.io.IOException $r1;
+
+        i8 := @parameter0: int;
+
+        r0 := @parameter1: java.lang.Appendable;
+
+     label1:
+        $i13 = (int) 44032;
+
+        i9 = i8 - $i13;
+
+        i10 = i9 % 28;
+
+        i11 = i9 / 28;
+
+        $i0 = i11 / 21;
+
+        $i1 = 4352 + $i0;
+
+        $c2 = (char) $i1;
+
+        interfaceinvoke r0.<java.lang.Appendable: java.lang.Appendable append(char)>($c2);
+
+        $i3 = i11 % 21;
+
+        $i4 = 4449 + $i3;
+
+        $c5 = (char) $i4;
+
+        interfaceinvoke r0.<java.lang.Appendable: java.lang.Appendable append(char)>($c5);
+
+        if i10 != 0 goto label3;
+
+     label2:
+        return 2;
+
+     label3:
+        $i6 = 4519 + i10;
+
+        $c7 = (char) $i6;
+
+        interfaceinvoke r0.<java.lang.Appendable: java.lang.Appendable append(char)>($c7);
+
+     label4:
+        return 3;
+
+     label5:
+        $r1 := @caughtexception;
+
+        $r3 = new java.lang.InternalError;
+
+        specialinvoke $r3.<java.lang.InternalError: void <init>(java.lang.Throwable)>($r1);
+
+        throw $r3;
+
+        catch java.io.IOException from label1 to label2 with label5;
+        catch java.io.IOException from label3 to label4 with label5;
+    }
+
+    public static void <clinit>()
+    {
+        <jdk.internal.icu.impl.NormalizerImpl$Hangul: int HANGUL_LIMIT> = 55204;
+
+        <jdk.internal.icu.impl.NormalizerImpl$Hangul: int HANGUL_COUNT> = 11172;
+
+        <jdk.internal.icu.impl.NormalizerImpl$Hangul: int JAMO_T_COUNT> = 28;
+
+        <jdk.internal.icu.impl.NormalizerImpl$Hangul: int JAMO_V_COUNT> = 21;
+
+        <jdk.internal.icu.impl.NormalizerImpl$Hangul: int JAMO_L_COUNT> = 19;
+
+        <jdk.internal.icu.impl.NormalizerImpl$Hangul: int HANGUL_END> = 55203;
+
+        <jdk.internal.icu.impl.NormalizerImpl$Hangul: int HANGUL_BASE> = 44032;
+
+        <jdk.internal.icu.impl.NormalizerImpl$Hangul: int JAMO_T_BASE> = 4519;
+
+        <jdk.internal.icu.impl.NormalizerImpl$Hangul: int JAMO_V_BASE> = 4449;
+
+        <jdk.internal.icu.impl.NormalizerImpl$Hangul: int JAMO_L_BASE> = 4352;
+
+        return;
+    }
+}

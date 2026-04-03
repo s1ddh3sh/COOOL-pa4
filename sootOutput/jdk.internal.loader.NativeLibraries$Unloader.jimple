@@ -1,0 +1,212 @@
+class jdk.internal.loader.NativeLibraries$Unloader extends java.lang.Object implements java.lang.Runnable
+{
+    static final jdk.internal.loader.NativeLibraries$NativeLibraryImpl UNLOADER;
+    final java.lang.String name;
+    final long handle;
+    final boolean isBuiltin;
+    final boolean isJNI;
+    static final boolean $assertionsDisabled;
+
+    void <init>(java.lang.String, long, boolean, boolean)
+    {
+        long l0;
+        java.lang.AssertionError $r7;
+        java.lang.IllegalArgumentException $r2;
+        byte $b1;
+        jdk.internal.loader.NativeLibraries$Unloader r0;
+        java.lang.StringBuilder $r3, $r4, $r5;
+        java.lang.String r1, $r6;
+        boolean $z0, z1, z2;
+
+        r0 := @this: jdk.internal.loader.NativeLibraries$Unloader;
+
+        r1 := @parameter0: java.lang.String;
+
+        l0 := @parameter1: long;
+
+        z1 := @parameter2: boolean;
+
+        z2 := @parameter3: boolean;
+
+        specialinvoke r0.<java.lang.Object: void <init>()>();
+
+        $z0 = <jdk.internal.loader.NativeLibraries$Unloader: boolean $assertionsDisabled>;
+
+        if $z0 != 0 goto label1;
+
+        if z1 == false goto label1;
+
+        if z2 != 0 goto label1;
+
+        $r7 = new java.lang.AssertionError;
+
+        specialinvoke $r7.<java.lang.AssertionError: void <init>(java.lang.Object)>("a builtin native library must be JNI library");
+
+        throw $r7;
+
+     label1:
+        $b1 = l0 cmp 0L;
+
+        if $b1 != 0 goto label2;
+
+        $r2 = new java.lang.IllegalArgumentException;
+
+        $r3 = new java.lang.StringBuilder;
+
+        specialinvoke $r3.<java.lang.StringBuilder: void <init>()>();
+
+        $r4 = virtualinvoke $r3.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("Invalid handle for native library ");
+
+        $r5 = virtualinvoke $r4.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(r1);
+
+        $r6 = virtualinvoke $r5.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        specialinvoke $r2.<java.lang.IllegalArgumentException: void <init>(java.lang.String)>($r6);
+
+        throw $r2;
+
+     label2:
+        r0.<jdk.internal.loader.NativeLibraries$Unloader: java.lang.String name> = r1;
+
+        r0.<jdk.internal.loader.NativeLibraries$Unloader: long handle> = l0;
+
+        r0.<jdk.internal.loader.NativeLibraries$Unloader: boolean isBuiltin> = z1;
+
+        r0.<jdk.internal.loader.NativeLibraries$Unloader: boolean isJNI> = z2;
+
+        return;
+    }
+
+    public void run()
+    {
+        java.lang.Throwable $r14, $r15;
+        java.lang.IllegalStateException $r8;
+        long $l0;
+        java.util.Deque $r5, $r7, $r16;
+        jdk.internal.loader.NativeLibraries$Unloader r1;
+        java.lang.String $r2, $r6, $r10, $r13;
+        boolean $z0, $z1, $z2;
+        java.util.Set $r0, $r3;
+        java.lang.StringBuilder $r9, $r11, $r12;
+        jdk.internal.loader.NativeLibraries$NativeLibraryImpl $r4;
+
+        r1 := @this: jdk.internal.loader.NativeLibraries$Unloader;
+
+        $r0 = <jdk.internal.loader.NativeLibraries: java.util.Set loadedLibraryNames>;
+
+        entermonitor $r0;
+
+     label01:
+        $r3 = <jdk.internal.loader.NativeLibraries: java.util.Set loadedLibraryNames>;
+
+        $r2 = r1.<jdk.internal.loader.NativeLibraries$Unloader: java.lang.String name>;
+
+        $z0 = interfaceinvoke $r3.<java.util.Set: boolean remove(java.lang.Object)>($r2);
+
+        if $z0 != 0 goto label02;
+
+        $r8 = new java.lang.IllegalStateException;
+
+        $r9 = new java.lang.StringBuilder;
+
+        specialinvoke $r9.<java.lang.StringBuilder: void <init>()>();
+
+        $r10 = r1.<jdk.internal.loader.NativeLibraries$Unloader: java.lang.String name>;
+
+        $r11 = virtualinvoke $r9.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>($r10);
+
+        $r12 = virtualinvoke $r11.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(" has already been unloaded");
+
+        $r13 = virtualinvoke $r12.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        specialinvoke $r8.<java.lang.IllegalStateException: void <init>(java.lang.String)>($r13);
+
+        throw $r8;
+
+     label02:
+        $r5 = <jdk.internal.loader.NativeLibraries: java.util.Deque nativeLibraryContext>;
+
+        $r4 = <jdk.internal.loader.NativeLibraries$Unloader: jdk.internal.loader.NativeLibraries$NativeLibraryImpl UNLOADER>;
+
+        interfaceinvoke $r5.<java.util.Deque: void push(java.lang.Object)>($r4);
+
+     label03:
+        $r6 = r1.<jdk.internal.loader.NativeLibraries$Unloader: java.lang.String name>;
+
+        $z2 = r1.<jdk.internal.loader.NativeLibraries$Unloader: boolean isBuiltin>;
+
+        $z1 = r1.<jdk.internal.loader.NativeLibraries$Unloader: boolean isJNI>;
+
+        $l0 = r1.<jdk.internal.loader.NativeLibraries$Unloader: long handle>;
+
+        staticinvoke <jdk.internal.loader.NativeLibraries: void unload(java.lang.String,boolean,boolean,long)>($r6, $z2, $z1, $l0);
+
+     label04:
+        $r7 = <jdk.internal.loader.NativeLibraries: java.util.Deque nativeLibraryContext>;
+
+        interfaceinvoke $r7.<java.util.Deque: java.lang.Object pop()>();
+
+        goto label06;
+
+     label05:
+        $r15 := @caughtexception;
+
+        $r16 = <jdk.internal.loader.NativeLibraries: java.util.Deque nativeLibraryContext>;
+
+        interfaceinvoke $r16.<java.util.Deque: java.lang.Object pop()>();
+
+        throw $r15;
+
+     label06:
+        exitmonitor $r0;
+
+     label07:
+        goto label10;
+
+     label08:
+        $r14 := @caughtexception;
+
+        exitmonitor $r0;
+
+     label09:
+        throw $r14;
+
+     label10:
+        return;
+
+        catch java.lang.Throwable from label03 to label04 with label05;
+        catch java.lang.Throwable from label01 to label07 with label08;
+        catch java.lang.Throwable from label08 to label09 with label08;
+    }
+
+    static void <clinit>()
+    {
+        java.lang.Class $r0;
+        jdk.internal.loader.NativeLibraries$NativeLibraryImpl $r1;
+        boolean $z0, $z1;
+
+        $r0 = class "Ljdk/internal/loader/NativeLibraries;";
+
+        $z0 = virtualinvoke $r0.<java.lang.Class: boolean desiredAssertionStatus()>();
+
+        if $z0 != 0 goto label1;
+
+        $z1 = 1;
+
+        goto label2;
+
+     label1:
+        $z1 = 0;
+
+     label2:
+        <jdk.internal.loader.NativeLibraries$Unloader: boolean $assertionsDisabled> = $z1;
+
+        $r1 = new jdk.internal.loader.NativeLibraries$NativeLibraryImpl;
+
+        specialinvoke $r1.<jdk.internal.loader.NativeLibraries$NativeLibraryImpl: void <init>(java.lang.Class,java.lang.String,boolean,boolean)>(null, "dummy", 0, 0);
+
+        <jdk.internal.loader.NativeLibraries$Unloader: jdk.internal.loader.NativeLibraries$NativeLibraryImpl UNLOADER> = $r1;
+
+        return;
+    }
+}

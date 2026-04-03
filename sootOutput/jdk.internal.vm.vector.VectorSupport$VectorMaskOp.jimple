@@ -1,0 +1,5 @@
+public interface  jdk.internal.vm.vector.VectorSupport$VectorMaskOp extends java.lang.Object
+{
+
+    public abstract int apply(java.lang.Object);
+}

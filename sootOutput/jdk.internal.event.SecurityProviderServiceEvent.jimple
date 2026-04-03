@@ -1,0 +1,43 @@
+public final class jdk.internal.event.SecurityProviderServiceEvent extends jdk.internal.event.Event
+{
+    private static final jdk.internal.event.SecurityProviderServiceEvent EVENT;
+    public java.lang.String type;
+    public java.lang.String algorithm;
+    public java.lang.String provider;
+
+    public void <init>()
+    {
+        jdk.internal.event.SecurityProviderServiceEvent r0;
+
+        r0 := @this: jdk.internal.event.SecurityProviderServiceEvent;
+
+        specialinvoke r0.<jdk.internal.event.Event: void <init>()>();
+
+        return;
+    }
+
+    public static boolean isTurnedOn()
+    {
+        jdk.internal.event.SecurityProviderServiceEvent $r0;
+        boolean $z0;
+
+        $r0 = <jdk.internal.event.SecurityProviderServiceEvent: jdk.internal.event.SecurityProviderServiceEvent EVENT>;
+
+        $z0 = virtualinvoke $r0.<jdk.internal.event.SecurityProviderServiceEvent: boolean isEnabled()>();
+
+        return $z0;
+    }
+
+    static void <clinit>()
+    {
+        jdk.internal.event.SecurityProviderServiceEvent $r0;
+
+        $r0 = new jdk.internal.event.SecurityProviderServiceEvent;
+
+        specialinvoke $r0.<jdk.internal.event.SecurityProviderServiceEvent: void <init>()>();
+
+        <jdk.internal.event.SecurityProviderServiceEvent: jdk.internal.event.SecurityProviderServiceEvent EVENT> = $r0;
+
+        return;
+    }
+}

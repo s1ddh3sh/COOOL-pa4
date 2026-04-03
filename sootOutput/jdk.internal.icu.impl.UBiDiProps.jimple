@@ -1,0 +1,596 @@
+public final class jdk.internal.icu.impl.UBiDiProps extends java.lang.Object
+{
+    private int[] indexes;
+    private int[] mirrors;
+    private byte[] jgArray;
+    private byte[] jgArray2;
+    private jdk.internal.icu.impl.Trie2_16 trie;
+    private static final java.lang.String DATA_FILE_NAME;
+    private static final int FMT;
+    private static final int IX_TRIE_SIZE;
+    private static final int IX_MIRROR_LENGTH;
+    private static final int IX_JG_START;
+    private static final int IX_JG_LIMIT;
+    private static final int IX_JG_START2;
+    private static final int IX_JG_LIMIT2;
+    private static final int IX_TOP;
+    private static final int JT_SHIFT;
+    private static final int BPT_SHIFT;
+    private static final int MIRROR_DELTA_SHIFT;
+    private static final int CLASS_MASK;
+    private static final int JT_MASK;
+    private static final int BPT_MASK;
+    private static final int ESC_MIRROR_DELTA;
+    private static final int MIRROR_INDEX_SHIFT;
+    public static final jdk.internal.icu.impl.UBiDiProps INSTANCE;
+
+    private void <init>() throws java.io.IOException
+    {
+        jdk.internal.icu.impl.UBiDiProps r0;
+        java.nio.ByteBuffer r1;
+
+        r0 := @this: jdk.internal.icu.impl.UBiDiProps;
+
+        specialinvoke r0.<java.lang.Object: void <init>()>();
+
+        r1 = staticinvoke <jdk.internal.icu.impl.ICUBinary: java.nio.ByteBuffer getRequiredData(java.lang.String)>("/jdk/internal/icu/impl/data/icudt67b/ubidi.icu");
+
+        virtualinvoke r0.<jdk.internal.icu.impl.UBiDiProps: void readData(java.nio.ByteBuffer)>(r1);
+
+        return;
+    }
+
+    private void readData(java.nio.ByteBuffer) throws java.io.IOException
+    {
+        byte[] $r11, $r14, $r15, $r16;
+        jdk.internal.icu.impl.UBiDiProps$IsAcceptable $r1;
+        java.nio.ByteBuffer r0;
+        byte $b7, $b8;
+        int[] $r3, $r4, $r6, $r8, $r9, $r10, $r12, $r13, $r17, $r18, $r20;
+        jdk.internal.icu.impl.Trie2_16 $r5, $r7;
+        jdk.internal.icu.impl.UBiDiProps r2;
+        int i0, i1, $i2, $i3, $i4, $i5, $i6, $i9, $i10, $i11, i12, i13, i14, i15, i16, i17, i18;
+        java.io.IOException $r19, $r21;
+
+        r2 := @this: jdk.internal.icu.impl.UBiDiProps;
+
+        r0 := @parameter0: java.nio.ByteBuffer;
+
+        $r1 = new jdk.internal.icu.impl.UBiDiProps$IsAcceptable;
+
+        specialinvoke $r1.<jdk.internal.icu.impl.UBiDiProps$IsAcceptable: void <init>()>();
+
+        staticinvoke <jdk.internal.icu.impl.ICUBinary: int readHeader(java.nio.ByteBuffer,int,jdk.internal.icu.impl.ICUBinary$Authenticate)>(r0, 1114195049, $r1);
+
+        i12 = virtualinvoke r0.<java.nio.ByteBuffer: int getInt()>();
+
+        if i12 >= 16 goto label01;
+
+        $r21 = new java.io.IOException;
+
+        specialinvoke $r21.<java.io.IOException: void <init>(java.lang.String)>("indexes[0] too small in /jdk/internal/icu/impl/data/icudt67b/ubidi.icu");
+
+        throw $r21;
+
+     label01:
+        $r3 = newarray (int)[i12];
+
+        r2.<jdk.internal.icu.impl.UBiDiProps: int[] indexes> = $r3;
+
+        $r4 = r2.<jdk.internal.icu.impl.UBiDiProps: int[] indexes>;
+
+        $r4[0] = i12;
+
+        i13 = 1;
+
+     label02:
+        if i13 >= i12 goto label03;
+
+        $r20 = r2.<jdk.internal.icu.impl.UBiDiProps: int[] indexes>;
+
+        $i11 = virtualinvoke r0.<java.nio.ByteBuffer: int getInt()>();
+
+        $r20[i13] = $i11;
+
+        i13 = i13 + 1;
+
+        goto label02;
+
+     label03:
+        $r5 = staticinvoke <jdk.internal.icu.impl.Trie2_16: jdk.internal.icu.impl.Trie2_16 createFromSerialized(java.nio.ByteBuffer)>(r0);
+
+        r2.<jdk.internal.icu.impl.UBiDiProps: jdk.internal.icu.impl.Trie2_16 trie> = $r5;
+
+        $r6 = r2.<jdk.internal.icu.impl.UBiDiProps: int[] indexes>;
+
+        i0 = $r6[2];
+
+        $r7 = r2.<jdk.internal.icu.impl.UBiDiProps: jdk.internal.icu.impl.Trie2_16 trie>;
+
+        i1 = virtualinvoke $r7.<jdk.internal.icu.impl.Trie2_16: int getSerializedLength()>();
+
+        if i1 <= i0 goto label04;
+
+        $r19 = new java.io.IOException;
+
+        specialinvoke $r19.<java.io.IOException: void <init>(java.lang.String)>("/jdk/internal/icu/impl/data/icudt67b/ubidi.icu: not enough bytes for the trie");
+
+        throw $r19;
+
+     label04:
+        $i2 = i0 - i1;
+
+        staticinvoke <jdk.internal.icu.impl.ICUBinary: void skipBytes(java.nio.ByteBuffer,int)>(r0, $i2);
+
+        $r8 = r2.<jdk.internal.icu.impl.UBiDiProps: int[] indexes>;
+
+        i14 = $r8[3];
+
+        if i14 <= 0 goto label06;
+
+        $r17 = newarray (int)[i14];
+
+        r2.<jdk.internal.icu.impl.UBiDiProps: int[] mirrors> = $r17;
+
+        i15 = 0;
+
+     label05:
+        if i15 >= i14 goto label06;
+
+        $r18 = r2.<jdk.internal.icu.impl.UBiDiProps: int[] mirrors>;
+
+        $i10 = virtualinvoke r0.<java.nio.ByteBuffer: int getInt()>();
+
+        $r18[i15] = $i10;
+
+        i15 = i15 + 1;
+
+        goto label05;
+
+     label06:
+        $r9 = r2.<jdk.internal.icu.impl.UBiDiProps: int[] indexes>;
+
+        $i4 = $r9[5];
+
+        $r10 = r2.<jdk.internal.icu.impl.UBiDiProps: int[] indexes>;
+
+        $i3 = $r10[4];
+
+        $i9 = $i4 - $i3;
+
+        $r11 = newarray (byte)[$i9];
+
+        r2.<jdk.internal.icu.impl.UBiDiProps: byte[] jgArray> = $r11;
+
+        i16 = 0;
+
+     label07:
+        if i16 >= $i9 goto label08;
+
+        $r16 = r2.<jdk.internal.icu.impl.UBiDiProps: byte[] jgArray>;
+
+        $b8 = virtualinvoke r0.<java.nio.ByteBuffer: byte get()>();
+
+        $r16[i16] = $b8;
+
+        i16 = i16 + 1;
+
+        goto label07;
+
+     label08:
+        $r12 = r2.<jdk.internal.icu.impl.UBiDiProps: int[] indexes>;
+
+        $i6 = $r12[7];
+
+        $r13 = r2.<jdk.internal.icu.impl.UBiDiProps: int[] indexes>;
+
+        $i5 = $r13[6];
+
+        i17 = $i6 - $i5;
+
+        $r14 = newarray (byte)[i17];
+
+        r2.<jdk.internal.icu.impl.UBiDiProps: byte[] jgArray2> = $r14;
+
+        i18 = 0;
+
+     label09:
+        if i18 >= i17 goto label10;
+
+        $r15 = r2.<jdk.internal.icu.impl.UBiDiProps: byte[] jgArray2>;
+
+        $b7 = virtualinvoke r0.<java.nio.ByteBuffer: byte get()>();
+
+        $r15[i18] = $b7;
+
+        i18 = i18 + 1;
+
+        goto label09;
+
+     label10:
+        return;
+    }
+
+    public final int getClass(int)
+    {
+        jdk.internal.icu.impl.UBiDiProps r0;
+        int i0, $i1, $i2;
+        jdk.internal.icu.impl.Trie2_16 $r1;
+
+        r0 := @this: jdk.internal.icu.impl.UBiDiProps;
+
+        i0 := @parameter0: int;
+
+        $r1 = r0.<jdk.internal.icu.impl.UBiDiProps: jdk.internal.icu.impl.Trie2_16 trie>;
+
+        $i1 = virtualinvoke $r1.<jdk.internal.icu.impl.Trie2_16: int get(int)>(i0);
+
+        $i2 = staticinvoke <jdk.internal.icu.impl.UBiDiProps: int getClassFromProps(int)>($i1);
+
+        return $i2;
+    }
+
+    private final int getMirror(int, int)
+    {
+        int[] $r1, $r2, $r3;
+        int i0, i1, i2, i3, i4, i5, $i6, $i7, $i8, $i9, i10, $i12;
+        jdk.internal.icu.impl.UBiDiProps r0;
+
+        r0 := @this: jdk.internal.icu.impl.UBiDiProps;
+
+        i3 := @parameter0: int;
+
+        i0 := @parameter1: int;
+
+        i1 = staticinvoke <jdk.internal.icu.impl.UBiDiProps: int getMirrorDeltaFromProps(int)>(i0);
+
+        $i12 = (int) -4;
+
+        if i1 == $i12 goto label1;
+
+        $i9 = i3 + i1;
+
+        return $i9;
+
+     label1:
+        $r1 = r0.<jdk.internal.icu.impl.UBiDiProps: int[] indexes>;
+
+        i2 = $r1[3];
+
+        i10 = 0;
+
+     label2:
+        if i10 >= i2 goto label5;
+
+        $r2 = r0.<jdk.internal.icu.impl.UBiDiProps: int[] mirrors>;
+
+        i4 = $r2[i10];
+
+        i5 = staticinvoke <jdk.internal.icu.impl.UBiDiProps: int getMirrorCodePoint(int)>(i4);
+
+        if i3 != i5 goto label3;
+
+        $r3 = r0.<jdk.internal.icu.impl.UBiDiProps: int[] mirrors>;
+
+        $i6 = staticinvoke <jdk.internal.icu.impl.UBiDiProps: int getMirrorIndex(int)>(i4);
+
+        $i7 = $r3[$i6];
+
+        $i8 = staticinvoke <jdk.internal.icu.impl.UBiDiProps: int getMirrorCodePoint(int)>($i7);
+
+        return $i8;
+
+     label3:
+        if i3 >= i5 goto label4;
+
+        goto label5;
+
+     label4:
+        i10 = i10 + 1;
+
+        goto label2;
+
+     label5:
+        return i3;
+    }
+
+    public final int getMirror(int)
+    {
+        jdk.internal.icu.impl.UBiDiProps r0;
+        int i0, i1, $i2;
+        jdk.internal.icu.impl.Trie2_16 $r1;
+
+        r0 := @this: jdk.internal.icu.impl.UBiDiProps;
+
+        i0 := @parameter0: int;
+
+        $r1 = r0.<jdk.internal.icu.impl.UBiDiProps: jdk.internal.icu.impl.Trie2_16 trie>;
+
+        i1 = virtualinvoke $r1.<jdk.internal.icu.impl.Trie2_16: int get(int)>(i0);
+
+        $i2 = virtualinvoke r0.<jdk.internal.icu.impl.UBiDiProps: int getMirror(int,int)>(i0, i1);
+
+        return $i2;
+    }
+
+    public final int getJoiningType(int)
+    {
+        jdk.internal.icu.impl.UBiDiProps r0;
+        int i0, $i1, $i2, $i3;
+        jdk.internal.icu.impl.Trie2_16 $r1;
+
+        r0 := @this: jdk.internal.icu.impl.UBiDiProps;
+
+        i0 := @parameter0: int;
+
+        $r1 = r0.<jdk.internal.icu.impl.UBiDiProps: jdk.internal.icu.impl.Trie2_16 trie>;
+
+        $i1 = virtualinvoke $r1.<jdk.internal.icu.impl.Trie2_16: int get(int)>(i0);
+
+        $i2 = $i1 & 224;
+
+        $i3 = $i2 >> 5;
+
+        return $i3;
+    }
+
+    public final int getJoiningGroup(int)
+    {
+        byte[] $r5, $r6;
+        short $s3, $s8, $s11, $s13;
+        byte $b2, $b7;
+        int[] $r1, $r2, $r3, $r4;
+        int i0, $i1, $i4, $i5, $i6, i9, i10, $i12, $i14;
+        jdk.internal.icu.impl.UBiDiProps r0;
+
+        r0 := @this: jdk.internal.icu.impl.UBiDiProps;
+
+        i0 := @parameter0: int;
+
+        $r1 = r0.<jdk.internal.icu.impl.UBiDiProps: int[] indexes>;
+
+        i9 = $r1[4];
+
+        $r2 = r0.<jdk.internal.icu.impl.UBiDiProps: int[] indexes>;
+
+        i10 = $r2[5];
+
+        if i9 > i0 goto label1;
+
+        if i0 >= i10 goto label1;
+
+        $r6 = r0.<jdk.internal.icu.impl.UBiDiProps: byte[] jgArray>;
+
+        $i6 = i0 - i9;
+
+        $b7 = $r6[$i6];
+
+        $s11 = (short) $b7;
+
+        $s8 = $s11 & 255;
+
+        $i12 = (int) $s8;
+
+        return $i12;
+
+     label1:
+        $r3 = r0.<jdk.internal.icu.impl.UBiDiProps: int[] indexes>;
+
+        $i4 = $r3[6];
+
+        $r4 = r0.<jdk.internal.icu.impl.UBiDiProps: int[] indexes>;
+
+        $i5 = $r4[7];
+
+        if $i4 > i0 goto label2;
+
+        if i0 >= $i5 goto label2;
+
+        $r5 = r0.<jdk.internal.icu.impl.UBiDiProps: byte[] jgArray2>;
+
+        $i1 = i0 - $i4;
+
+        $b2 = $r5[$i1];
+
+        $s13 = (short) $b2;
+
+        $s3 = $s13 & 255;
+
+        $i14 = (int) $s3;
+
+        return $i14;
+
+     label2:
+        return 0;
+    }
+
+    public final int getPairedBracketType(int)
+    {
+        jdk.internal.icu.impl.UBiDiProps r0;
+        int i0, $i1, $i2, $i3;
+        jdk.internal.icu.impl.Trie2_16 $r1;
+
+        r0 := @this: jdk.internal.icu.impl.UBiDiProps;
+
+        i0 := @parameter0: int;
+
+        $r1 = r0.<jdk.internal.icu.impl.UBiDiProps: jdk.internal.icu.impl.Trie2_16 trie>;
+
+        $i1 = virtualinvoke $r1.<jdk.internal.icu.impl.Trie2_16: int get(int)>(i0);
+
+        $i2 = $i1 & 768;
+
+        $i3 = $i2 >> 8;
+
+        return $i3;
+    }
+
+    public final int getPairedBracket(int)
+    {
+        jdk.internal.icu.impl.UBiDiProps r0;
+        int i0, i1, $i2, $i3;
+        jdk.internal.icu.impl.Trie2_16 $r1;
+
+        r0 := @this: jdk.internal.icu.impl.UBiDiProps;
+
+        i0 := @parameter0: int;
+
+        $r1 = r0.<jdk.internal.icu.impl.UBiDiProps: jdk.internal.icu.impl.Trie2_16 trie>;
+
+        i1 = virtualinvoke $r1.<jdk.internal.icu.impl.Trie2_16: int get(int)>(i0);
+
+        $i2 = i1 & 768;
+
+        if $i2 != 0 goto label1;
+
+        return i0;
+
+     label1:
+        $i3 = virtualinvoke r0.<jdk.internal.icu.impl.UBiDiProps: int getMirror(int,int)>(i0, i1);
+
+        return $i3;
+    }
+
+    private static final int getClassFromProps(int)
+    {
+        int i0, $i1;
+
+        i0 := @parameter0: int;
+
+        $i1 = i0 & 31;
+
+        return $i1;
+    }
+
+    private static final boolean getFlagFromProps(int, int)
+    {
+        int i0, i1, $i2, $i3;
+        boolean $z0;
+
+        i0 := @parameter0: int;
+
+        i1 := @parameter1: int;
+
+        $i2 = i0 >> i1;
+
+        $i3 = $i2 & 1;
+
+        if $i3 == false goto label1;
+
+        $z0 = 1;
+
+        goto label2;
+
+     label1:
+        $z0 = 0;
+
+     label2:
+        return $z0;
+    }
+
+    private static final int getMirrorDeltaFromProps(int)
+    {
+        short $s1;
+        int i0, $i2, $i3;
+
+        i0 := @parameter0: int;
+
+        $s1 = (short) i0;
+
+        $i3 = (int) $s1;
+
+        $i2 = $i3 >> 13;
+
+        return $i2;
+    }
+
+    private static final int getMirrorCodePoint(int)
+    {
+        int i0, $i1;
+
+        i0 := @parameter0: int;
+
+        $i1 = i0 & 2097151;
+
+        return $i1;
+    }
+
+    private static final int getMirrorIndex(int)
+    {
+        int i0, $i1;
+
+        i0 := @parameter0: int;
+
+        $i1 = i0 >>> 21;
+
+        return $i1;
+    }
+
+    static void <clinit>()
+    {
+        jdk.internal.icu.impl.UBiDiProps $r0;
+        java.util.MissingResourceException $r2;
+        java.io.IOException $r1;
+        java.lang.String $r3;
+
+        <jdk.internal.icu.impl.UBiDiProps: int MIRROR_INDEX_SHIFT> = 21;
+
+        <jdk.internal.icu.impl.UBiDiProps: int ESC_MIRROR_DELTA> = -4;
+
+        <jdk.internal.icu.impl.UBiDiProps: int BPT_MASK> = 768;
+
+        <jdk.internal.icu.impl.UBiDiProps: int JT_MASK> = 224;
+
+        <jdk.internal.icu.impl.UBiDiProps: int CLASS_MASK> = 31;
+
+        <jdk.internal.icu.impl.UBiDiProps: int MIRROR_DELTA_SHIFT> = 13;
+
+        <jdk.internal.icu.impl.UBiDiProps: int BPT_SHIFT> = 8;
+
+        <jdk.internal.icu.impl.UBiDiProps: int JT_SHIFT> = 5;
+
+        <jdk.internal.icu.impl.UBiDiProps: int IX_TOP> = 16;
+
+        <jdk.internal.icu.impl.UBiDiProps: int IX_JG_LIMIT2> = 7;
+
+        <jdk.internal.icu.impl.UBiDiProps: int IX_JG_START2> = 6;
+
+        <jdk.internal.icu.impl.UBiDiProps: int IX_JG_LIMIT> = 5;
+
+        <jdk.internal.icu.impl.UBiDiProps: int IX_JG_START> = 4;
+
+        <jdk.internal.icu.impl.UBiDiProps: int IX_MIRROR_LENGTH> = 3;
+
+        <jdk.internal.icu.impl.UBiDiProps: int IX_TRIE_SIZE> = 2;
+
+        <jdk.internal.icu.impl.UBiDiProps: int FMT> = 1114195049;
+
+        <jdk.internal.icu.impl.UBiDiProps: java.lang.String DATA_FILE_NAME> = "/jdk/internal/icu/impl/data/icudt67b/ubidi.icu";
+
+     label1:
+        $r0 = new jdk.internal.icu.impl.UBiDiProps;
+
+        specialinvoke $r0.<jdk.internal.icu.impl.UBiDiProps: void <init>()>();
+
+        <jdk.internal.icu.impl.UBiDiProps: jdk.internal.icu.impl.UBiDiProps INSTANCE> = $r0;
+
+     label2:
+        goto label4;
+
+     label3:
+        $r1 := @caughtexception;
+
+        $r2 = new java.util.MissingResourceException;
+
+        $r3 = virtualinvoke $r1.<java.io.IOException: java.lang.String getMessage()>();
+
+        specialinvoke $r2.<java.util.MissingResourceException: void <init>(java.lang.String,java.lang.String,java.lang.String)>($r3, "/jdk/internal/icu/impl/data/icudt67b/ubidi.icu", "");
+
+        throw $r2;
+
+     label4:
+        return;
+
+        catch java.io.IOException from label1 to label2 with label3;
+    }
+}

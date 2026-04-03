@@ -1,0 +1,279 @@
+public abstract class jdk.internal.icu.text.UCharacterIterator extends java.lang.Object implements java.lang.Cloneable
+{
+    public static final int DONE;
+
+    protected void <init>()
+    {
+        jdk.internal.icu.text.UCharacterIterator r0;
+
+        r0 := @this: jdk.internal.icu.text.UCharacterIterator;
+
+        specialinvoke r0.<java.lang.Object: void <init>()>();
+
+        return;
+    }
+
+    public static final jdk.internal.icu.text.UCharacterIterator getInstance(java.lang.String)
+    {
+        jdk.internal.icu.impl.ReplaceableUCharacterIterator $r0;
+        java.lang.String r1;
+
+        r1 := @parameter0: java.lang.String;
+
+        $r0 = new jdk.internal.icu.impl.ReplaceableUCharacterIterator;
+
+        specialinvoke $r0.<jdk.internal.icu.impl.ReplaceableUCharacterIterator: void <init>(java.lang.String)>(r1);
+
+        return $r0;
+    }
+
+    public static final jdk.internal.icu.text.UCharacterIterator getInstance(java.lang.StringBuffer)
+    {
+        jdk.internal.icu.impl.ReplaceableUCharacterIterator $r0;
+        java.lang.StringBuffer r1;
+
+        r1 := @parameter0: java.lang.StringBuffer;
+
+        $r0 = new jdk.internal.icu.impl.ReplaceableUCharacterIterator;
+
+        specialinvoke $r0.<jdk.internal.icu.impl.ReplaceableUCharacterIterator: void <init>(java.lang.StringBuffer)>(r1);
+
+        return $r0;
+    }
+
+    public static final jdk.internal.icu.text.UCharacterIterator getInstance(java.text.CharacterIterator)
+    {
+        jdk.internal.icu.impl.CharacterIteratorWrapper $r0;
+        java.text.CharacterIterator r1;
+
+        r1 := @parameter0: java.text.CharacterIterator;
+
+        $r0 = new jdk.internal.icu.impl.CharacterIteratorWrapper;
+
+        specialinvoke $r0.<jdk.internal.icu.impl.CharacterIteratorWrapper: void <init>(java.text.CharacterIterator)>(r1);
+
+        return $r0;
+    }
+
+    public abstract int getLength();
+
+    public abstract int getIndex();
+
+    public abstract int next();
+
+    public int nextCodePoint()
+    {
+        jdk.internal.icu.text.UCharacterIterator r0;
+        char $c1, $c3, $c4, $c5;
+        int i0, i2, $i6, $i8;
+        boolean $z0, $z1;
+
+        r0 := @this: jdk.internal.icu.text.UCharacterIterator;
+
+        i0 = virtualinvoke r0.<jdk.internal.icu.text.UCharacterIterator: int next()>();
+
+        $c1 = (char) i0;
+
+        $z0 = staticinvoke <jdk.internal.icu.text.UTF16: boolean isLeadSurrogate(char)>($c1);
+
+        if $z0 == false goto label2;
+
+        i2 = virtualinvoke r0.<jdk.internal.icu.text.UCharacterIterator: int next()>();
+
+        $c3 = (char) i2;
+
+        $z1 = staticinvoke <jdk.internal.icu.text.UTF16: boolean isTrailSurrogate(char)>($c3);
+
+        if $z1 == false goto label1;
+
+        $c5 = (char) i0;
+
+        $c4 = (char) i2;
+
+        $i6 = staticinvoke <jdk.internal.icu.impl.UCharacterProperty: int getRawSupplementary(char,char)>($c5, $c4);
+
+        return $i6;
+
+     label1:
+        $i8 = (int) -1;
+
+        if i2 == $i8 goto label2;
+
+        virtualinvoke r0.<jdk.internal.icu.text.UCharacterIterator: int previous()>();
+
+     label2:
+        return i0;
+    }
+
+    public abstract int previous();
+
+    public int previousCodePoint()
+    {
+        jdk.internal.icu.text.UCharacterIterator r0;
+        char $c1, $c3, $c4, $c5;
+        int i0, i2, $i6, $i8;
+        boolean $z0, $z1;
+
+        r0 := @this: jdk.internal.icu.text.UCharacterIterator;
+
+        i0 = virtualinvoke r0.<jdk.internal.icu.text.UCharacterIterator: int previous()>();
+
+        $c1 = (char) i0;
+
+        $z0 = staticinvoke <jdk.internal.icu.text.UTF16: boolean isTrailSurrogate(char)>($c1);
+
+        if $z0 == false goto label2;
+
+        i2 = virtualinvoke r0.<jdk.internal.icu.text.UCharacterIterator: int previous()>();
+
+        $c3 = (char) i2;
+
+        $z1 = staticinvoke <jdk.internal.icu.text.UTF16: boolean isLeadSurrogate(char)>($c3);
+
+        if $z1 == false goto label1;
+
+        $c5 = (char) i2;
+
+        $c4 = (char) i0;
+
+        $i6 = staticinvoke <jdk.internal.icu.impl.UCharacterProperty: int getRawSupplementary(char,char)>($c5, $c4);
+
+        return $i6;
+
+     label1:
+        $i8 = (int) -1;
+
+        if i2 == $i8 goto label2;
+
+        virtualinvoke r0.<jdk.internal.icu.text.UCharacterIterator: int next()>();
+
+     label2:
+        return i0;
+    }
+
+    public abstract void setIndex(int);
+
+    public void setToStart()
+    {
+        jdk.internal.icu.text.UCharacterIterator r0;
+
+        r0 := @this: jdk.internal.icu.text.UCharacterIterator;
+
+        virtualinvoke r0.<jdk.internal.icu.text.UCharacterIterator: void setIndex(int)>(0);
+
+        return;
+    }
+
+    public abstract int getText(char[], int);
+
+    public final int getText(char[])
+    {
+        jdk.internal.icu.text.UCharacterIterator r0;
+        int $i0;
+        char[] r1;
+
+        r0 := @this: jdk.internal.icu.text.UCharacterIterator;
+
+        r1 := @parameter0: char[];
+
+        $i0 = virtualinvoke r0.<jdk.internal.icu.text.UCharacterIterator: int getText(char[],int)>(r1, 0);
+
+        return $i0;
+    }
+
+    public java.lang.String getText()
+    {
+        jdk.internal.icu.text.UCharacterIterator r0;
+        int $i0;
+        char[] r1;
+        java.lang.String $r2;
+
+        r0 := @this: jdk.internal.icu.text.UCharacterIterator;
+
+        $i0 = virtualinvoke r0.<jdk.internal.icu.text.UCharacterIterator: int getLength()>();
+
+        r1 = newarray (char)[$i0];
+
+        virtualinvoke r0.<jdk.internal.icu.text.UCharacterIterator: int getText(char[])>(r1);
+
+        $r2 = new java.lang.String;
+
+        specialinvoke $r2.<java.lang.String: void <init>(char[])>(r1);
+
+        return $r2;
+    }
+
+    public int moveCodePointIndex(int)
+    {
+        java.lang.IndexOutOfBoundsException $r2;
+        jdk.internal.icu.text.UCharacterIterator r0;
+        int $i0, $i1, $i2, i3, $i5, $i7, $i9;
+
+        r0 := @this: jdk.internal.icu.text.UCharacterIterator;
+
+        i3 := @parameter0: int;
+
+        if i3 <= 0 goto label2;
+
+     label1:
+        if i3 <= 0 goto label3;
+
+        $i2 = virtualinvoke r0.<jdk.internal.icu.text.UCharacterIterator: int nextCodePoint()>();
+
+        $i5 = (int) -1;
+
+        if $i2 == $i5 goto label3;
+
+        $i7 = (int) -1;
+
+        i3 = i3 + $i7;
+
+        goto label1;
+
+     label2:
+        if i3 >= 0 goto label3;
+
+        $i1 = virtualinvoke r0.<jdk.internal.icu.text.UCharacterIterator: int previousCodePoint()>();
+
+        $i9 = (int) -1;
+
+        if $i1 == $i9 goto label3;
+
+        i3 = i3 + 1;
+
+        goto label2;
+
+     label3:
+        if i3 == false goto label4;
+
+        $r2 = new java.lang.IndexOutOfBoundsException;
+
+        specialinvoke $r2.<java.lang.IndexOutOfBoundsException: void <init>()>();
+
+        throw $r2;
+
+     label4:
+        $i0 = virtualinvoke r0.<jdk.internal.icu.text.UCharacterIterator: int getIndex()>();
+
+        return $i0;
+    }
+
+    public java.lang.Object clone() throws java.lang.CloneNotSupportedException
+    {
+        jdk.internal.icu.text.UCharacterIterator r0;
+        java.lang.Object $r1;
+
+        r0 := @this: jdk.internal.icu.text.UCharacterIterator;
+
+        $r1 = specialinvoke r0.<java.lang.Object: java.lang.Object clone()>();
+
+        return $r1;
+    }
+
+    public static void <clinit>()
+    {
+        <jdk.internal.icu.text.UCharacterIterator: int DONE> = -1;
+
+        return;
+    }
+}

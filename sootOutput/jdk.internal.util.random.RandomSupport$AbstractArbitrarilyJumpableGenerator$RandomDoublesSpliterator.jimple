@@ -1,0 +1,245 @@
+class jdk.internal.util.random.RandomSupport$AbstractArbitrarilyJumpableGenerator$RandomDoublesSpliterator extends jdk.internal.util.random.RandomSupport$RandomSpliterator implements java.util.Spliterator$OfDouble
+{
+    final java.util.random.RandomGenerator$ArbitrarilyJumpableGenerator generatingGenerator;
+    final double origin;
+    final double bound;
+
+    void <init>(java.util.random.RandomGenerator$ArbitrarilyJumpableGenerator, long, long, double, double)
+    {
+        jdk.internal.util.random.RandomSupport$AbstractArbitrarilyJumpableGenerator$RandomDoublesSpliterator r0;
+        long l0, l1;
+        java.util.random.RandomGenerator$ArbitrarilyJumpableGenerator r1;
+        double d0, d1;
+
+        r0 := @this: jdk.internal.util.random.RandomSupport$AbstractArbitrarilyJumpableGenerator$RandomDoublesSpliterator;
+
+        r1 := @parameter0: java.util.random.RandomGenerator$ArbitrarilyJumpableGenerator;
+
+        l0 := @parameter1: long;
+
+        l1 := @parameter2: long;
+
+        d0 := @parameter3: double;
+
+        d1 := @parameter4: double;
+
+        specialinvoke r0.<jdk.internal.util.random.RandomSupport$RandomSpliterator: void <init>(long,long)>(l0, l1);
+
+        r0.<jdk.internal.util.random.RandomSupport$AbstractArbitrarilyJumpableGenerator$RandomDoublesSpliterator: java.util.random.RandomGenerator$ArbitrarilyJumpableGenerator generatingGenerator> = r1;
+
+        r0.<jdk.internal.util.random.RandomSupport$AbstractArbitrarilyJumpableGenerator$RandomDoublesSpliterator: double origin> = d0;
+
+        r0.<jdk.internal.util.random.RandomSupport$AbstractArbitrarilyJumpableGenerator$RandomDoublesSpliterator: double bound> = d1;
+
+        return;
+    }
+
+    public java.util.Spliterator$OfDouble trySplit()
+    {
+        long l0, $l1, $l2, $l3, l4, l5;
+        java.util.random.RandomGenerator$ArbitrarilyJumpableGenerator r1, $r3;
+        jdk.internal.util.random.RandomSupport$AbstractArbitrarilyJumpableGenerator$RandomDoublesSpliterator r0, $r4;
+        byte $b6;
+        int $i7;
+        double $d0, $d1, $d2;
+
+        r0 := @this: jdk.internal.util.random.RandomSupport$AbstractArbitrarilyJumpableGenerator$RandomDoublesSpliterator;
+
+        l0 = r0.<jdk.internal.util.random.RandomSupport$AbstractArbitrarilyJumpableGenerator$RandomDoublesSpliterator: long index>;
+
+        $l1 = r0.<jdk.internal.util.random.RandomSupport$AbstractArbitrarilyJumpableGenerator$RandomDoublesSpliterator: long fence>;
+
+        $l2 = $l1 - l0;
+
+        $l3 = $l2 - 1L;
+
+        l4 = staticinvoke <java.lang.Long: long highestOneBit(long)>($l3);
+
+        l5 = l0 + l4;
+
+        $b6 = l5 cmp l0;
+
+        $i7 = (int) $b6;
+
+        if $i7 > 0 goto label1;
+
+        return null;
+
+     label1:
+        r0.<jdk.internal.util.random.RandomSupport$AbstractArbitrarilyJumpableGenerator$RandomDoublesSpliterator: long index> = l5;
+
+        r1 = r0.<jdk.internal.util.random.RandomSupport$AbstractArbitrarilyJumpableGenerator$RandomDoublesSpliterator: java.util.random.RandomGenerator$ArbitrarilyJumpableGenerator generatingGenerator>;
+
+        $r4 = new jdk.internal.util.random.RandomSupport$AbstractArbitrarilyJumpableGenerator$RandomDoublesSpliterator;
+
+        $d0 = (double) l4;
+
+        $r3 = interfaceinvoke r1.<java.util.random.RandomGenerator$ArbitrarilyJumpableGenerator: java.util.random.RandomGenerator$ArbitrarilyJumpableGenerator copyAndJump(double)>($d0);
+
+        $d2 = r0.<jdk.internal.util.random.RandomSupport$AbstractArbitrarilyJumpableGenerator$RandomDoublesSpliterator: double origin>;
+
+        $d1 = r0.<jdk.internal.util.random.RandomSupport$AbstractArbitrarilyJumpableGenerator$RandomDoublesSpliterator: double bound>;
+
+        specialinvoke $r4.<jdk.internal.util.random.RandomSupport$AbstractArbitrarilyJumpableGenerator$RandomDoublesSpliterator: void <init>(java.util.random.RandomGenerator$ArbitrarilyJumpableGenerator,long,long,double,double)>($r3, l0, l5, $d2, $d1);
+
+        return $r4;
+    }
+
+    public boolean tryAdvance(java.util.function.DoubleConsumer)
+    {
+        long l0, l1, $l3;
+        java.util.random.RandomGenerator$ArbitrarilyJumpableGenerator $r2;
+        java.util.function.DoubleConsumer r0;
+        jdk.internal.util.random.RandomSupport$AbstractArbitrarilyJumpableGenerator$RandomDoublesSpliterator r1;
+        byte $b2;
+        int $i4;
+        double $d0, $d1, $d2;
+
+        r1 := @this: jdk.internal.util.random.RandomSupport$AbstractArbitrarilyJumpableGenerator$RandomDoublesSpliterator;
+
+        r0 := @parameter0: java.util.function.DoubleConsumer;
+
+        staticinvoke <java.util.Objects: java.lang.Object requireNonNull(java.lang.Object)>(r0);
+
+        l0 = r1.<jdk.internal.util.random.RandomSupport$AbstractArbitrarilyJumpableGenerator$RandomDoublesSpliterator: long index>;
+
+        l1 = r1.<jdk.internal.util.random.RandomSupport$AbstractArbitrarilyJumpableGenerator$RandomDoublesSpliterator: long fence>;
+
+        $b2 = l0 cmp l1;
+
+        $i4 = (int) $b2;
+
+        if $i4 >= 0 goto label1;
+
+        $r2 = r1.<jdk.internal.util.random.RandomSupport$AbstractArbitrarilyJumpableGenerator$RandomDoublesSpliterator: java.util.random.RandomGenerator$ArbitrarilyJumpableGenerator generatingGenerator>;
+
+        $d1 = r1.<jdk.internal.util.random.RandomSupport$AbstractArbitrarilyJumpableGenerator$RandomDoublesSpliterator: double origin>;
+
+        $d0 = r1.<jdk.internal.util.random.RandomSupport$AbstractArbitrarilyJumpableGenerator$RandomDoublesSpliterator: double bound>;
+
+        $d2 = staticinvoke <jdk.internal.util.random.RandomSupport: double boundedNextDouble(java.util.random.RandomGenerator,double,double)>($r2, $d1, $d0);
+
+        interfaceinvoke r0.<java.util.function.DoubleConsumer: void accept(double)>($d2);
+
+        $l3 = l0 + 1L;
+
+        r1.<jdk.internal.util.random.RandomSupport$AbstractArbitrarilyJumpableGenerator$RandomDoublesSpliterator: long index> = $l3;
+
+        return 1;
+
+     label1:
+        return 0;
+    }
+
+    public void forEachRemaining(java.util.function.DoubleConsumer)
+    {
+        long l0, $l2, l4;
+        java.util.random.RandomGenerator$ArbitrarilyJumpableGenerator r2;
+        java.util.function.DoubleConsumer r0;
+        jdk.internal.util.random.RandomSupport$AbstractArbitrarilyJumpableGenerator$RandomDoublesSpliterator r1;
+        byte $b1, $b3;
+        int $i5, $i6;
+        double d0, d1, $d2;
+
+        r1 := @this: jdk.internal.util.random.RandomSupport$AbstractArbitrarilyJumpableGenerator$RandomDoublesSpliterator;
+
+        r0 := @parameter0: java.util.function.DoubleConsumer;
+
+        staticinvoke <java.util.Objects: java.lang.Object requireNonNull(java.lang.Object)>(r0);
+
+        l4 = r1.<jdk.internal.util.random.RandomSupport$AbstractArbitrarilyJumpableGenerator$RandomDoublesSpliterator: long index>;
+
+        l0 = r1.<jdk.internal.util.random.RandomSupport$AbstractArbitrarilyJumpableGenerator$RandomDoublesSpliterator: long fence>;
+
+        $b1 = l4 cmp l0;
+
+        $i5 = (int) $b1;
+
+        if $i5 >= 0 goto label2;
+
+        r1.<jdk.internal.util.random.RandomSupport$AbstractArbitrarilyJumpableGenerator$RandomDoublesSpliterator: long index> = l0;
+
+        r2 = r1.<jdk.internal.util.random.RandomSupport$AbstractArbitrarilyJumpableGenerator$RandomDoublesSpliterator: java.util.random.RandomGenerator$ArbitrarilyJumpableGenerator generatingGenerator>;
+
+        d0 = r1.<jdk.internal.util.random.RandomSupport$AbstractArbitrarilyJumpableGenerator$RandomDoublesSpliterator: double origin>;
+
+        d1 = r1.<jdk.internal.util.random.RandomSupport$AbstractArbitrarilyJumpableGenerator$RandomDoublesSpliterator: double bound>;
+
+     label1:
+        $d2 = staticinvoke <jdk.internal.util.random.RandomSupport: double boundedNextDouble(java.util.random.RandomGenerator,double,double)>(r2, d0, d1);
+
+        interfaceinvoke r0.<java.util.function.DoubleConsumer: void accept(double)>($d2);
+
+        $l2 = l4 + 1L;
+
+        l4 = $l2;
+
+        $b3 = $l2 cmp l0;
+
+        $i6 = (int) $b3;
+
+        if $i6 < 0 goto label1;
+
+     label2:
+        return;
+    }
+
+    public volatile void forEachRemaining(java.lang.Object)
+    {
+        jdk.internal.util.random.RandomSupport$AbstractArbitrarilyJumpableGenerator$RandomDoublesSpliterator r0;
+        java.lang.Object r1;
+        java.util.function.DoubleConsumer $r2;
+
+        r0 := @this: jdk.internal.util.random.RandomSupport$AbstractArbitrarilyJumpableGenerator$RandomDoublesSpliterator;
+
+        r1 := @parameter0: java.lang.Object;
+
+        $r2 = (java.util.function.DoubleConsumer) r1;
+
+        virtualinvoke r0.<jdk.internal.util.random.RandomSupport$AbstractArbitrarilyJumpableGenerator$RandomDoublesSpliterator: void forEachRemaining(java.util.function.DoubleConsumer)>($r2);
+
+        return;
+    }
+
+    public volatile boolean tryAdvance(java.lang.Object)
+    {
+        jdk.internal.util.random.RandomSupport$AbstractArbitrarilyJumpableGenerator$RandomDoublesSpliterator r0;
+        java.lang.Object r1;
+        java.util.function.DoubleConsumer $r2;
+        boolean $z0;
+
+        r0 := @this: jdk.internal.util.random.RandomSupport$AbstractArbitrarilyJumpableGenerator$RandomDoublesSpliterator;
+
+        r1 := @parameter0: java.lang.Object;
+
+        $r2 = (java.util.function.DoubleConsumer) r1;
+
+        $z0 = virtualinvoke r0.<jdk.internal.util.random.RandomSupport$AbstractArbitrarilyJumpableGenerator$RandomDoublesSpliterator: boolean tryAdvance(java.util.function.DoubleConsumer)>($r2);
+
+        return $z0;
+    }
+
+    public volatile java.util.Spliterator$OfPrimitive trySplit()
+    {
+        java.util.Spliterator$OfDouble $r1;
+        jdk.internal.util.random.RandomSupport$AbstractArbitrarilyJumpableGenerator$RandomDoublesSpliterator r0;
+
+        r0 := @this: jdk.internal.util.random.RandomSupport$AbstractArbitrarilyJumpableGenerator$RandomDoublesSpliterator;
+
+        $r1 = virtualinvoke r0.<jdk.internal.util.random.RandomSupport$AbstractArbitrarilyJumpableGenerator$RandomDoublesSpliterator: java.util.Spliterator$OfDouble trySplit()>();
+
+        return $r1;
+    }
+
+    public volatile java.util.Spliterator trySplit()
+    {
+        java.util.Spliterator$OfDouble $r1;
+        jdk.internal.util.random.RandomSupport$AbstractArbitrarilyJumpableGenerator$RandomDoublesSpliterator r0;
+
+        r0 := @this: jdk.internal.util.random.RandomSupport$AbstractArbitrarilyJumpableGenerator$RandomDoublesSpliterator;
+
+        $r1 = virtualinvoke r0.<jdk.internal.util.random.RandomSupport$AbstractArbitrarilyJumpableGenerator$RandomDoublesSpliterator: java.util.Spliterator$OfDouble trySplit()>();
+
+        return $r1;
+    }
+}

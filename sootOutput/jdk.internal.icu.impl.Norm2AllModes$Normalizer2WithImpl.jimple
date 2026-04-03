@@ -1,0 +1,250 @@
+public abstract class jdk.internal.icu.impl.Norm2AllModes$Normalizer2WithImpl extends jdk.internal.icu.text.Normalizer2
+{
+    public final jdk.internal.icu.impl.NormalizerImpl impl;
+
+    public void <init>(jdk.internal.icu.impl.NormalizerImpl)
+    {
+        jdk.internal.icu.impl.NormalizerImpl r1;
+        jdk.internal.icu.impl.Norm2AllModes$Normalizer2WithImpl r0;
+
+        r0 := @this: jdk.internal.icu.impl.Norm2AllModes$Normalizer2WithImpl;
+
+        r1 := @parameter0: jdk.internal.icu.impl.NormalizerImpl;
+
+        specialinvoke r0.<jdk.internal.icu.text.Normalizer2: void <init>()>();
+
+        r0.<jdk.internal.icu.impl.Norm2AllModes$Normalizer2WithImpl: jdk.internal.icu.impl.NormalizerImpl impl> = r1;
+
+        return;
+    }
+
+    public java.lang.StringBuilder normalize(java.lang.CharSequence, java.lang.StringBuilder)
+    {
+        jdk.internal.icu.impl.NormalizerImpl $r4;
+        java.lang.CharSequence r1;
+        int $i0;
+        jdk.internal.icu.impl.NormalizerImpl$ReorderingBuffer $r3;
+        java.lang.StringBuilder r0;
+        jdk.internal.icu.impl.Norm2AllModes$Normalizer2WithImpl r2;
+        java.lang.IllegalArgumentException $r5;
+
+        r2 := @this: jdk.internal.icu.impl.Norm2AllModes$Normalizer2WithImpl;
+
+        r1 := @parameter0: java.lang.CharSequence;
+
+        r0 := @parameter1: java.lang.StringBuilder;
+
+        if r0 != r1 goto label1;
+
+        $r5 = new java.lang.IllegalArgumentException;
+
+        specialinvoke $r5.<java.lang.IllegalArgumentException: void <init>()>();
+
+        throw $r5;
+
+     label1:
+        virtualinvoke r0.<java.lang.StringBuilder: void setLength(int)>(0);
+
+        $r3 = new jdk.internal.icu.impl.NormalizerImpl$ReorderingBuffer;
+
+        $r4 = r2.<jdk.internal.icu.impl.Norm2AllModes$Normalizer2WithImpl: jdk.internal.icu.impl.NormalizerImpl impl>;
+
+        $i0 = interfaceinvoke r1.<java.lang.CharSequence: int length()>();
+
+        specialinvoke $r3.<jdk.internal.icu.impl.NormalizerImpl$ReorderingBuffer: void <init>(jdk.internal.icu.impl.NormalizerImpl,java.lang.Appendable,int)>($r4, r0, $i0);
+
+        virtualinvoke r2.<jdk.internal.icu.impl.Norm2AllModes$Normalizer2WithImpl: void normalize(java.lang.CharSequence,jdk.internal.icu.impl.NormalizerImpl$ReorderingBuffer)>(r1, $r3);
+
+        return r0;
+    }
+
+    public java.lang.Appendable normalize(java.lang.CharSequence, java.lang.Appendable)
+    {
+        jdk.internal.icu.impl.NormalizerImpl $r4;
+        java.lang.CharSequence r1;
+        java.lang.Appendable r0;
+        int $i0;
+        jdk.internal.icu.impl.NormalizerImpl$ReorderingBuffer $r2;
+        jdk.internal.icu.impl.Norm2AllModes$Normalizer2WithImpl r3;
+        java.lang.IllegalArgumentException $r5;
+
+        r3 := @this: jdk.internal.icu.impl.Norm2AllModes$Normalizer2WithImpl;
+
+        r1 := @parameter0: java.lang.CharSequence;
+
+        r0 := @parameter1: java.lang.Appendable;
+
+        if r0 != r1 goto label1;
+
+        $r5 = new java.lang.IllegalArgumentException;
+
+        specialinvoke $r5.<java.lang.IllegalArgumentException: void <init>()>();
+
+        throw $r5;
+
+     label1:
+        $r2 = new jdk.internal.icu.impl.NormalizerImpl$ReorderingBuffer;
+
+        $r4 = r3.<jdk.internal.icu.impl.Norm2AllModes$Normalizer2WithImpl: jdk.internal.icu.impl.NormalizerImpl impl>;
+
+        $i0 = interfaceinvoke r1.<java.lang.CharSequence: int length()>();
+
+        specialinvoke $r2.<jdk.internal.icu.impl.NormalizerImpl$ReorderingBuffer: void <init>(jdk.internal.icu.impl.NormalizerImpl,java.lang.Appendable,int)>($r4, r0, $i0);
+
+        virtualinvoke r3.<jdk.internal.icu.impl.Norm2AllModes$Normalizer2WithImpl: void normalize(java.lang.CharSequence,jdk.internal.icu.impl.NormalizerImpl$ReorderingBuffer)>(r1, $r2);
+
+        virtualinvoke $r2.<jdk.internal.icu.impl.NormalizerImpl$ReorderingBuffer: void flush()>();
+
+        return r0;
+    }
+
+    protected abstract void normalize(java.lang.CharSequence, jdk.internal.icu.impl.NormalizerImpl$ReorderingBuffer);
+
+    public java.lang.StringBuilder normalizeSecondAndAppend(java.lang.StringBuilder, java.lang.CharSequence)
+    {
+        java.lang.CharSequence r2;
+        jdk.internal.icu.impl.Norm2AllModes$Normalizer2WithImpl r0;
+        java.lang.StringBuilder r1, $r3;
+
+        r0 := @this: jdk.internal.icu.impl.Norm2AllModes$Normalizer2WithImpl;
+
+        r1 := @parameter0: java.lang.StringBuilder;
+
+        r2 := @parameter1: java.lang.CharSequence;
+
+        $r3 = virtualinvoke r0.<jdk.internal.icu.impl.Norm2AllModes$Normalizer2WithImpl: java.lang.StringBuilder normalizeSecondAndAppend(java.lang.StringBuilder,java.lang.CharSequence,boolean)>(r1, r2, 1);
+
+        return $r3;
+    }
+
+    public java.lang.StringBuilder append(java.lang.StringBuilder, java.lang.CharSequence)
+    {
+        java.lang.CharSequence r2;
+        jdk.internal.icu.impl.Norm2AllModes$Normalizer2WithImpl r0;
+        java.lang.StringBuilder r1, $r3;
+
+        r0 := @this: jdk.internal.icu.impl.Norm2AllModes$Normalizer2WithImpl;
+
+        r1 := @parameter0: java.lang.StringBuilder;
+
+        r2 := @parameter1: java.lang.CharSequence;
+
+        $r3 = virtualinvoke r0.<jdk.internal.icu.impl.Norm2AllModes$Normalizer2WithImpl: java.lang.StringBuilder normalizeSecondAndAppend(java.lang.StringBuilder,java.lang.CharSequence,boolean)>(r1, r2, 0);
+
+        return $r3;
+    }
+
+    public java.lang.StringBuilder normalizeSecondAndAppend(java.lang.StringBuilder, java.lang.CharSequence, boolean)
+    {
+        java.lang.CharSequence r1;
+        jdk.internal.icu.impl.Norm2AllModes$Normalizer2WithImpl r2;
+        java.lang.IllegalArgumentException $r5;
+        jdk.internal.icu.impl.NormalizerImpl $r4;
+        int $i0, $i1, $i2;
+        jdk.internal.icu.impl.NormalizerImpl$ReorderingBuffer $r3;
+        java.lang.StringBuilder r0;
+        boolean z0;
+
+        r2 := @this: jdk.internal.icu.impl.Norm2AllModes$Normalizer2WithImpl;
+
+        r0 := @parameter0: java.lang.StringBuilder;
+
+        r1 := @parameter1: java.lang.CharSequence;
+
+        z0 := @parameter2: boolean;
+
+        if r0 != r1 goto label1;
+
+        $r5 = new java.lang.IllegalArgumentException;
+
+        specialinvoke $r5.<java.lang.IllegalArgumentException: void <init>()>();
+
+        throw $r5;
+
+     label1:
+        $r3 = new jdk.internal.icu.impl.NormalizerImpl$ReorderingBuffer;
+
+        $r4 = r2.<jdk.internal.icu.impl.Norm2AllModes$Normalizer2WithImpl: jdk.internal.icu.impl.NormalizerImpl impl>;
+
+        $i1 = virtualinvoke r0.<java.lang.StringBuilder: int length()>();
+
+        $i0 = interfaceinvoke r1.<java.lang.CharSequence: int length()>();
+
+        $i2 = $i1 + $i0;
+
+        specialinvoke $r3.<jdk.internal.icu.impl.NormalizerImpl$ReorderingBuffer: void <init>(jdk.internal.icu.impl.NormalizerImpl,java.lang.Appendable,int)>($r4, r0, $i2);
+
+        virtualinvoke r2.<jdk.internal.icu.impl.Norm2AllModes$Normalizer2WithImpl: void normalizeAndAppend(java.lang.CharSequence,boolean,jdk.internal.icu.impl.NormalizerImpl$ReorderingBuffer)>(r1, z0, $r3);
+
+        return r0;
+    }
+
+    protected abstract void normalizeAndAppend(java.lang.CharSequence, boolean, jdk.internal.icu.impl.NormalizerImpl$ReorderingBuffer);
+
+    public java.lang.String getDecomposition(int)
+    {
+        jdk.internal.icu.impl.NormalizerImpl $r1;
+        int i0;
+        jdk.internal.icu.impl.Norm2AllModes$Normalizer2WithImpl r0;
+        java.lang.String $r2;
+
+        r0 := @this: jdk.internal.icu.impl.Norm2AllModes$Normalizer2WithImpl;
+
+        i0 := @parameter0: int;
+
+        $r1 = r0.<jdk.internal.icu.impl.Norm2AllModes$Normalizer2WithImpl: jdk.internal.icu.impl.NormalizerImpl impl>;
+
+        $r2 = virtualinvoke $r1.<jdk.internal.icu.impl.NormalizerImpl: java.lang.String getDecomposition(int)>(i0);
+
+        return $r2;
+    }
+
+    public int getCombiningClass(int)
+    {
+        jdk.internal.icu.impl.NormalizerImpl $r1, $r2;
+        int i0, $i1, $i2;
+        jdk.internal.icu.impl.Norm2AllModes$Normalizer2WithImpl r0;
+
+        r0 := @this: jdk.internal.icu.impl.Norm2AllModes$Normalizer2WithImpl;
+
+        i0 := @parameter0: int;
+
+        $r2 = r0.<jdk.internal.icu.impl.Norm2AllModes$Normalizer2WithImpl: jdk.internal.icu.impl.NormalizerImpl impl>;
+
+        $r1 = r0.<jdk.internal.icu.impl.Norm2AllModes$Normalizer2WithImpl: jdk.internal.icu.impl.NormalizerImpl impl>;
+
+        $i1 = virtualinvoke $r1.<jdk.internal.icu.impl.NormalizerImpl: int getNorm16(int)>(i0);
+
+        $i2 = virtualinvoke $r2.<jdk.internal.icu.impl.NormalizerImpl: int getCC(int)>($i1);
+
+        return $i2;
+    }
+
+    public boolean isNormalized(java.lang.CharSequence)
+    {
+        java.lang.CharSequence r0;
+        int $i0, $i1;
+        jdk.internal.icu.impl.Norm2AllModes$Normalizer2WithImpl r1;
+        boolean $z0;
+
+        r1 := @this: jdk.internal.icu.impl.Norm2AllModes$Normalizer2WithImpl;
+
+        r0 := @parameter0: java.lang.CharSequence;
+
+        $i1 = interfaceinvoke r0.<java.lang.CharSequence: int length()>();
+
+        $i0 = virtualinvoke r1.<jdk.internal.icu.impl.Norm2AllModes$Normalizer2WithImpl: int spanQuickCheckYes(java.lang.CharSequence)>(r0);
+
+        if $i1 != $i0 goto label1;
+
+        $z0 = 1;
+
+        goto label2;
+
+     label1:
+        $z0 = 0;
+
+     label2:
+        return $z0;
+    }
+}

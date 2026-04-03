@@ -1,0 +1,193 @@
+public final class jdk.internal.icu.impl.Norm2AllModes$NoopNormalizer2 extends jdk.internal.icu.text.Normalizer2
+{
+
+    public void <init>()
+    {
+        jdk.internal.icu.impl.Norm2AllModes$NoopNormalizer2 r0;
+
+        r0 := @this: jdk.internal.icu.impl.Norm2AllModes$NoopNormalizer2;
+
+        specialinvoke r0.<jdk.internal.icu.text.Normalizer2: void <init>()>();
+
+        return;
+    }
+
+    public java.lang.StringBuilder normalize(java.lang.CharSequence, java.lang.StringBuilder)
+    {
+        java.lang.CharSequence r1;
+        jdk.internal.icu.impl.Norm2AllModes$NoopNormalizer2 r4;
+        java.lang.StringBuilder r0, $r3;
+        java.lang.IllegalArgumentException $r2;
+
+        r4 := @this: jdk.internal.icu.impl.Norm2AllModes$NoopNormalizer2;
+
+        r1 := @parameter0: java.lang.CharSequence;
+
+        r0 := @parameter1: java.lang.StringBuilder;
+
+        if r0 == r1 goto label1;
+
+        virtualinvoke r0.<java.lang.StringBuilder: void setLength(int)>(0);
+
+        $r3 = virtualinvoke r0.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.CharSequence)>(r1);
+
+        return $r3;
+
+     label1:
+        $r2 = new java.lang.IllegalArgumentException;
+
+        specialinvoke $r2.<java.lang.IllegalArgumentException: void <init>()>();
+
+        throw $r2;
+    }
+
+    public java.lang.Appendable normalize(java.lang.CharSequence, java.lang.Appendable)
+    {
+        java.lang.CharSequence r1;
+        java.lang.Appendable r0, $r3;
+        java.io.IOException $r4;
+        java.lang.IllegalArgumentException $r2;
+        jdk.internal.icu.impl.Norm2AllModes$NoopNormalizer2 r7;
+        java.lang.InternalError $r5;
+        java.lang.String $r6;
+
+        r7 := @this: jdk.internal.icu.impl.Norm2AllModes$NoopNormalizer2;
+
+        r1 := @parameter0: java.lang.CharSequence;
+
+        r0 := @parameter1: java.lang.Appendable;
+
+        if r0 == r1 goto label4;
+
+     label1:
+        $r3 = interfaceinvoke r0.<java.lang.Appendable: java.lang.Appendable append(java.lang.CharSequence)>(r1);
+
+     label2:
+        return $r3;
+
+     label3:
+        $r4 := @caughtexception;
+
+        $r5 = new java.lang.InternalError;
+
+        $r6 = virtualinvoke $r4.<java.io.IOException: java.lang.String toString()>();
+
+        specialinvoke $r5.<java.lang.InternalError: void <init>(java.lang.String,java.lang.Throwable)>($r6, $r4);
+
+        throw $r5;
+
+     label4:
+        $r2 = new java.lang.IllegalArgumentException;
+
+        specialinvoke $r2.<java.lang.IllegalArgumentException: void <init>()>();
+
+        throw $r2;
+
+        catch java.io.IOException from label1 to label2 with label3;
+    }
+
+    public java.lang.StringBuilder normalizeSecondAndAppend(java.lang.StringBuilder, java.lang.CharSequence)
+    {
+        java.lang.CharSequence r1;
+        jdk.internal.icu.impl.Norm2AllModes$NoopNormalizer2 r4;
+        java.lang.StringBuilder r0, $r3;
+        java.lang.IllegalArgumentException $r2;
+
+        r4 := @this: jdk.internal.icu.impl.Norm2AllModes$NoopNormalizer2;
+
+        r0 := @parameter0: java.lang.StringBuilder;
+
+        r1 := @parameter1: java.lang.CharSequence;
+
+        if r0 == r1 goto label1;
+
+        $r3 = virtualinvoke r0.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.CharSequence)>(r1);
+
+        return $r3;
+
+     label1:
+        $r2 = new java.lang.IllegalArgumentException;
+
+        specialinvoke $r2.<java.lang.IllegalArgumentException: void <init>()>();
+
+        throw $r2;
+    }
+
+    public java.lang.StringBuilder append(java.lang.StringBuilder, java.lang.CharSequence)
+    {
+        java.lang.CharSequence r1;
+        jdk.internal.icu.impl.Norm2AllModes$NoopNormalizer2 r4;
+        java.lang.StringBuilder r0, $r3;
+        java.lang.IllegalArgumentException $r2;
+
+        r4 := @this: jdk.internal.icu.impl.Norm2AllModes$NoopNormalizer2;
+
+        r0 := @parameter0: java.lang.StringBuilder;
+
+        r1 := @parameter1: java.lang.CharSequence;
+
+        if r0 == r1 goto label1;
+
+        $r3 = virtualinvoke r0.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.CharSequence)>(r1);
+
+        return $r3;
+
+     label1:
+        $r2 = new java.lang.IllegalArgumentException;
+
+        specialinvoke $r2.<java.lang.IllegalArgumentException: void <init>()>();
+
+        throw $r2;
+    }
+
+    public java.lang.String getDecomposition(int)
+    {
+        int i0;
+        jdk.internal.icu.impl.Norm2AllModes$NoopNormalizer2 r0;
+
+        r0 := @this: jdk.internal.icu.impl.Norm2AllModes$NoopNormalizer2;
+
+        i0 := @parameter0: int;
+
+        return null;
+    }
+
+    public boolean isNormalized(java.lang.CharSequence)
+    {
+        java.lang.CharSequence r1;
+        jdk.internal.icu.impl.Norm2AllModes$NoopNormalizer2 r0;
+
+        r0 := @this: jdk.internal.icu.impl.Norm2AllModes$NoopNormalizer2;
+
+        r1 := @parameter0: java.lang.CharSequence;
+
+        return 1;
+    }
+
+    public int spanQuickCheckYes(java.lang.CharSequence)
+    {
+        int $i0;
+        java.lang.CharSequence r0;
+        jdk.internal.icu.impl.Norm2AllModes$NoopNormalizer2 r1;
+
+        r1 := @this: jdk.internal.icu.impl.Norm2AllModes$NoopNormalizer2;
+
+        r0 := @parameter0: java.lang.CharSequence;
+
+        $i0 = interfaceinvoke r0.<java.lang.CharSequence: int length()>();
+
+        return $i0;
+    }
+
+    public boolean hasBoundaryBefore(int)
+    {
+        int i0;
+        jdk.internal.icu.impl.Norm2AllModes$NoopNormalizer2 r0;
+
+        r0 := @this: jdk.internal.icu.impl.Norm2AllModes$NoopNormalizer2;
+
+        i0 := @parameter0: int;
+
+        return 1;
+    }
+}

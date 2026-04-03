@@ -1,0 +1,67 @@
+public final class jdk.internal.module.ModulePath$lambda_explodedPackages_9__79 extends java.lang.Object implements java.util.function.Function
+{
+    jdk.internal.module.ModulePath cap0;
+    java.lang.String cap1;
+
+    public static java.util.function.Function bootstrap$(jdk.internal.module.ModulePath, java.lang.String)
+    {
+        java.lang.String $r1;
+        jdk.internal.module.ModulePath$lambda_explodedPackages_9__79 $r2;
+        jdk.internal.module.ModulePath $r0;
+
+        $r0 := @parameter0: jdk.internal.module.ModulePath;
+
+        $r1 := @parameter1: java.lang.String;
+
+        $r2 = new jdk.internal.module.ModulePath$lambda_explodedPackages_9__79;
+
+        specialinvoke $r2.<jdk.internal.module.ModulePath$lambda_explodedPackages_9__79: void <init>(jdk.internal.module.ModulePath,java.lang.String)>($r0, $r1);
+
+        return $r2;
+    }
+
+    public void <init>(jdk.internal.module.ModulePath, java.lang.String)
+    {
+        jdk.internal.module.ModulePath$lambda_explodedPackages_9__79 $r0;
+        java.lang.String $r2;
+        jdk.internal.module.ModulePath $r1;
+
+        $r0 := @this: jdk.internal.module.ModulePath$lambda_explodedPackages_9__79;
+
+        $r1 := @parameter0: jdk.internal.module.ModulePath;
+
+        $r2 := @parameter1: java.lang.String;
+
+        specialinvoke $r0.<java.lang.Object: void <init>()>();
+
+        $r0.<jdk.internal.module.ModulePath$lambda_explodedPackages_9__79: jdk.internal.module.ModulePath cap0> = $r1;
+
+        $r0.<jdk.internal.module.ModulePath$lambda_explodedPackages_9__79: java.lang.String cap1> = $r2;
+
+        return;
+    }
+
+    public java.lang.Object apply(java.lang.Object)
+    {
+        jdk.internal.module.ModulePath $r3;
+        java.util.Optional $r5;
+        java.lang.Object $r1;
+        jdk.internal.module.ModulePath$lambda_explodedPackages_9__79 $r0;
+        java.lang.String $r4;
+        java.nio.file.Path $r2;
+
+        $r0 := @this: jdk.internal.module.ModulePath$lambda_explodedPackages_9__79;
+
+        $r1 := @parameter0: java.lang.Object;
+
+        $r2 = (java.nio.file.Path) $r1;
+
+        $r3 = $r0.<jdk.internal.module.ModulePath$lambda_explodedPackages_9__79: jdk.internal.module.ModulePath cap0>;
+
+        $r4 = $r0.<jdk.internal.module.ModulePath$lambda_explodedPackages_9__79: java.lang.String cap1>;
+
+        $r5 = virtualinvoke $r3.<jdk.internal.module.ModulePath: java.util.Optional lambda$explodedPackages$9(java.lang.String,java.nio.file.Path)>($r4, $r2);
+
+        return $r5;
+    }
+}

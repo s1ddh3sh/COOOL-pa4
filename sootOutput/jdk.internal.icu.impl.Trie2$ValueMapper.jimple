@@ -1,0 +1,5 @@
+public interface  jdk.internal.icu.impl.Trie2$ValueMapper extends java.lang.Object
+{
+
+    public abstract int map(int);
+}

@@ -1,0 +1,3147 @@
+class jdk.internal.org.objectweb.asm.Frame extends java.lang.Object
+{
+    static final int SAME_FRAME;
+    static final int SAME_LOCALS_1_STACK_ITEM_FRAME;
+    static final int RESERVED;
+    static final int SAME_LOCALS_1_STACK_ITEM_FRAME_EXTENDED;
+    static final int CHOP_FRAME;
+    static final int SAME_FRAME_EXTENDED;
+    static final int APPEND_FRAME;
+    static final int FULL_FRAME;
+    static final int ITEM_TOP;
+    static final int ITEM_INTEGER;
+    static final int ITEM_FLOAT;
+    static final int ITEM_DOUBLE;
+    static final int ITEM_LONG;
+    static final int ITEM_NULL;
+    static final int ITEM_UNINITIALIZED_THIS;
+    static final int ITEM_OBJECT;
+    static final int ITEM_UNINITIALIZED;
+    private static final int ITEM_ASM_BOOLEAN;
+    private static final int ITEM_ASM_BYTE;
+    private static final int ITEM_ASM_CHAR;
+    private static final int ITEM_ASM_SHORT;
+    private static final int DIM_SIZE;
+    private static final int KIND_SIZE;
+    private static final int FLAGS_SIZE;
+    private static final int VALUE_SIZE;
+    private static final int DIM_SHIFT;
+    private static final int KIND_SHIFT;
+    private static final int FLAGS_SHIFT;
+    private static final int DIM_MASK;
+    private static final int KIND_MASK;
+    private static final int VALUE_MASK;
+    private static final int ARRAY_OF;
+    private static final int ELEMENT_OF;
+    private static final int CONSTANT_KIND;
+    private static final int REFERENCE_KIND;
+    private static final int UNINITIALIZED_KIND;
+    private static final int LOCAL_KIND;
+    private static final int STACK_KIND;
+    private static final int TOP_IF_LONG_OR_DOUBLE_FLAG;
+    private static final int TOP;
+    private static final int BOOLEAN;
+    private static final int BYTE;
+    private static final int CHAR;
+    private static final int SHORT;
+    private static final int INTEGER;
+    private static final int FLOAT;
+    private static final int LONG;
+    private static final int DOUBLE;
+    private static final int NULL;
+    private static final int UNINITIALIZED_THIS;
+    jdk.internal.org.objectweb.asm.Label owner;
+    private int[] inputLocals;
+    private int[] inputStack;
+    private int[] outputLocals;
+    private int[] outputStack;
+    private short outputStackStart;
+    private short outputStackTop;
+    private int initializationCount;
+    private int[] initializations;
+
+    void <init>(jdk.internal.org.objectweb.asm.Label)
+    {
+        jdk.internal.org.objectweb.asm.Label r1;
+        jdk.internal.org.objectweb.asm.Frame r0;
+
+        r0 := @this: jdk.internal.org.objectweb.asm.Frame;
+
+        r1 := @parameter0: jdk.internal.org.objectweb.asm.Label;
+
+        specialinvoke r0.<java.lang.Object: void <init>()>();
+
+        r0.<jdk.internal.org.objectweb.asm.Frame: jdk.internal.org.objectweb.asm.Label owner> = r1;
+
+        return;
+    }
+
+    final void copyFrom(jdk.internal.org.objectweb.asm.Frame)
+    {
+        jdk.internal.org.objectweb.asm.Frame r0, r1;
+        short $s0;
+        int[] $r2, $r3, $r4, $r5, $r6;
+        int $i1;
+
+        r0 := @this: jdk.internal.org.objectweb.asm.Frame;
+
+        r1 := @parameter0: jdk.internal.org.objectweb.asm.Frame;
+
+        $r2 = r1.<jdk.internal.org.objectweb.asm.Frame: int[] inputLocals>;
+
+        r0.<jdk.internal.org.objectweb.asm.Frame: int[] inputLocals> = $r2;
+
+        $r3 = r1.<jdk.internal.org.objectweb.asm.Frame: int[] inputStack>;
+
+        r0.<jdk.internal.org.objectweb.asm.Frame: int[] inputStack> = $r3;
+
+        r0.<jdk.internal.org.objectweb.asm.Frame: short outputStackStart> = 0;
+
+        $r4 = r1.<jdk.internal.org.objectweb.asm.Frame: int[] outputLocals>;
+
+        r0.<jdk.internal.org.objectweb.asm.Frame: int[] outputLocals> = $r4;
+
+        $r5 = r1.<jdk.internal.org.objectweb.asm.Frame: int[] outputStack>;
+
+        r0.<jdk.internal.org.objectweb.asm.Frame: int[] outputStack> = $r5;
+
+        $s0 = r1.<jdk.internal.org.objectweb.asm.Frame: short outputStackTop>;
+
+        r0.<jdk.internal.org.objectweb.asm.Frame: short outputStackTop> = $s0;
+
+        $i1 = r1.<jdk.internal.org.objectweb.asm.Frame: int initializationCount>;
+
+        r0.<jdk.internal.org.objectweb.asm.Frame: int initializationCount> = $i1;
+
+        $r6 = r1.<jdk.internal.org.objectweb.asm.Frame: int[] initializations>;
+
+        r0.<jdk.internal.org.objectweb.asm.Frame: int[] initializations> = $r6;
+
+        return;
+    }
+
+    static int getAbstractTypeFromApiFormat(jdk.internal.org.objectweb.asm.SymbolTable, java.lang.Object)
+    {
+        jdk.internal.org.objectweb.asm.Type $r4;
+        java.lang.Integer $r6;
+        jdk.internal.org.objectweb.asm.Label $r2;
+        jdk.internal.org.objectweb.asm.SymbolTable r1;
+        int $i0, $i1, $i2, $i3, $i4, $i5;
+        java.lang.Object r0;
+        java.lang.String $r3, r5;
+        boolean $z0, $z1;
+
+        r1 := @parameter0: jdk.internal.org.objectweb.asm.SymbolTable;
+
+        r0 := @parameter1: java.lang.Object;
+
+        $z0 = r0 instanceof java.lang.Integer;
+
+        if $z0 == false goto label1;
+
+        $r6 = (java.lang.Integer) r0;
+
+        $i4 = virtualinvoke $r6.<java.lang.Integer: int intValue()>();
+
+        $i5 = 4194304 | $i4;
+
+        return $i5;
+
+     label1:
+        $z1 = r0 instanceof java.lang.String;
+
+        if $z1 == false goto label2;
+
+        $r3 = (java.lang.String) r0;
+
+        $r4 = staticinvoke <jdk.internal.org.objectweb.asm.Type: jdk.internal.org.objectweb.asm.Type getObjectType(java.lang.String)>($r3);
+
+        r5 = virtualinvoke $r4.<jdk.internal.org.objectweb.asm.Type: java.lang.String getDescriptor()>();
+
+        $i3 = staticinvoke <jdk.internal.org.objectweb.asm.Frame: int getAbstractTypeFromDescriptor(jdk.internal.org.objectweb.asm.SymbolTable,java.lang.String,int)>(r1, r5, 0);
+
+        return $i3;
+
+     label2:
+        $r2 = (jdk.internal.org.objectweb.asm.Label) r0;
+
+        $i0 = $r2.<jdk.internal.org.objectweb.asm.Label: int bytecodeOffset>;
+
+        $i1 = virtualinvoke r1.<jdk.internal.org.objectweb.asm.SymbolTable: int addUninitializedType(java.lang.String,int)>("", $i0);
+
+        $i2 = 12582912 | $i1;
+
+        return $i2;
+    }
+
+    static int getAbstractTypeFromInternalName(jdk.internal.org.objectweb.asm.SymbolTable, java.lang.String)
+    {
+        jdk.internal.org.objectweb.asm.SymbolTable r0;
+        int $i0, $i1;
+        java.lang.String r1;
+
+        r0 := @parameter0: jdk.internal.org.objectweb.asm.SymbolTable;
+
+        r1 := @parameter1: java.lang.String;
+
+        $i0 = virtualinvoke r0.<jdk.internal.org.objectweb.asm.SymbolTable: int addType(java.lang.String)>(r1);
+
+        $i1 = 8388608 | $i0;
+
+        return $i1;
+    }
+
+    private static int getAbstractTypeFromDescriptor(jdk.internal.org.objectweb.asm.SymbolTable, java.lang.String, int)
+    {
+        jdk.internal.org.objectweb.asm.SymbolTable r1;
+        int i0, $i4, $i5, $i6, $i7, $i8, $i9, $i10, $i11, $i12, i13, i14, $i15, $i16, $i17, $i18, $i19, $i20;
+        java.lang.String r0, r4, r5;
+        char $c1, $c2, $c3;
+        java.lang.IllegalArgumentException $r6, $r7;
+
+        r1 := @parameter0: jdk.internal.org.objectweb.asm.SymbolTable;
+
+        r0 := @parameter1: java.lang.String;
+
+        i0 := @parameter2: int;
+
+        $c1 = virtualinvoke r0.<java.lang.String: char charAt(int)>(i0);
+
+        $i18 = (int) $c1;
+
+        tableswitch($i18)
+        {
+            case 66: goto label02;
+            case 67: goto label02;
+            case 68: goto label05;
+            case 69: goto label21;
+            case 70: goto label03;
+            case 71: goto label21;
+            case 72: goto label21;
+            case 73: goto label02;
+            case 74: goto label04;
+            case 75: goto label21;
+            case 76: goto label06;
+            case 77: goto label21;
+            case 78: goto label21;
+            case 79: goto label21;
+            case 80: goto label21;
+            case 81: goto label21;
+            case 82: goto label21;
+            case 83: goto label02;
+            case 84: goto label21;
+            case 85: goto label21;
+            case 86: goto label01;
+            case 87: goto label21;
+            case 88: goto label21;
+            case 89: goto label21;
+            case 90: goto label02;
+            case 91: goto label07;
+            default: goto label21;
+        };
+
+     label01:
+        return 0;
+
+     label02:
+        return 4194305;
+
+     label03:
+        return 4194306;
+
+     label04:
+        return 4194308;
+
+     label05:
+        return 4194307;
+
+     label06:
+        $i10 = i0 + 1;
+
+        $i8 = virtualinvoke r0.<java.lang.String: int length()>();
+
+        $i9 = $i8 - 1;
+
+        r4 = virtualinvoke r0.<java.lang.String: java.lang.String substring(int,int)>($i10, $i9);
+
+        $i11 = virtualinvoke r1.<jdk.internal.org.objectweb.asm.SymbolTable: int addType(java.lang.String)>(r4);
+
+        $i12 = 8388608 | $i11;
+
+        return $i12;
+
+     label07:
+        i13 = i0 + 1;
+
+     label08:
+        $c2 = virtualinvoke r0.<java.lang.String: char charAt(int)>(i13);
+
+        $i19 = (int) $c2;
+
+        if $i19 != 91 goto label09;
+
+        i13 = i13 + 1;
+
+        goto label08;
+
+     label09:
+        $c3 = virtualinvoke r0.<java.lang.String: char charAt(int)>(i13);
+
+        $i20 = (int) $c3;
+
+        tableswitch($i20)
+        {
+            case 66: goto label12;
+            case 67: goto label11;
+            case 68: goto label17;
+            case 69: goto label19;
+            case 70: goto label15;
+            case 71: goto label19;
+            case 72: goto label19;
+            case 73: goto label14;
+            case 74: goto label16;
+            case 75: goto label19;
+            case 76: goto label18;
+            case 77: goto label19;
+            case 78: goto label19;
+            case 79: goto label19;
+            case 80: goto label19;
+            case 81: goto label19;
+            case 82: goto label19;
+            case 83: goto label13;
+            case 84: goto label19;
+            case 85: goto label19;
+            case 86: goto label19;
+            case 87: goto label19;
+            case 88: goto label19;
+            case 89: goto label19;
+            case 90: goto label10;
+            default: goto label19;
+        };
+
+     label10:
+        i14 = 4194313;
+
+        goto label20;
+
+     label11:
+        i14 = 4194315;
+
+        goto label20;
+
+     label12:
+        i14 = 4194314;
+
+        goto label20;
+
+     label13:
+        i14 = 4194316;
+
+        goto label20;
+
+     label14:
+        i14 = 4194305;
+
+        goto label20;
+
+     label15:
+        i14 = 4194306;
+
+        goto label20;
+
+     label16:
+        i14 = 4194308;
+
+        goto label20;
+
+     label17:
+        i14 = 4194307;
+
+        goto label20;
+
+     label18:
+        $i6 = i13 + 1;
+
+        $i4 = virtualinvoke r0.<java.lang.String: int length()>();
+
+        $i5 = $i4 - 1;
+
+        r5 = virtualinvoke r0.<java.lang.String: java.lang.String substring(int,int)>($i6, $i5);
+
+        $i7 = virtualinvoke r1.<jdk.internal.org.objectweb.asm.SymbolTable: int addType(java.lang.String)>(r5);
+
+        i14 = 8388608 | $i7;
+
+        goto label20;
+
+     label19:
+        $r6 = new java.lang.IllegalArgumentException;
+
+        specialinvoke $r6.<java.lang.IllegalArgumentException: void <init>()>();
+
+        throw $r6;
+
+     label20:
+        $i15 = i13 - i0;
+
+        $i16 = $i15 << 26;
+
+        $i17 = $i16 | i14;
+
+        return $i17;
+
+     label21:
+        $r7 = new java.lang.IllegalArgumentException;
+
+        specialinvoke $r7.<java.lang.IllegalArgumentException: void <init>()>();
+
+        throw $r7;
+    }
+
+    final void setInputFrameFromDescriptor(jdk.internal.org.objectweb.asm.SymbolTable, int, java.lang.String, int)
+    {
+        int[] $r1, $r2, $r4, $r8, $r9, $r10, $r11;
+        jdk.internal.org.objectweb.asm.SymbolTable r6;
+        int i0, i1, $i2, $i3, i4, $i5, $i6, $i7, $i8, $i9, i10, $i11, i12;
+        jdk.internal.org.objectweb.asm.Type[] $r13;
+        java.lang.String r3, $r7, $r12;
+        jdk.internal.org.objectweb.asm.Type r5;
+        jdk.internal.org.objectweb.asm.Frame r0;
+
+        r0 := @this: jdk.internal.org.objectweb.asm.Frame;
+
+        r6 := @parameter0: jdk.internal.org.objectweb.asm.SymbolTable;
+
+        i1 := @parameter1: int;
+
+        r3 := @parameter2: java.lang.String;
+
+        i0 := @parameter3: int;
+
+        $r1 = newarray (int)[i0];
+
+        r0.<jdk.internal.org.objectweb.asm.Frame: int[] inputLocals> = $r1;
+
+        $r2 = newarray (int)[0];
+
+        r0.<jdk.internal.org.objectweb.asm.Frame: int[] inputStack> = $r2;
+
+        i10 = 0;
+
+        $i2 = i1 & 8;
+
+        if $i2 != 0 goto label2;
+
+        $i7 = i1 & 262144;
+
+        if $i7 != 0 goto label1;
+
+        $r11 = r0.<jdk.internal.org.objectweb.asm.Frame: int[] inputLocals>;
+
+        i10 = 1;
+
+        $r12 = virtualinvoke r6.<jdk.internal.org.objectweb.asm.SymbolTable: java.lang.String getClassName()>();
+
+        $i8 = virtualinvoke r6.<jdk.internal.org.objectweb.asm.SymbolTable: int addType(java.lang.String)>($r12);
+
+        $i9 = 8388608 | $i8;
+
+        $r11[0] = $i9;
+
+        goto label2;
+
+     label1:
+        $r10 = r0.<jdk.internal.org.objectweb.asm.Frame: int[] inputLocals>;
+
+        i10 = 1;
+
+        $r10[0] = 4194310;
+
+     label2:
+        $r13 = staticinvoke <jdk.internal.org.objectweb.asm.Type: jdk.internal.org.objectweb.asm.Type[] getArgumentTypes(java.lang.String)>(r3);
+
+        $i11 = lengthof $r13;
+
+        i12 = 0;
+
+     label3:
+        if i12 >= $i11 goto label6;
+
+        r5 = $r13[i12];
+
+        $r7 = virtualinvoke r5.<jdk.internal.org.objectweb.asm.Type: java.lang.String getDescriptor()>();
+
+        i4 = staticinvoke <jdk.internal.org.objectweb.asm.Frame: int getAbstractTypeFromDescriptor(jdk.internal.org.objectweb.asm.SymbolTable,java.lang.String,int)>(r6, $r7, 0);
+
+        $r8 = r0.<jdk.internal.org.objectweb.asm.Frame: int[] inputLocals>;
+
+        $i5 = i10;
+
+        i10 = i10 + 1;
+
+        $r8[$i5] = i4;
+
+        if i4 == 4194308 goto label4;
+
+        if i4 != 4194307 goto label5;
+
+     label4:
+        $r9 = r0.<jdk.internal.org.objectweb.asm.Frame: int[] inputLocals>;
+
+        $i6 = i10;
+
+        i10 = i10 + 1;
+
+        $r9[$i6] = 4194304;
+
+     label5:
+        i12 = i12 + 1;
+
+        goto label3;
+
+     label6:
+        if i10 >= i0 goto label7;
+
+        $r4 = r0.<jdk.internal.org.objectweb.asm.Frame: int[] inputLocals>;
+
+        $i3 = i10;
+
+        i10 = i10 + 1;
+
+        $r4[$i3] = 4194304;
+
+        goto label6;
+
+     label7:
+        return;
+    }
+
+    final void setInputFrameFromApiFormat(jdk.internal.org.objectweb.asm.SymbolTable, int, java.lang.Object[], int, java.lang.Object[])
+    {
+        java.lang.Integer $r7, $r10, $r12, $r14, $r20, $r23;
+        int[] $r1, $r2, $r6, $r9, $r16, $r19, $r22;
+        jdk.internal.org.objectweb.asm.SymbolTable r3;
+        jdk.internal.org.objectweb.asm.Frame r0;
+        java.lang.Object[] r4, r17;
+        int i0, $i1, i2, $i3, $i4, $i5, $i6, $i7, $i8, $i9, $i10, i11, i12, i13, i14, i15, i16;
+        java.lang.Object $r5, $r8, $r11, $r13, $r15, $r18, $r21, $r24;
+
+        r0 := @this: jdk.internal.org.objectweb.asm.Frame;
+
+        r3 := @parameter0: jdk.internal.org.objectweb.asm.SymbolTable;
+
+        i0 := @parameter1: int;
+
+        r17 := @parameter2: java.lang.Object[];
+
+        i2 := @parameter3: int;
+
+        r4 := @parameter4: java.lang.Object[];
+
+        i11 = 0;
+
+        i12 = 0;
+
+     label01:
+        if i12 >= i0 goto label04;
+
+        $r19 = r0.<jdk.internal.org.objectweb.asm.Frame: int[] inputLocals>;
+
+        $i8 = i11;
+
+        i11 = i11 + 1;
+
+        $r18 = r17[i12];
+
+        $i9 = staticinvoke <jdk.internal.org.objectweb.asm.Frame: int getAbstractTypeFromApiFormat(jdk.internal.org.objectweb.asm.SymbolTable,java.lang.Object)>(r3, $r18);
+
+        $r19[$i8] = $i9;
+
+        $r21 = r17[i12];
+
+        $r20 = <jdk.internal.org.objectweb.asm.Opcodes: java.lang.Integer LONG>;
+
+        if $r21 == $r20 goto label02;
+
+        $r24 = r17[i12];
+
+        $r23 = <jdk.internal.org.objectweb.asm.Opcodes: java.lang.Integer DOUBLE>;
+
+        if $r24 != $r23 goto label03;
+
+     label02:
+        $r22 = r0.<jdk.internal.org.objectweb.asm.Frame: int[] inputLocals>;
+
+        $i10 = i11;
+
+        i11 = i11 + 1;
+
+        $r22[$i10] = 4194304;
+
+     label03:
+        i12 = i12 + 1;
+
+        goto label01;
+
+     label04:
+        $r1 = r0.<jdk.internal.org.objectweb.asm.Frame: int[] inputLocals>;
+
+        $i1 = lengthof $r1;
+
+        if i11 >= $i1 goto label05;
+
+        $r16 = r0.<jdk.internal.org.objectweb.asm.Frame: int[] inputLocals>;
+
+        $i7 = i11;
+
+        i11 = i11 + 1;
+
+        $r16[$i7] = 4194304;
+
+        goto label04;
+
+     label05:
+        i13 = 0;
+
+        i14 = 0;
+
+     label06:
+        if i14 >= i2 goto label09;
+
+        $r13 = r4[i14];
+
+        $r12 = <jdk.internal.org.objectweb.asm.Opcodes: java.lang.Integer LONG>;
+
+        if $r13 == $r12 goto label07;
+
+        $r15 = r4[i14];
+
+        $r14 = <jdk.internal.org.objectweb.asm.Opcodes: java.lang.Integer DOUBLE>;
+
+        if $r15 != $r14 goto label08;
+
+     label07:
+        i13 = i13 + 1;
+
+     label08:
+        i14 = i14 + 1;
+
+        goto label06;
+
+     label09:
+        $i3 = i2 + i13;
+
+        $r2 = newarray (int)[$i3];
+
+        r0.<jdk.internal.org.objectweb.asm.Frame: int[] inputStack> = $r2;
+
+        i15 = 0;
+
+        i16 = 0;
+
+     label10:
+        if i16 >= i2 goto label13;
+
+        $r6 = r0.<jdk.internal.org.objectweb.asm.Frame: int[] inputStack>;
+
+        $i4 = i15;
+
+        i15 = i15 + 1;
+
+        $r5 = r4[i16];
+
+        $i5 = staticinvoke <jdk.internal.org.objectweb.asm.Frame: int getAbstractTypeFromApiFormat(jdk.internal.org.objectweb.asm.SymbolTable,java.lang.Object)>(r3, $r5);
+
+        $r6[$i4] = $i5;
+
+        $r8 = r4[i16];
+
+        $r7 = <jdk.internal.org.objectweb.asm.Opcodes: java.lang.Integer LONG>;
+
+        if $r8 == $r7 goto label11;
+
+        $r11 = r4[i16];
+
+        $r10 = <jdk.internal.org.objectweb.asm.Opcodes: java.lang.Integer DOUBLE>;
+
+        if $r11 != $r10 goto label12;
+
+     label11:
+        $r9 = r0.<jdk.internal.org.objectweb.asm.Frame: int[] inputStack>;
+
+        $i6 = i15;
+
+        i15 = i15 + 1;
+
+        $r9[$i6] = 4194304;
+
+     label12:
+        i16 = i16 + 1;
+
+        goto label10;
+
+     label13:
+        r0.<jdk.internal.org.objectweb.asm.Frame: short outputStackTop> = 0;
+
+        r0.<jdk.internal.org.objectweb.asm.Frame: int initializationCount> = 0;
+
+        return;
+    }
+
+    final int getInputStackSize()
+    {
+        int $i0;
+        int[] $r1;
+        jdk.internal.org.objectweb.asm.Frame r0;
+
+        r0 := @this: jdk.internal.org.objectweb.asm.Frame;
+
+        $r1 = r0.<jdk.internal.org.objectweb.asm.Frame: int[] inputStack>;
+
+        $i0 = lengthof $r1;
+
+        return $i0;
+    }
+
+    private int getLocal(int)
+    {
+        jdk.internal.org.objectweb.asm.Frame r0;
+        int[] $r1, $r2, $r3, $r4;
+        int i0, $i1, $i2, $i3, i4;
+
+        r0 := @this: jdk.internal.org.objectweb.asm.Frame;
+
+        i0 := @parameter0: int;
+
+        $r1 = r0.<jdk.internal.org.objectweb.asm.Frame: int[] outputLocals>;
+
+        if $r1 == null goto label1;
+
+        $r2 = r0.<jdk.internal.org.objectweb.asm.Frame: int[] outputLocals>;
+
+        $i2 = lengthof $r2;
+
+        if i0 < $i2 goto label2;
+
+     label1:
+        $i1 = 16777216 | i0;
+
+        return $i1;
+
+     label2:
+        $r3 = r0.<jdk.internal.org.objectweb.asm.Frame: int[] outputLocals>;
+
+        i4 = $r3[i0];
+
+        if i4 != 0 goto label3;
+
+        $r4 = r0.<jdk.internal.org.objectweb.asm.Frame: int[] outputLocals>;
+
+        $i3 = 16777216 | i0;
+
+        $r4[i0] = $i3;
+
+        i4 = $i3;
+
+     label3:
+        return i4;
+    }
+
+    private void setLocal(int, int)
+    {
+        jdk.internal.org.objectweb.asm.Frame r0;
+        int[] $r1, $r2, $r3, r4, $r5, $r6;
+        int i0, i1, $i2, $i3, $i4, $i5;
+
+        r0 := @this: jdk.internal.org.objectweb.asm.Frame;
+
+        i0 := @parameter0: int;
+
+        i1 := @parameter1: int;
+
+        $r1 = r0.<jdk.internal.org.objectweb.asm.Frame: int[] outputLocals>;
+
+        if $r1 != null goto label1;
+
+        $r6 = newarray (int)[10];
+
+        r0.<jdk.internal.org.objectweb.asm.Frame: int[] outputLocals> = $r6;
+
+     label1:
+        $r2 = r0.<jdk.internal.org.objectweb.asm.Frame: int[] outputLocals>;
+
+        $i5 = lengthof $r2;
+
+        if i0 < $i5 goto label2;
+
+        $i3 = i0 + 1;
+
+        $i2 = 2 * $i5;
+
+        $i4 = staticinvoke <java.lang.Math: int max(int,int)>($i3, $i2);
+
+        r4 = newarray (int)[$i4];
+
+        $r5 = r0.<jdk.internal.org.objectweb.asm.Frame: int[] outputLocals>;
+
+        staticinvoke <java.lang.System: void arraycopy(java.lang.Object,int,java.lang.Object,int,int)>($r5, 0, r4, 0, $i5);
+
+        r0.<jdk.internal.org.objectweb.asm.Frame: int[] outputLocals> = r4;
+
+     label2:
+        $r3 = r0.<jdk.internal.org.objectweb.asm.Frame: int[] outputLocals>;
+
+        $r3[i0] = i1;
+
+        return;
+    }
+
+    private void push(int)
+    {
+        int[] $r1, $r2, $r3, $r6, $r7, r8;
+        jdk.internal.org.objectweb.asm.Frame r0;
+        short $s0, $s1, $s3, $s5, $s6, $s8, $s9, $s13;
+        int $i2, i4, $i7, $i10, $i11, $i12, $i14, $i15, $i16, $i17, $i18, $i19, $i20, $i21, $i22;
+        jdk.internal.org.objectweb.asm.Label $r4, $r5;
+
+        r0 := @this: jdk.internal.org.objectweb.asm.Frame;
+
+        i4 := @parameter0: int;
+
+        $r1 = r0.<jdk.internal.org.objectweb.asm.Frame: int[] outputStack>;
+
+        if $r1 != null goto label1;
+
+        $r7 = newarray (int)[10];
+
+        r0.<jdk.internal.org.objectweb.asm.Frame: int[] outputStack> = $r7;
+
+     label1:
+        $r2 = r0.<jdk.internal.org.objectweb.asm.Frame: int[] outputStack>;
+
+        $i14 = lengthof $r2;
+
+        $s0 = r0.<jdk.internal.org.objectweb.asm.Frame: short outputStackTop>;
+
+        $i15 = (int) $s0;
+
+        if $i15 < $i14 goto label2;
+
+        $s9 = r0.<jdk.internal.org.objectweb.asm.Frame: short outputStackTop>;
+
+        $i16 = (int) $s9;
+
+        $i11 = $i16 + 1;
+
+        $i10 = 2 * $i14;
+
+        $i12 = staticinvoke <java.lang.Math: int max(int,int)>($i11, $i10);
+
+        r8 = newarray (int)[$i12];
+
+        $r6 = r0.<jdk.internal.org.objectweb.asm.Frame: int[] outputStack>;
+
+        staticinvoke <java.lang.System: void arraycopy(java.lang.Object,int,java.lang.Object,int,int)>($r6, 0, r8, 0, $i14);
+
+        r0.<jdk.internal.org.objectweb.asm.Frame: int[] outputStack> = r8;
+
+     label2:
+        $r3 = r0.<jdk.internal.org.objectweb.asm.Frame: int[] outputStack>;
+
+        $s1 = r0.<jdk.internal.org.objectweb.asm.Frame: short outputStackTop>;
+
+        $i17 = (int) $s1;
+
+        $i2 = $i17 + 1;
+
+        $s3 = (short) $i2;
+
+        r0.<jdk.internal.org.objectweb.asm.Frame: short outputStackTop> = $s3;
+
+        $i18 = (int) $s1;
+
+        $r3[$i18] = i4;
+
+        $s6 = r0.<jdk.internal.org.objectweb.asm.Frame: short outputStackStart>;
+
+        $s5 = r0.<jdk.internal.org.objectweb.asm.Frame: short outputStackTop>;
+
+        $i19 = (int) $s6;
+
+        $i20 = (int) $s5;
+
+        $i7 = $i19 + $i20;
+
+        $s13 = (short) $i7;
+
+        $r4 = r0.<jdk.internal.org.objectweb.asm.Frame: jdk.internal.org.objectweb.asm.Label owner>;
+
+        $s8 = $r4.<jdk.internal.org.objectweb.asm.Label: short outputStackMax>;
+
+        $i21 = (int) $s13;
+
+        $i22 = (int) $s8;
+
+        if $i21 <= $i22 goto label3;
+
+        $r5 = r0.<jdk.internal.org.objectweb.asm.Frame: jdk.internal.org.objectweb.asm.Label owner>;
+
+        $r5.<jdk.internal.org.objectweb.asm.Label: short outputStackMax> = $s13;
+
+     label3:
+        return;
+    }
+
+    private void push(jdk.internal.org.objectweb.asm.SymbolTable, java.lang.String)
+    {
+        jdk.internal.org.objectweb.asm.SymbolTable r1;
+        int $i1, $i2, $i3;
+        char $c0;
+        java.lang.String r0;
+        jdk.internal.org.objectweb.asm.Frame r2;
+
+        r2 := @this: jdk.internal.org.objectweb.asm.Frame;
+
+        r1 := @parameter0: jdk.internal.org.objectweb.asm.SymbolTable;
+
+        r0 := @parameter1: java.lang.String;
+
+        $c0 = virtualinvoke r0.<java.lang.String: char charAt(int)>(0);
+
+        $i3 = (int) $c0;
+
+        if $i3 != 40 goto label1;
+
+        $i2 = staticinvoke <jdk.internal.org.objectweb.asm.Type: int getReturnTypeOffset(java.lang.String)>(r0);
+
+        goto label2;
+
+     label1:
+        $i2 = 0;
+
+     label2:
+        $i1 = staticinvoke <jdk.internal.org.objectweb.asm.Frame: int getAbstractTypeFromDescriptor(jdk.internal.org.objectweb.asm.SymbolTable,java.lang.String,int)>(r1, r0, $i2);
+
+        if $i1 == false goto label4;
+
+        virtualinvoke r2.<jdk.internal.org.objectweb.asm.Frame: void push(int)>($i1);
+
+        if $i1 == 4194308 goto label3;
+
+        if $i1 != 4194307 goto label4;
+
+     label3:
+        virtualinvoke r2.<jdk.internal.org.objectweb.asm.Frame: void push(int)>(4194304);
+
+     label4:
+        return;
+    }
+
+    private int pop()
+    {
+        short $s0, $s1, $s3, $s6, $s8;
+        int[] $r1;
+        int $i2, $i4, $i5, $i7, $i9, $i10, $i11, $i12, $i13, $i14;
+        jdk.internal.org.objectweb.asm.Frame r0;
+
+        r0 := @this: jdk.internal.org.objectweb.asm.Frame;
+
+        $s0 = r0.<jdk.internal.org.objectweb.asm.Frame: short outputStackTop>;
+
+        $i10 = (int) $s0;
+
+        if $i10 <= 0 goto label1;
+
+        $r1 = r0.<jdk.internal.org.objectweb.asm.Frame: int[] outputStack>;
+
+        $s6 = r0.<jdk.internal.org.objectweb.asm.Frame: short outputStackTop>;
+
+        $i11 = (int) $s6;
+
+        $i7 = $i11 - 1;
+
+        $s8 = (short) $i7;
+
+        r0.<jdk.internal.org.objectweb.asm.Frame: short outputStackTop> = $s8;
+
+        $i12 = (int) $s8;
+
+        $i9 = $r1[$i12];
+
+        return $i9;
+
+     label1:
+        $s1 = r0.<jdk.internal.org.objectweb.asm.Frame: short outputStackStart>;
+
+        $i13 = (int) $s1;
+
+        $i2 = $i13 - 1;
+
+        $s3 = (short) $i2;
+
+        r0.<jdk.internal.org.objectweb.asm.Frame: short outputStackStart> = $s3;
+
+        $i14 = (int) $s3;
+
+        $i4 = neg $i14;
+
+        $i5 = 20971520 | $i4;
+
+        return $i5;
+    }
+
+    private void pop(int)
+    {
+        jdk.internal.org.objectweb.asm.Frame r0;
+        short $s1, $s2, $s4, $s6, $s7, $s9;
+        int i0, $i3, $i5, $i8, $i10, $i11, $i12, $i13;
+
+        r0 := @this: jdk.internal.org.objectweb.asm.Frame;
+
+        i0 := @parameter0: int;
+
+        $s1 = r0.<jdk.internal.org.objectweb.asm.Frame: short outputStackTop>;
+
+        $i10 = (int) $s1;
+
+        if $i10 < i0 goto label1;
+
+        $s7 = r0.<jdk.internal.org.objectweb.asm.Frame: short outputStackTop>;
+
+        $i11 = (int) $s7;
+
+        $i8 = $i11 - i0;
+
+        $s9 = (short) $i8;
+
+        r0.<jdk.internal.org.objectweb.asm.Frame: short outputStackTop> = $s9;
+
+        goto label2;
+
+     label1:
+        $s4 = r0.<jdk.internal.org.objectweb.asm.Frame: short outputStackStart>;
+
+        $s2 = r0.<jdk.internal.org.objectweb.asm.Frame: short outputStackTop>;
+
+        $i12 = (int) $s2;
+
+        $i3 = i0 - $i12;
+
+        $i13 = (int) $s4;
+
+        $i5 = $i13 - $i3;
+
+        $s6 = (short) $i5;
+
+        r0.<jdk.internal.org.objectweb.asm.Frame: short outputStackStart> = $s6;
+
+        r0.<jdk.internal.org.objectweb.asm.Frame: short outputStackTop> = 0;
+
+     label2:
+        return;
+    }
+
+    private void pop(java.lang.String)
+    {
+        char c0;
+        jdk.internal.org.objectweb.asm.Frame r1;
+        int $i1, $i2, $i3, $i4, $i5, $i6;
+        java.lang.String r0;
+
+        r1 := @this: jdk.internal.org.objectweb.asm.Frame;
+
+        r0 := @parameter0: java.lang.String;
+
+        c0 = virtualinvoke r0.<java.lang.String: char charAt(int)>(0);
+
+        $i4 = (int) c0;
+
+        if $i4 != 40 goto label1;
+
+        $i1 = staticinvoke <jdk.internal.org.objectweb.asm.Type: int getArgumentsAndReturnSizes(java.lang.String)>(r0);
+
+        $i2 = $i1 >> 2;
+
+        $i3 = $i2 - 1;
+
+        virtualinvoke r1.<jdk.internal.org.objectweb.asm.Frame: void pop(int)>($i3);
+
+        goto label4;
+
+     label1:
+        $i5 = (int) c0;
+
+        if $i5 == 74 goto label2;
+
+        $i6 = (int) c0;
+
+        if $i6 != 68 goto label3;
+
+     label2:
+        virtualinvoke r1.<jdk.internal.org.objectweb.asm.Frame: void pop(int)>(2);
+
+        goto label4;
+
+     label3:
+        virtualinvoke r1.<jdk.internal.org.objectweb.asm.Frame: void pop(int)>(1);
+
+     label4:
+        return;
+    }
+
+    private void addInitializedType(int)
+    {
+        int[] $r1, $r2, $r3, r4, $r5, $r6;
+        int $i0, $i1, $i2, i3, $i4, $i5, $i6, $i7, $i8;
+        jdk.internal.org.objectweb.asm.Frame r0;
+
+        r0 := @this: jdk.internal.org.objectweb.asm.Frame;
+
+        i3 := @parameter0: int;
+
+        $r1 = r0.<jdk.internal.org.objectweb.asm.Frame: int[] initializations>;
+
+        if $r1 != null goto label1;
+
+        $r6 = newarray (int)[2];
+
+        r0.<jdk.internal.org.objectweb.asm.Frame: int[] initializations> = $r6;
+
+     label1:
+        $r2 = r0.<jdk.internal.org.objectweb.asm.Frame: int[] initializations>;
+
+        $i8 = lengthof $r2;
+
+        $i0 = r0.<jdk.internal.org.objectweb.asm.Frame: int initializationCount>;
+
+        if $i0 < $i8 goto label2;
+
+        $i4 = r0.<jdk.internal.org.objectweb.asm.Frame: int initializationCount>;
+
+        $i6 = $i4 + 1;
+
+        $i5 = 2 * $i8;
+
+        $i7 = staticinvoke <java.lang.Math: int max(int,int)>($i6, $i5);
+
+        r4 = newarray (int)[$i7];
+
+        $r5 = r0.<jdk.internal.org.objectweb.asm.Frame: int[] initializations>;
+
+        staticinvoke <java.lang.System: void arraycopy(java.lang.Object,int,java.lang.Object,int,int)>($r5, 0, r4, 0, $i8);
+
+        r0.<jdk.internal.org.objectweb.asm.Frame: int[] initializations> = r4;
+
+     label2:
+        $r3 = r0.<jdk.internal.org.objectweb.asm.Frame: int[] initializations>;
+
+        $i1 = r0.<jdk.internal.org.objectweb.asm.Frame: int initializationCount>;
+
+        $i2 = $i1 + 1;
+
+        r0.<jdk.internal.org.objectweb.asm.Frame: int initializationCount> = $i2;
+
+        $r3[$i1] = i3;
+
+        return;
+    }
+
+    private int getInitializedType(jdk.internal.org.objectweb.asm.SymbolTable, int)
+    {
+        int[] $r1, $r6, $r7, $r8;
+        jdk.internal.org.objectweb.asm.SymbolTable r2;
+        int i0, i1, i2, i3, $i4, $i5, $i6, $i7, $i8, $i9, $i10, $i11, $i12, $i13, i14, $i15, i16;
+        java.lang.String $r4, $r5;
+        jdk.internal.org.objectweb.asm.Symbol $r3;
+        jdk.internal.org.objectweb.asm.Frame r0;
+
+        r0 := @this: jdk.internal.org.objectweb.asm.Frame;
+
+        r2 := @parameter0: jdk.internal.org.objectweb.asm.SymbolTable;
+
+        i0 := @parameter1: int;
+
+        if i0 == 4194310 goto label1;
+
+        $i13 = i0 & -4194304;
+
+        if $i13 != 12582912 goto label7;
+
+     label1:
+        i14 = 0;
+
+     label2:
+        $i15 = r0.<jdk.internal.org.objectweb.asm.Frame: int initializationCount>;
+
+        if i14 >= $i15 goto label7;
+
+        $r1 = r0.<jdk.internal.org.objectweb.asm.Frame: int[] initializations>;
+
+        i16 = $r1[i14];
+
+        i1 = i16 & -67108864;
+
+        i2 = i16 & 62914560;
+
+        i3 = i16 & 1048575;
+
+        if i2 != 16777216 goto label3;
+
+        $r8 = r0.<jdk.internal.org.objectweb.asm.Frame: int[] inputLocals>;
+
+        $i12 = $r8[i3];
+
+        i16 = i1 + $i12;
+
+        goto label4;
+
+     label3:
+        if i2 != 20971520 goto label4;
+
+        $r7 = r0.<jdk.internal.org.objectweb.asm.Frame: int[] inputStack>;
+
+        $r6 = r0.<jdk.internal.org.objectweb.asm.Frame: int[] inputStack>;
+
+        $i9 = lengthof $r6;
+
+        $i10 = $i9 - i3;
+
+        $i11 = $r7[$i10];
+
+        i16 = i1 + $i11;
+
+     label4:
+        if i0 != i16 goto label6;
+
+        if i0 != 4194310 goto label5;
+
+        $r5 = virtualinvoke r2.<jdk.internal.org.objectweb.asm.SymbolTable: java.lang.String getClassName()>();
+
+        $i7 = virtualinvoke r2.<jdk.internal.org.objectweb.asm.SymbolTable: int addType(java.lang.String)>($r5);
+
+        $i8 = 8388608 | $i7;
+
+        return $i8;
+
+     label5:
+        $i4 = i0 & 1048575;
+
+        $r3 = virtualinvoke r2.<jdk.internal.org.objectweb.asm.SymbolTable: jdk.internal.org.objectweb.asm.Symbol getType(int)>($i4);
+
+        $r4 = $r3.<jdk.internal.org.objectweb.asm.Symbol: java.lang.String value>;
+
+        $i5 = virtualinvoke r2.<jdk.internal.org.objectweb.asm.SymbolTable: int addType(java.lang.String)>($r4);
+
+        $i6 = 8388608 | $i5;
+
+        return $i6;
+
+     label6:
+        i14 = i14 + 1;
+
+        goto label2;
+
+     label7:
+        return i0;
+    }
+
+    void execute(int, int, jdk.internal.org.objectweb.asm.Symbol, jdk.internal.org.objectweb.asm.SymbolTable)
+    {
+        jdk.internal.org.objectweb.asm.SymbolTable r1;
+        java.lang.StringBuilder $r6, $r7, $r28;
+        java.lang.AssertionError $r25;
+        java.lang.String $r3, r4, $r8, $r10, $r11, $r12, $r13, $r14, $r15, $r16, $r17, $r18, $r20, $r23, r24;
+        jdk.internal.org.objectweb.asm.Symbol r2;
+        jdk.internal.org.objectweb.asm.Frame r0;
+        int i0, i1, $i3, $i4, $i6, $i7, $i8, $i9, i11, $i12, $i13, $i14, $i15, $i16, $i17, $i18, $i19, $i20, $i21, $i22, $i23, $i24, $i25, $i26, $i27, $i28, $i29, $i30, $i31, $i32, $i33, $i34, i35, $i36, i37, i38, i39, i40, i41, i42, i43, i44, i45, i46, i47, i48, i49, i50, i51, i52, i53, i54, i55, i56, i57, $i58, $i59, $i60;
+        char $c2, $c5, $c10;
+        java.lang.IllegalArgumentException $r26, $r27, $r29;
+
+        r0 := @this: jdk.internal.org.objectweb.asm.Frame;
+
+        i0 := @parameter0: int;
+
+        i1 := @parameter1: int;
+
+        r2 := @parameter2: jdk.internal.org.objectweb.asm.Symbol;
+
+        r1 := @parameter3: jdk.internal.org.objectweb.asm.SymbolTable;
+
+        tableswitch(i0)
+        {
+            case 0: goto label01;
+            case 1: goto label02;
+            case 2: goto label03;
+            case 3: goto label03;
+            case 4: goto label03;
+            case 5: goto label03;
+            case 6: goto label03;
+            case 7: goto label03;
+            case 8: goto label03;
+            case 9: goto label04;
+            case 10: goto label04;
+            case 11: goto label05;
+            case 12: goto label05;
+            case 13: goto label05;
+            case 14: goto label06;
+            case 15: goto label06;
+            case 16: goto label03;
+            case 17: goto label03;
+            case 18: goto label07;
+            case 19: goto label80;
+            case 20: goto label80;
+            case 21: goto label03;
+            case 22: goto label04;
+            case 23: goto label05;
+            case 24: goto label06;
+            case 25: goto label18;
+            case 26: goto label80;
+            case 27: goto label80;
+            case 28: goto label80;
+            case 29: goto label80;
+            case 30: goto label80;
+            case 31: goto label80;
+            case 32: goto label80;
+            case 33: goto label80;
+            case 34: goto label80;
+            case 35: goto label80;
+            case 36: goto label80;
+            case 37: goto label80;
+            case 38: goto label80;
+            case 39: goto label80;
+            case 40: goto label80;
+            case 41: goto label80;
+            case 42: goto label80;
+            case 43: goto label80;
+            case 44: goto label80;
+            case 45: goto label80;
+            case 46: goto label45;
+            case 47: goto label19;
+            case 48: goto label47;
+            case 49: goto label20;
+            case 50: goto label21;
+            case 51: goto label45;
+            case 52: goto label45;
+            case 53: goto label45;
+            case 54: goto label24;
+            case 55: goto label29;
+            case 56: goto label24;
+            case 57: goto label29;
+            case 58: goto label24;
+            case 59: goto label80;
+            case 60: goto label80;
+            case 61: goto label80;
+            case 62: goto label80;
+            case 63: goto label80;
+            case 64: goto label80;
+            case 65: goto label80;
+            case 66: goto label80;
+            case 67: goto label80;
+            case 68: goto label80;
+            case 69: goto label80;
+            case 70: goto label80;
+            case 71: goto label80;
+            case 72: goto label80;
+            case 73: goto label80;
+            case 74: goto label80;
+            case 75: goto label80;
+            case 76: goto label80;
+            case 77: goto label80;
+            case 78: goto label80;
+            case 79: goto label34;
+            case 80: goto label35;
+            case 81: goto label34;
+            case 82: goto label35;
+            case 83: goto label34;
+            case 84: goto label34;
+            case 85: goto label34;
+            case 86: goto label34;
+            case 87: goto label36;
+            case 88: goto label37;
+            case 89: goto label38;
+            case 90: goto label39;
+            case 91: goto label40;
+            case 92: goto label41;
+            case 93: goto label42;
+            case 94: goto label43;
+            case 95: goto label44;
+            case 96: goto label45;
+            case 97: goto label46;
+            case 98: goto label47;
+            case 99: goto label48;
+            case 100: goto label45;
+            case 101: goto label46;
+            case 102: goto label47;
+            case 103: goto label48;
+            case 104: goto label45;
+            case 105: goto label46;
+            case 106: goto label47;
+            case 107: goto label48;
+            case 108: goto label45;
+            case 109: goto label46;
+            case 110: goto label47;
+            case 111: goto label48;
+            case 112: goto label45;
+            case 113: goto label46;
+            case 114: goto label47;
+            case 115: goto label48;
+            case 116: goto label01;
+            case 117: goto label01;
+            case 118: goto label01;
+            case 119: goto label01;
+            case 120: goto label45;
+            case 121: goto label49;
+            case 122: goto label45;
+            case 123: goto label49;
+            case 124: goto label45;
+            case 125: goto label49;
+            case 126: goto label45;
+            case 127: goto label46;
+            case 128: goto label45;
+            case 129: goto label46;
+            case 130: goto label45;
+            case 131: goto label46;
+            case 132: goto label50;
+            case 133: goto label51;
+            case 134: goto label52;
+            case 135: goto label53;
+            case 136: goto label45;
+            case 137: goto label47;
+            case 138: goto label20;
+            case 139: goto label54;
+            case 140: goto label51;
+            case 141: goto label53;
+            case 142: goto label45;
+            case 143: goto label19;
+            case 144: goto label47;
+            case 145: goto label01;
+            case 146: goto label01;
+            case 147: goto label01;
+            case 148: goto label55;
+            case 149: goto label45;
+            case 150: goto label45;
+            case 151: goto label55;
+            case 152: goto label55;
+            case 153: goto label36;
+            case 154: goto label36;
+            case 155: goto label36;
+            case 156: goto label36;
+            case 157: goto label36;
+            case 158: goto label36;
+            case 159: goto label37;
+            case 160: goto label37;
+            case 161: goto label37;
+            case 162: goto label37;
+            case 163: goto label37;
+            case 164: goto label37;
+            case 165: goto label37;
+            case 166: goto label37;
+            case 167: goto label01;
+            case 168: goto label56;
+            case 169: goto label56;
+            case 170: goto label36;
+            case 171: goto label36;
+            case 172: goto label36;
+            case 173: goto label37;
+            case 174: goto label36;
+            case 175: goto label37;
+            case 176: goto label36;
+            case 177: goto label01;
+            case 178: goto label57;
+            case 179: goto label58;
+            case 180: goto label59;
+            case 181: goto label60;
+            case 182: goto label61;
+            case 183: goto label61;
+            case 184: goto label61;
+            case 185: goto label61;
+            case 186: goto label63;
+            case 187: goto label64;
+            case 188: goto label65;
+            case 189: goto label75;
+            case 190: goto label54;
+            case 191: goto label36;
+            case 192: goto label77;
+            case 193: goto label54;
+            case 194: goto label36;
+            case 195: goto label36;
+            case 196: goto label80;
+            case 197: goto label79;
+            case 198: goto label36;
+            case 199: goto label36;
+            default: goto label80;
+        };
+
+     label01:
+        goto label81;
+
+     label02:
+        virtualinvoke r0.<jdk.internal.org.objectweb.asm.Frame: void push(int)>(4194309);
+
+        goto label81;
+
+     label03:
+        virtualinvoke r0.<jdk.internal.org.objectweb.asm.Frame: void push(int)>(4194305);
+
+        goto label81;
+
+     label04:
+        virtualinvoke r0.<jdk.internal.org.objectweb.asm.Frame: void push(int)>(4194308);
+
+        virtualinvoke r0.<jdk.internal.org.objectweb.asm.Frame: void push(int)>(4194304);
+
+        goto label81;
+
+     label05:
+        virtualinvoke r0.<jdk.internal.org.objectweb.asm.Frame: void push(int)>(4194306);
+
+        goto label81;
+
+     label06:
+        virtualinvoke r0.<jdk.internal.org.objectweb.asm.Frame: void push(int)>(4194307);
+
+        virtualinvoke r0.<jdk.internal.org.objectweb.asm.Frame: void push(int)>(4194304);
+
+        goto label81;
+
+     label07:
+        $i26 = r2.<jdk.internal.org.objectweb.asm.Symbol: int tag>;
+
+        tableswitch($i26)
+        {
+            case 3: goto label08;
+            case 4: goto label10;
+            case 5: goto label09;
+            case 6: goto label11;
+            case 7: goto label12;
+            case 8: goto label13;
+            case 9: goto label17;
+            case 10: goto label17;
+            case 11: goto label17;
+            case 12: goto label17;
+            case 13: goto label17;
+            case 14: goto label17;
+            case 15: goto label15;
+            case 16: goto label14;
+            case 17: goto label16;
+            default: goto label17;
+        };
+
+     label08:
+        virtualinvoke r0.<jdk.internal.org.objectweb.asm.Frame: void push(int)>(4194305);
+
+        goto label81;
+
+     label09:
+        virtualinvoke r0.<jdk.internal.org.objectweb.asm.Frame: void push(int)>(4194308);
+
+        virtualinvoke r0.<jdk.internal.org.objectweb.asm.Frame: void push(int)>(4194304);
+
+        goto label81;
+
+     label10:
+        virtualinvoke r0.<jdk.internal.org.objectweb.asm.Frame: void push(int)>(4194306);
+
+        goto label81;
+
+     label11:
+        virtualinvoke r0.<jdk.internal.org.objectweb.asm.Frame: void push(int)>(4194307);
+
+        virtualinvoke r0.<jdk.internal.org.objectweb.asm.Frame: void push(int)>(4194304);
+
+        goto label81;
+
+     label12:
+        $i33 = virtualinvoke r1.<jdk.internal.org.objectweb.asm.SymbolTable: int addType(java.lang.String)>("java/lang/Class");
+
+        $i34 = 8388608 | $i33;
+
+        virtualinvoke r0.<jdk.internal.org.objectweb.asm.Frame: void push(int)>($i34);
+
+        goto label81;
+
+     label13:
+        $i31 = virtualinvoke r1.<jdk.internal.org.objectweb.asm.SymbolTable: int addType(java.lang.String)>("java/lang/String");
+
+        $i32 = 8388608 | $i31;
+
+        virtualinvoke r0.<jdk.internal.org.objectweb.asm.Frame: void push(int)>($i32);
+
+        goto label81;
+
+     label14:
+        $i27 = virtualinvoke r1.<jdk.internal.org.objectweb.asm.SymbolTable: int addType(java.lang.String)>("java/lang/invoke/MethodType");
+
+        $i28 = 8388608 | $i27;
+
+        virtualinvoke r0.<jdk.internal.org.objectweb.asm.Frame: void push(int)>($i28);
+
+        goto label81;
+
+     label15:
+        $i29 = virtualinvoke r1.<jdk.internal.org.objectweb.asm.SymbolTable: int addType(java.lang.String)>("java/lang/invoke/MethodHandle");
+
+        $i30 = 8388608 | $i29;
+
+        virtualinvoke r0.<jdk.internal.org.objectweb.asm.Frame: void push(int)>($i30);
+
+        goto label81;
+
+     label16:
+        $r20 = r2.<jdk.internal.org.objectweb.asm.Symbol: java.lang.String value>;
+
+        virtualinvoke r0.<jdk.internal.org.objectweb.asm.Frame: void push(jdk.internal.org.objectweb.asm.SymbolTable,java.lang.String)>(r1, $r20);
+
+        goto label81;
+
+     label17:
+        $r25 = new java.lang.AssertionError;
+
+        specialinvoke $r25.<java.lang.AssertionError: void <init>()>();
+
+        throw $r25;
+
+     label18:
+        $i25 = virtualinvoke r0.<jdk.internal.org.objectweb.asm.Frame: int getLocal(int)>(i1);
+
+        virtualinvoke r0.<jdk.internal.org.objectweb.asm.Frame: void push(int)>($i25);
+
+        goto label81;
+
+     label19:
+        virtualinvoke r0.<jdk.internal.org.objectweb.asm.Frame: void pop(int)>(2);
+
+        virtualinvoke r0.<jdk.internal.org.objectweb.asm.Frame: void push(int)>(4194308);
+
+        virtualinvoke r0.<jdk.internal.org.objectweb.asm.Frame: void push(int)>(4194304);
+
+        goto label81;
+
+     label20:
+        virtualinvoke r0.<jdk.internal.org.objectweb.asm.Frame: void pop(int)>(2);
+
+        virtualinvoke r0.<jdk.internal.org.objectweb.asm.Frame: void push(int)>(4194307);
+
+        virtualinvoke r0.<jdk.internal.org.objectweb.asm.Frame: void push(int)>(4194304);
+
+        goto label81;
+
+     label21:
+        virtualinvoke r0.<jdk.internal.org.objectweb.asm.Frame: void pop(int)>(1);
+
+        i35 = virtualinvoke r0.<jdk.internal.org.objectweb.asm.Frame: int pop()>();
+
+        if i35 != 4194309 goto label22;
+
+        $i36 = i35;
+
+        goto label23;
+
+     label22:
+        $i36 = -67108864 + i35;
+
+     label23:
+        virtualinvoke r0.<jdk.internal.org.objectweb.asm.Frame: void push(int)>($i36);
+
+        goto label81;
+
+     label24:
+        i37 = virtualinvoke r0.<jdk.internal.org.objectweb.asm.Frame: int pop()>();
+
+        virtualinvoke r0.<jdk.internal.org.objectweb.asm.Frame: void setLocal(int,int)>(i1, i37);
+
+        if i1 <= 0 goto label81;
+
+        $i19 = i1 - 1;
+
+        i38 = virtualinvoke r0.<jdk.internal.org.objectweb.asm.Frame: int getLocal(int)>($i19);
+
+        if i38 == 4194308 goto label25;
+
+        if i38 != 4194307 goto label26;
+
+     label25:
+        $i20 = i1 - 1;
+
+        virtualinvoke r0.<jdk.internal.org.objectweb.asm.Frame: void setLocal(int,int)>($i20, 4194304);
+
+        goto label28;
+
+     label26:
+        $i21 = i38 & 62914560;
+
+        if $i21 == 16777216 goto label27;
+
+        $i24 = i38 & 62914560;
+
+        if $i24 != 20971520 goto label28;
+
+     label27:
+        $i23 = i1 - 1;
+
+        $i22 = i38 | 1048576;
+
+        virtualinvoke r0.<jdk.internal.org.objectweb.asm.Frame: void setLocal(int,int)>($i23, $i22);
+
+     label28:
+        goto label81;
+
+     label29:
+        virtualinvoke r0.<jdk.internal.org.objectweb.asm.Frame: void pop(int)>(1);
+
+        i39 = virtualinvoke r0.<jdk.internal.org.objectweb.asm.Frame: int pop()>();
+
+        virtualinvoke r0.<jdk.internal.org.objectweb.asm.Frame: void setLocal(int,int)>(i1, i39);
+
+        $i12 = i1 + 1;
+
+        virtualinvoke r0.<jdk.internal.org.objectweb.asm.Frame: void setLocal(int,int)>($i12, 4194304);
+
+        if i1 <= 0 goto label81;
+
+        $i13 = i1 - 1;
+
+        i40 = virtualinvoke r0.<jdk.internal.org.objectweb.asm.Frame: int getLocal(int)>($i13);
+
+        if i40 == 4194308 goto label30;
+
+        if i40 != 4194307 goto label31;
+
+     label30:
+        $i14 = i1 - 1;
+
+        virtualinvoke r0.<jdk.internal.org.objectweb.asm.Frame: void setLocal(int,int)>($i14, 4194304);
+
+        goto label33;
+
+     label31:
+        $i15 = i40 & 62914560;
+
+        if $i15 == 16777216 goto label32;
+
+        $i18 = i40 & 62914560;
+
+        if $i18 != 20971520 goto label33;
+
+     label32:
+        $i17 = i1 - 1;
+
+        $i16 = i40 | 1048576;
+
+        virtualinvoke r0.<jdk.internal.org.objectweb.asm.Frame: void setLocal(int,int)>($i17, $i16);
+
+     label33:
+        goto label81;
+
+     label34:
+        virtualinvoke r0.<jdk.internal.org.objectweb.asm.Frame: void pop(int)>(3);
+
+        goto label81;
+
+     label35:
+        virtualinvoke r0.<jdk.internal.org.objectweb.asm.Frame: void pop(int)>(4);
+
+        goto label81;
+
+     label36:
+        virtualinvoke r0.<jdk.internal.org.objectweb.asm.Frame: void pop(int)>(1);
+
+        goto label81;
+
+     label37:
+        virtualinvoke r0.<jdk.internal.org.objectweb.asm.Frame: void pop(int)>(2);
+
+        goto label81;
+
+     label38:
+        i41 = virtualinvoke r0.<jdk.internal.org.objectweb.asm.Frame: int pop()>();
+
+        virtualinvoke r0.<jdk.internal.org.objectweb.asm.Frame: void push(int)>(i41);
+
+        virtualinvoke r0.<jdk.internal.org.objectweb.asm.Frame: void push(int)>(i41);
+
+        goto label81;
+
+     label39:
+        i42 = virtualinvoke r0.<jdk.internal.org.objectweb.asm.Frame: int pop()>();
+
+        i43 = virtualinvoke r0.<jdk.internal.org.objectweb.asm.Frame: int pop()>();
+
+        virtualinvoke r0.<jdk.internal.org.objectweb.asm.Frame: void push(int)>(i42);
+
+        virtualinvoke r0.<jdk.internal.org.objectweb.asm.Frame: void push(int)>(i43);
+
+        virtualinvoke r0.<jdk.internal.org.objectweb.asm.Frame: void push(int)>(i42);
+
+        goto label81;
+
+     label40:
+        i44 = virtualinvoke r0.<jdk.internal.org.objectweb.asm.Frame: int pop()>();
+
+        i45 = virtualinvoke r0.<jdk.internal.org.objectweb.asm.Frame: int pop()>();
+
+        i46 = virtualinvoke r0.<jdk.internal.org.objectweb.asm.Frame: int pop()>();
+
+        virtualinvoke r0.<jdk.internal.org.objectweb.asm.Frame: void push(int)>(i44);
+
+        virtualinvoke r0.<jdk.internal.org.objectweb.asm.Frame: void push(int)>(i46);
+
+        virtualinvoke r0.<jdk.internal.org.objectweb.asm.Frame: void push(int)>(i45);
+
+        virtualinvoke r0.<jdk.internal.org.objectweb.asm.Frame: void push(int)>(i44);
+
+        goto label81;
+
+     label41:
+        i47 = virtualinvoke r0.<jdk.internal.org.objectweb.asm.Frame: int pop()>();
+
+        i48 = virtualinvoke r0.<jdk.internal.org.objectweb.asm.Frame: int pop()>();
+
+        virtualinvoke r0.<jdk.internal.org.objectweb.asm.Frame: void push(int)>(i48);
+
+        virtualinvoke r0.<jdk.internal.org.objectweb.asm.Frame: void push(int)>(i47);
+
+        virtualinvoke r0.<jdk.internal.org.objectweb.asm.Frame: void push(int)>(i48);
+
+        virtualinvoke r0.<jdk.internal.org.objectweb.asm.Frame: void push(int)>(i47);
+
+        goto label81;
+
+     label42:
+        i49 = virtualinvoke r0.<jdk.internal.org.objectweb.asm.Frame: int pop()>();
+
+        i50 = virtualinvoke r0.<jdk.internal.org.objectweb.asm.Frame: int pop()>();
+
+        i51 = virtualinvoke r0.<jdk.internal.org.objectweb.asm.Frame: int pop()>();
+
+        virtualinvoke r0.<jdk.internal.org.objectweb.asm.Frame: void push(int)>(i50);
+
+        virtualinvoke r0.<jdk.internal.org.objectweb.asm.Frame: void push(int)>(i49);
+
+        virtualinvoke r0.<jdk.internal.org.objectweb.asm.Frame: void push(int)>(i51);
+
+        virtualinvoke r0.<jdk.internal.org.objectweb.asm.Frame: void push(int)>(i50);
+
+        virtualinvoke r0.<jdk.internal.org.objectweb.asm.Frame: void push(int)>(i49);
+
+        goto label81;
+
+     label43:
+        i52 = virtualinvoke r0.<jdk.internal.org.objectweb.asm.Frame: int pop()>();
+
+        i53 = virtualinvoke r0.<jdk.internal.org.objectweb.asm.Frame: int pop()>();
+
+        i54 = virtualinvoke r0.<jdk.internal.org.objectweb.asm.Frame: int pop()>();
+
+        i11 = virtualinvoke r0.<jdk.internal.org.objectweb.asm.Frame: int pop()>();
+
+        virtualinvoke r0.<jdk.internal.org.objectweb.asm.Frame: void push(int)>(i53);
+
+        virtualinvoke r0.<jdk.internal.org.objectweb.asm.Frame: void push(int)>(i52);
+
+        virtualinvoke r0.<jdk.internal.org.objectweb.asm.Frame: void push(int)>(i11);
+
+        virtualinvoke r0.<jdk.internal.org.objectweb.asm.Frame: void push(int)>(i54);
+
+        virtualinvoke r0.<jdk.internal.org.objectweb.asm.Frame: void push(int)>(i53);
+
+        virtualinvoke r0.<jdk.internal.org.objectweb.asm.Frame: void push(int)>(i52);
+
+        goto label81;
+
+     label44:
+        i55 = virtualinvoke r0.<jdk.internal.org.objectweb.asm.Frame: int pop()>();
+
+        i56 = virtualinvoke r0.<jdk.internal.org.objectweb.asm.Frame: int pop()>();
+
+        virtualinvoke r0.<jdk.internal.org.objectweb.asm.Frame: void push(int)>(i55);
+
+        virtualinvoke r0.<jdk.internal.org.objectweb.asm.Frame: void push(int)>(i56);
+
+        goto label81;
+
+     label45:
+        virtualinvoke r0.<jdk.internal.org.objectweb.asm.Frame: void pop(int)>(2);
+
+        virtualinvoke r0.<jdk.internal.org.objectweb.asm.Frame: void push(int)>(4194305);
+
+        goto label81;
+
+     label46:
+        virtualinvoke r0.<jdk.internal.org.objectweb.asm.Frame: void pop(int)>(4);
+
+        virtualinvoke r0.<jdk.internal.org.objectweb.asm.Frame: void push(int)>(4194308);
+
+        virtualinvoke r0.<jdk.internal.org.objectweb.asm.Frame: void push(int)>(4194304);
+
+        goto label81;
+
+     label47:
+        virtualinvoke r0.<jdk.internal.org.objectweb.asm.Frame: void pop(int)>(2);
+
+        virtualinvoke r0.<jdk.internal.org.objectweb.asm.Frame: void push(int)>(4194306);
+
+        goto label81;
+
+     label48:
+        virtualinvoke r0.<jdk.internal.org.objectweb.asm.Frame: void pop(int)>(4);
+
+        virtualinvoke r0.<jdk.internal.org.objectweb.asm.Frame: void push(int)>(4194307);
+
+        virtualinvoke r0.<jdk.internal.org.objectweb.asm.Frame: void push(int)>(4194304);
+
+        goto label81;
+
+     label49:
+        virtualinvoke r0.<jdk.internal.org.objectweb.asm.Frame: void pop(int)>(3);
+
+        virtualinvoke r0.<jdk.internal.org.objectweb.asm.Frame: void push(int)>(4194308);
+
+        virtualinvoke r0.<jdk.internal.org.objectweb.asm.Frame: void push(int)>(4194304);
+
+        goto label81;
+
+     label50:
+        virtualinvoke r0.<jdk.internal.org.objectweb.asm.Frame: void setLocal(int,int)>(i1, 4194305);
+
+        goto label81;
+
+     label51:
+        virtualinvoke r0.<jdk.internal.org.objectweb.asm.Frame: void pop(int)>(1);
+
+        virtualinvoke r0.<jdk.internal.org.objectweb.asm.Frame: void push(int)>(4194308);
+
+        virtualinvoke r0.<jdk.internal.org.objectweb.asm.Frame: void push(int)>(4194304);
+
+        goto label81;
+
+     label52:
+        virtualinvoke r0.<jdk.internal.org.objectweb.asm.Frame: void pop(int)>(1);
+
+        virtualinvoke r0.<jdk.internal.org.objectweb.asm.Frame: void push(int)>(4194306);
+
+        goto label81;
+
+     label53:
+        virtualinvoke r0.<jdk.internal.org.objectweb.asm.Frame: void pop(int)>(1);
+
+        virtualinvoke r0.<jdk.internal.org.objectweb.asm.Frame: void push(int)>(4194307);
+
+        virtualinvoke r0.<jdk.internal.org.objectweb.asm.Frame: void push(int)>(4194304);
+
+        goto label81;
+
+     label54:
+        virtualinvoke r0.<jdk.internal.org.objectweb.asm.Frame: void pop(int)>(1);
+
+        virtualinvoke r0.<jdk.internal.org.objectweb.asm.Frame: void push(int)>(4194305);
+
+        goto label81;
+
+     label55:
+        virtualinvoke r0.<jdk.internal.org.objectweb.asm.Frame: void pop(int)>(4);
+
+        virtualinvoke r0.<jdk.internal.org.objectweb.asm.Frame: void push(int)>(4194305);
+
+        goto label81;
+
+     label56:
+        $r26 = new java.lang.IllegalArgumentException;
+
+        specialinvoke $r26.<java.lang.IllegalArgumentException: void <init>(java.lang.String)>("JSR/RET are not supported with computeFrames option");
+
+        throw $r26;
+
+     label57:
+        $r18 = r2.<jdk.internal.org.objectweb.asm.Symbol: java.lang.String value>;
+
+        virtualinvoke r0.<jdk.internal.org.objectweb.asm.Frame: void push(jdk.internal.org.objectweb.asm.SymbolTable,java.lang.String)>(r1, $r18);
+
+        goto label81;
+
+     label58:
+        $r17 = r2.<jdk.internal.org.objectweb.asm.Symbol: java.lang.String value>;
+
+        virtualinvoke r0.<jdk.internal.org.objectweb.asm.Frame: void pop(java.lang.String)>($r17);
+
+        goto label81;
+
+     label59:
+        virtualinvoke r0.<jdk.internal.org.objectweb.asm.Frame: void pop(int)>(1);
+
+        $r16 = r2.<jdk.internal.org.objectweb.asm.Symbol: java.lang.String value>;
+
+        virtualinvoke r0.<jdk.internal.org.objectweb.asm.Frame: void push(jdk.internal.org.objectweb.asm.SymbolTable,java.lang.String)>(r1, $r16);
+
+        goto label81;
+
+     label60:
+        $r15 = r2.<jdk.internal.org.objectweb.asm.Symbol: java.lang.String value>;
+
+        virtualinvoke r0.<jdk.internal.org.objectweb.asm.Frame: void pop(java.lang.String)>($r15);
+
+        virtualinvoke r0.<jdk.internal.org.objectweb.asm.Frame: int pop()>();
+
+        goto label81;
+
+     label61:
+        $r13 = r2.<jdk.internal.org.objectweb.asm.Symbol: java.lang.String value>;
+
+        virtualinvoke r0.<jdk.internal.org.objectweb.asm.Frame: void pop(java.lang.String)>($r13);
+
+        if i0 == 184 goto label62;
+
+        i57 = virtualinvoke r0.<jdk.internal.org.objectweb.asm.Frame: int pop()>();
+
+        if i0 != 183 goto label62;
+
+        $r14 = r2.<jdk.internal.org.objectweb.asm.Symbol: java.lang.String name>;
+
+        $c10 = virtualinvoke $r14.<java.lang.String: char charAt(int)>(0);
+
+        $i58 = (int) $c10;
+
+        if $i58 != 60 goto label62;
+
+        virtualinvoke r0.<jdk.internal.org.objectweb.asm.Frame: void addInitializedType(int)>(i57);
+
+     label62:
+        $r23 = r2.<jdk.internal.org.objectweb.asm.Symbol: java.lang.String value>;
+
+        virtualinvoke r0.<jdk.internal.org.objectweb.asm.Frame: void push(jdk.internal.org.objectweb.asm.SymbolTable,java.lang.String)>(r1, $r23);
+
+        goto label81;
+
+     label63:
+        $r11 = r2.<jdk.internal.org.objectweb.asm.Symbol: java.lang.String value>;
+
+        virtualinvoke r0.<jdk.internal.org.objectweb.asm.Frame: void pop(java.lang.String)>($r11);
+
+        $r12 = r2.<jdk.internal.org.objectweb.asm.Symbol: java.lang.String value>;
+
+        virtualinvoke r0.<jdk.internal.org.objectweb.asm.Frame: void push(jdk.internal.org.objectweb.asm.SymbolTable,java.lang.String)>(r1, $r12);
+
+        goto label81;
+
+     label64:
+        $r10 = r2.<jdk.internal.org.objectweb.asm.Symbol: java.lang.String value>;
+
+        $i8 = virtualinvoke r1.<jdk.internal.org.objectweb.asm.SymbolTable: int addUninitializedType(java.lang.String,int)>($r10, i1);
+
+        $i9 = 12582912 | $i8;
+
+        virtualinvoke r0.<jdk.internal.org.objectweb.asm.Frame: void push(int)>($i9);
+
+        goto label81;
+
+     label65:
+        virtualinvoke r0.<jdk.internal.org.objectweb.asm.Frame: int pop()>();
+
+        tableswitch(i1)
+        {
+            case 4: goto label66;
+            case 5: goto label67;
+            case 6: goto label71;
+            case 7: goto label72;
+            case 8: goto label68;
+            case 9: goto label69;
+            case 10: goto label70;
+            case 11: goto label73;
+            default: goto label74;
+        };
+
+     label66:
+        virtualinvoke r0.<jdk.internal.org.objectweb.asm.Frame: void push(int)>(71303177);
+
+        goto label81;
+
+     label67:
+        virtualinvoke r0.<jdk.internal.org.objectweb.asm.Frame: void push(int)>(71303179);
+
+        goto label81;
+
+     label68:
+        virtualinvoke r0.<jdk.internal.org.objectweb.asm.Frame: void push(int)>(71303178);
+
+        goto label81;
+
+     label69:
+        virtualinvoke r0.<jdk.internal.org.objectweb.asm.Frame: void push(int)>(71303180);
+
+        goto label81;
+
+     label70:
+        virtualinvoke r0.<jdk.internal.org.objectweb.asm.Frame: void push(int)>(71303169);
+
+        goto label81;
+
+     label71:
+        virtualinvoke r0.<jdk.internal.org.objectweb.asm.Frame: void push(int)>(71303170);
+
+        goto label81;
+
+     label72:
+        virtualinvoke r0.<jdk.internal.org.objectweb.asm.Frame: void push(int)>(71303171);
+
+        goto label81;
+
+     label73:
+        virtualinvoke r0.<jdk.internal.org.objectweb.asm.Frame: void push(int)>(71303172);
+
+        goto label81;
+
+     label74:
+        $r27 = new java.lang.IllegalArgumentException;
+
+        specialinvoke $r27.<java.lang.IllegalArgumentException: void <init>()>();
+
+        throw $r27;
+
+     label75:
+        r24 = r2.<jdk.internal.org.objectweb.asm.Symbol: java.lang.String value>;
+
+        virtualinvoke r0.<jdk.internal.org.objectweb.asm.Frame: int pop()>();
+
+        $c5 = virtualinvoke r24.<java.lang.String: char charAt(int)>(0);
+
+        $i59 = (int) $c5;
+
+        if $i59 != 91 goto label76;
+
+        $r28 = new java.lang.StringBuilder;
+
+        specialinvoke $r28.<java.lang.StringBuilder: void <init>()>();
+
+        $r6 = virtualinvoke $r28.<java.lang.StringBuilder: java.lang.StringBuilder append(char)>(91);
+
+        $r7 = virtualinvoke $r6.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(r24);
+
+        $r8 = virtualinvoke $r7.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        virtualinvoke r0.<jdk.internal.org.objectweb.asm.Frame: void push(jdk.internal.org.objectweb.asm.SymbolTable,java.lang.String)>(r1, $r8);
+
+        goto label81;
+
+     label76:
+        $i6 = virtualinvoke r1.<jdk.internal.org.objectweb.asm.SymbolTable: int addType(java.lang.String)>(r24);
+
+        $i7 = 75497472 | $i6;
+
+        virtualinvoke r0.<jdk.internal.org.objectweb.asm.Frame: void push(int)>($i7);
+
+        goto label81;
+
+     label77:
+        r4 = r2.<jdk.internal.org.objectweb.asm.Symbol: java.lang.String value>;
+
+        virtualinvoke r0.<jdk.internal.org.objectweb.asm.Frame: int pop()>();
+
+        $c2 = virtualinvoke r4.<java.lang.String: char charAt(int)>(0);
+
+        $i60 = (int) $c2;
+
+        if $i60 != 91 goto label78;
+
+        virtualinvoke r0.<jdk.internal.org.objectweb.asm.Frame: void push(jdk.internal.org.objectweb.asm.SymbolTable,java.lang.String)>(r1, r4);
+
+        goto label81;
+
+     label78:
+        $i3 = virtualinvoke r1.<jdk.internal.org.objectweb.asm.SymbolTable: int addType(java.lang.String)>(r4);
+
+        $i4 = 8388608 | $i3;
+
+        virtualinvoke r0.<jdk.internal.org.objectweb.asm.Frame: void push(int)>($i4);
+
+        goto label81;
+
+     label79:
+        virtualinvoke r0.<jdk.internal.org.objectweb.asm.Frame: void pop(int)>(i1);
+
+        $r3 = r2.<jdk.internal.org.objectweb.asm.Symbol: java.lang.String value>;
+
+        virtualinvoke r0.<jdk.internal.org.objectweb.asm.Frame: void push(jdk.internal.org.objectweb.asm.SymbolTable,java.lang.String)>(r1, $r3);
+
+        goto label81;
+
+     label80:
+        $r29 = new java.lang.IllegalArgumentException;
+
+        specialinvoke $r29.<java.lang.IllegalArgumentException: void <init>()>();
+
+        throw $r29;
+
+     label81:
+        return;
+    }
+
+    private int getConcreteOutputType(int, int)
+    {
+        int[] $r1, $r2;
+        int i0, i1, i2, i3, $i4, $i5, $i6, $i7, $i8, $i9, $i10, i11, i12;
+        jdk.internal.org.objectweb.asm.Frame r0;
+
+        r0 := @this: jdk.internal.org.objectweb.asm.Frame;
+
+        i0 := @parameter0: int;
+
+        i3 := @parameter1: int;
+
+        i1 = i0 & -67108864;
+
+        i2 = i0 & 62914560;
+
+        if i2 != 16777216 goto label3;
+
+        $r2 = r0.<jdk.internal.org.objectweb.asm.Frame: int[] inputLocals>;
+
+        $i8 = i0 & 1048575;
+
+        $i9 = $r2[$i8];
+
+        i11 = i1 + $i9;
+
+        $i10 = i0 & 1048576;
+
+        if $i10 == false goto label2;
+
+        if i11 == 4194308 goto label1;
+
+        if i11 != 4194307 goto label2;
+
+     label1:
+        i11 = 4194304;
+
+     label2:
+        return i11;
+
+     label3:
+        if i2 != 20971520 goto label6;
+
+        $r1 = r0.<jdk.internal.org.objectweb.asm.Frame: int[] inputStack>;
+
+        $i4 = i0 & 1048575;
+
+        $i5 = i3 - $i4;
+
+        $i6 = $r1[$i5];
+
+        i12 = i1 + $i6;
+
+        $i7 = i0 & 1048576;
+
+        if $i7 == false goto label5;
+
+        if i12 == 4194308 goto label4;
+
+        if i12 != 4194307 goto label5;
+
+     label4:
+        i12 = 4194304;
+
+     label5:
+        return i12;
+
+     label6:
+        return i0;
+    }
+
+    final boolean merge(jdk.internal.org.objectweb.asm.SymbolTable, jdk.internal.org.objectweb.asm.Frame, int)
+    {
+        int[] $r1, $r2, $r4, $r5, $r6, $r7, $r8, $r10, $r11, $r12, $r13, $r14, $r15, $r16, $r17, $r18, $r19, $r20, $r21, $r22, $r23, $r24, $r25, $r26, $r27;
+        jdk.internal.org.objectweb.asm.SymbolTable r9;
+        boolean $z0, $z1, $z2, $z3, $z4, $z5, z6;
+        jdk.internal.org.objectweb.asm.Frame r0, r3;
+        short $s3, $s5, $s7;
+        int i0, i1, i2, $i4, $i6, $i8, $i9, $i10, i11, i12, i13, i14, i15, i16, i17, i18, i19, i20, $i21, $i22, $i23;
+
+        r0 := @this: jdk.internal.org.objectweb.asm.Frame;
+
+        r9 := @parameter0: jdk.internal.org.objectweb.asm.SymbolTable;
+
+        r3 := @parameter1: jdk.internal.org.objectweb.asm.Frame;
+
+        i2 := @parameter2: int;
+
+        z6 = 0;
+
+        $r1 = r0.<jdk.internal.org.objectweb.asm.Frame: int[] inputLocals>;
+
+        i0 = lengthof $r1;
+
+        $r2 = r0.<jdk.internal.org.objectweb.asm.Frame: int[] inputStack>;
+
+        i1 = lengthof $r2;
+
+        $r4 = r3.<jdk.internal.org.objectweb.asm.Frame: int[] inputLocals>;
+
+        if $r4 != null goto label01;
+
+        $r26 = newarray (int)[i0];
+
+        r3.<jdk.internal.org.objectweb.asm.Frame: int[] inputLocals> = $r26;
+
+        z6 = 1;
+
+     label01:
+        i11 = 0;
+
+     label02:
+        if i11 >= i0 goto label08;
+
+        $r20 = r0.<jdk.internal.org.objectweb.asm.Frame: int[] outputLocals>;
+
+        if $r20 == null goto label05;
+
+        $r23 = r0.<jdk.internal.org.objectweb.asm.Frame: int[] outputLocals>;
+
+        $i10 = lengthof $r23;
+
+        if i11 >= $i10 goto label05;
+
+        $r24 = r0.<jdk.internal.org.objectweb.asm.Frame: int[] outputLocals>;
+
+        i12 = $r24[i11];
+
+        if i12 != 0 goto label03;
+
+        $r25 = r0.<jdk.internal.org.objectweb.asm.Frame: int[] inputLocals>;
+
+        i13 = $r25[i11];
+
+        goto label04;
+
+     label03:
+        i13 = virtualinvoke r0.<jdk.internal.org.objectweb.asm.Frame: int getConcreteOutputType(int,int)>(i12, i1);
+
+     label04:
+        goto label06;
+
+     label05:
+        $r21 = r0.<jdk.internal.org.objectweb.asm.Frame: int[] inputLocals>;
+
+        i13 = $r21[i11];
+
+     label06:
+        $r27 = r0.<jdk.internal.org.objectweb.asm.Frame: int[] initializations>;
+
+        if $r27 == null goto label07;
+
+        i13 = virtualinvoke r0.<jdk.internal.org.objectweb.asm.Frame: int getInitializedType(jdk.internal.org.objectweb.asm.SymbolTable,int)>(r9, i13);
+
+     label07:
+        $r22 = r3.<jdk.internal.org.objectweb.asm.Frame: int[] inputLocals>;
+
+        $z5 = staticinvoke <jdk.internal.org.objectweb.asm.Frame: boolean merge(jdk.internal.org.objectweb.asm.SymbolTable,int,int[],int)>(r9, i13, $r22, i11);
+
+        z6 = z6 | $z5;
+
+        i11 = i11 + 1;
+
+        goto label02;
+
+     label08:
+        if i2 <= 0 goto label12;
+
+        i14 = 0;
+
+     label09:
+        if i14 >= i0 goto label10;
+
+        $r18 = r0.<jdk.internal.org.objectweb.asm.Frame: int[] inputLocals>;
+
+        $i9 = $r18[i14];
+
+        $r19 = r3.<jdk.internal.org.objectweb.asm.Frame: int[] inputLocals>;
+
+        $z4 = staticinvoke <jdk.internal.org.objectweb.asm.Frame: boolean merge(jdk.internal.org.objectweb.asm.SymbolTable,int,int[],int)>(r9, $i9, $r19, i14);
+
+        z6 = z6 | $z4;
+
+        i14 = i14 + 1;
+
+        goto label09;
+
+     label10:
+        $r15 = r3.<jdk.internal.org.objectweb.asm.Frame: int[] inputStack>;
+
+        if $r15 != null goto label11;
+
+        $r17 = newarray (int)[1];
+
+        r3.<jdk.internal.org.objectweb.asm.Frame: int[] inputStack> = $r17;
+
+        z6 = 1;
+
+     label11:
+        $r16 = r3.<jdk.internal.org.objectweb.asm.Frame: int[] inputStack>;
+
+        $z2 = staticinvoke <jdk.internal.org.objectweb.asm.Frame: boolean merge(jdk.internal.org.objectweb.asm.SymbolTable,int,int[],int)>(r9, i2, $r16, 0);
+
+        $z3 = z6 | $z2;
+
+        return $z3;
+
+     label12:
+        $r5 = r0.<jdk.internal.org.objectweb.asm.Frame: int[] inputStack>;
+
+        $i4 = lengthof $r5;
+
+        $s3 = r0.<jdk.internal.org.objectweb.asm.Frame: short outputStackStart>;
+
+        $i21 = (int) $s3;
+
+        i15 = $i4 + $i21;
+
+        $r6 = r3.<jdk.internal.org.objectweb.asm.Frame: int[] inputStack>;
+
+        if $r6 != null goto label13;
+
+        $s7 = r0.<jdk.internal.org.objectweb.asm.Frame: short outputStackTop>;
+
+        $i22 = (int) $s7;
+
+        $i8 = i15 + $i22;
+
+        $r14 = newarray (int)[$i8];
+
+        r3.<jdk.internal.org.objectweb.asm.Frame: int[] inputStack> = $r14;
+
+        z6 = 1;
+
+     label13:
+        i16 = 0;
+
+     label14:
+        if i16 >= i15 goto label16;
+
+        $r11 = r0.<jdk.internal.org.objectweb.asm.Frame: int[] inputStack>;
+
+        i17 = $r11[i16];
+
+        $r12 = r0.<jdk.internal.org.objectweb.asm.Frame: int[] initializations>;
+
+        if $r12 == null goto label15;
+
+        i17 = virtualinvoke r0.<jdk.internal.org.objectweb.asm.Frame: int getInitializedType(jdk.internal.org.objectweb.asm.SymbolTable,int)>(r9, i17);
+
+     label15:
+        $r13 = r3.<jdk.internal.org.objectweb.asm.Frame: int[] inputStack>;
+
+        $z1 = staticinvoke <jdk.internal.org.objectweb.asm.Frame: boolean merge(jdk.internal.org.objectweb.asm.SymbolTable,int,int[],int)>(r9, i17, $r13, i16);
+
+        z6 = z6 | $z1;
+
+        i16 = i16 + 1;
+
+        goto label14;
+
+     label16:
+        i18 = 0;
+
+     label17:
+        $s5 = r0.<jdk.internal.org.objectweb.asm.Frame: short outputStackTop>;
+
+        $i23 = (int) $s5;
+
+        if i18 >= $i23 goto label19;
+
+        $r7 = r0.<jdk.internal.org.objectweb.asm.Frame: int[] outputStack>;
+
+        i19 = $r7[i18];
+
+        i20 = virtualinvoke r0.<jdk.internal.org.objectweb.asm.Frame: int getConcreteOutputType(int,int)>(i19, i1);
+
+        $r8 = r0.<jdk.internal.org.objectweb.asm.Frame: int[] initializations>;
+
+        if $r8 == null goto label18;
+
+        i20 = virtualinvoke r0.<jdk.internal.org.objectweb.asm.Frame: int getInitializedType(jdk.internal.org.objectweb.asm.SymbolTable,int)>(r9, i20);
+
+     label18:
+        $r10 = r3.<jdk.internal.org.objectweb.asm.Frame: int[] inputStack>;
+
+        $i6 = i15 + i18;
+
+        $z0 = staticinvoke <jdk.internal.org.objectweb.asm.Frame: boolean merge(jdk.internal.org.objectweb.asm.SymbolTable,int,int[],int)>(r9, i20, $r10, $i6);
+
+        z6 = z6 | $z0;
+
+        i18 = i18 + 1;
+
+        goto label17;
+
+     label19:
+        return z6;
+    }
+
+    private static boolean merge(jdk.internal.org.objectweb.asm.SymbolTable, int, int[], int)
+    {
+        int[] r0;
+        jdk.internal.org.objectweb.asm.SymbolTable r1;
+        int i0, i1, i2, $i3, $i4, $i5, $i6, $i7, $i8, $i9, $i10, $i11, $i12, $i13, $i14, $i15, $i16, $i17, $i18, $i19, $i20, $i21, $i22, $i23, i24, i25, i26, i27, $i28, i29, $i30, $i31, $i32, $i33;
+
+        r1 := @parameter0: jdk.internal.org.objectweb.asm.SymbolTable;
+
+        i2 := @parameter1: int;
+
+        r0 := @parameter2: int[];
+
+        i0 := @parameter3: int;
+
+        i1 = r0[i0];
+
+        if i1 != i2 goto label01;
+
+        return 0;
+
+     label01:
+        i24 = i2;
+
+        $i3 = i2 & 67108863;
+
+        if $i3 != 4194309 goto label03;
+
+        if i1 != 4194309 goto label02;
+
+        return 0;
+
+     label02:
+        i24 = 4194309;
+
+     label03:
+        if i1 != 0 goto label04;
+
+        r0[i0] = i24;
+
+        return 1;
+
+     label04:
+        $i4 = i1 & -67108864;
+
+        if $i4 != 0 goto label05;
+
+        $i21 = i1 & 62914560;
+
+        if $i21 != 8388608 goto label13;
+
+     label05:
+        if i24 != 4194309 goto label06;
+
+        return 0;
+
+     label06:
+        $i6 = i24 & -4194304;
+
+        $i5 = i1 & -4194304;
+
+        if $i6 != $i5 goto label08;
+
+        $i12 = i1 & 62914560;
+
+        if $i12 != 8388608 goto label07;
+
+        $i16 = i24 & -67108864;
+
+        $i20 = $i16 | 8388608;
+
+        $i18 = i24 & 1048575;
+
+        $i17 = i1 & 1048575;
+
+        $i19 = virtualinvoke r1.<jdk.internal.org.objectweb.asm.SymbolTable: int addMergedType(int,int)>($i18, $i17);
+
+        i25 = $i20 | $i19;
+
+        goto label18;
+
+     label07:
+        $i13 = i24 & -67108864;
+
+        i26 = -67108864 + $i13;
+
+        $i15 = i26 | 8388608;
+
+        $i14 = virtualinvoke r1.<jdk.internal.org.objectweb.asm.SymbolTable: int addType(java.lang.String)>("java/lang/Object");
+
+        i25 = $i15 | $i14;
+
+        goto label18;
+
+     label08:
+        $i7 = i24 & -67108864;
+
+        if $i7 != 0 goto label09;
+
+        $i10 = i24 & 62914560;
+
+        if $i10 != 8388608 goto label12;
+
+     label09:
+        $i11 = i24 & -67108864;
+
+        i27 = $i11;
+
+        if $i11 == false goto label10;
+
+        $i9 = i24 & 62914560;
+
+        if $i9 == 8388608 goto label10;
+
+        i27 = -67108864 + $i11;
+
+     label10:
+        $i28 = i1 & -67108864;
+
+        i29 = $i28;
+
+        if $i28 == false goto label11;
+
+        $i8 = i1 & 62914560;
+
+        if $i8 == 8388608 goto label11;
+
+        i29 = -67108864 + $i28;
+
+     label11:
+        $i30 = staticinvoke <java.lang.Math: int min(int,int)>(i27, i29);
+
+        $i31 = $i30 | 8388608;
+
+        $i32 = virtualinvoke r1.<jdk.internal.org.objectweb.asm.SymbolTable: int addType(java.lang.String)>("java/lang/Object");
+
+        i25 = $i31 | $i32;
+
+        goto label18;
+
+     label12:
+        i25 = 4194304;
+
+        goto label18;
+
+     label13:
+        if i1 != 4194309 goto label17;
+
+        $i22 = i24 & -67108864;
+
+        if $i22 != 0 goto label14;
+
+        $i23 = i24 & 62914560;
+
+        if $i23 != 8388608 goto label15;
+
+     label14:
+        $i33 = i24;
+
+        goto label16;
+
+     label15:
+        $i33 = 4194304;
+
+     label16:
+        i25 = $i33;
+
+        goto label18;
+
+     label17:
+        i25 = 4194304;
+
+     label18:
+        if i25 == i1 goto label19;
+
+        r0[i0] = i25;
+
+        return 1;
+
+     label19:
+        return 0;
+    }
+
+    final void accept(jdk.internal.org.objectweb.asm.MethodWriter)
+    {
+        byte $b16, $b20, $b24, $b27;
+        int[] r1, r4;
+        jdk.internal.org.objectweb.asm.Frame r0;
+        jdk.internal.org.objectweb.asm.MethodWriter r2;
+        int $i0, $i1, $i2, $i3, $i4, $i5, $i6, $i7, $i8, $i9, $i10, $i11, i12, i13, i14, i15, i17, i18, i19, i21, i22, i23, i25, i26, $i29, $i31;
+        jdk.internal.org.objectweb.asm.Label $r3;
+
+        r0 := @this: jdk.internal.org.objectweb.asm.Frame;
+
+        r2 := @parameter0: jdk.internal.org.objectweb.asm.MethodWriter;
+
+        r1 = r0.<jdk.internal.org.objectweb.asm.Frame: int[] inputLocals>;
+
+        i12 = 0;
+
+        i13 = 0;
+
+        i14 = 0;
+
+     label01:
+        $i0 = lengthof r1;
+
+        if i14 >= $i0 goto label07;
+
+        i15 = r1[i14];
+
+        $i11 = i14;
+
+        if i15 == 4194308 goto label02;
+
+        if i15 != 4194307 goto label03;
+
+     label02:
+        $b16 = 2;
+
+        goto label04;
+
+     label03:
+        $b16 = 1;
+
+     label04:
+        i14 = $i11 + $b16;
+
+        if i15 != 4194304 goto label05;
+
+        i13 = i13 + 1;
+
+        goto label06;
+
+     label05:
+        $i10 = i13 + 1;
+
+        i12 = i12 + $i10;
+
+        i13 = 0;
+
+     label06:
+        goto label01;
+
+     label07:
+        r4 = r0.<jdk.internal.org.objectweb.asm.Frame: int[] inputStack>;
+
+        i17 = 0;
+
+        i18 = 0;
+
+     label08:
+        $i1 = lengthof r4;
+
+        if i18 >= $i1 goto label12;
+
+        i19 = r4[i18];
+
+        $i9 = i18;
+
+        if i19 == 4194308 goto label09;
+
+        if i19 != 4194307 goto label10;
+
+     label09:
+        $b20 = 2;
+
+        goto label11;
+
+     label10:
+        $b20 = 1;
+
+     label11:
+        i18 = $i9 + $b20;
+
+        i17 = i17 + 1;
+
+        goto label08;
+
+     label12:
+        $r3 = r0.<jdk.internal.org.objectweb.asm.Frame: jdk.internal.org.objectweb.asm.Label owner>;
+
+        $i2 = $r3.<jdk.internal.org.objectweb.asm.Label: int bytecodeOffset>;
+
+        i21 = virtualinvoke r2.<jdk.internal.org.objectweb.asm.MethodWriter: int visitFrameStart(int,int,int)>($i2, i12, i17);
+
+        i22 = 0;
+
+     label13:
+        $i3 = i12;
+
+        $i29 = (int) -1;
+
+        i12 = i12 + $i29;
+
+        if $i3 <= 0 goto label17;
+
+        i23 = r1[i22];
+
+        $i8 = i22;
+
+        if i23 == 4194308 goto label14;
+
+        if i23 != 4194307 goto label15;
+
+     label14:
+        $b24 = 2;
+
+        goto label16;
+
+     label15:
+        $b24 = 1;
+
+     label16:
+        i22 = $i8 + $b24;
+
+        $i7 = i21;
+
+        i21 = i21 + 1;
+
+        virtualinvoke r2.<jdk.internal.org.objectweb.asm.MethodWriter: void visitAbstractType(int,int)>($i7, i23);
+
+        goto label13;
+
+     label17:
+        i25 = 0;
+
+     label18:
+        $i4 = i17;
+
+        $i31 = (int) -1;
+
+        i17 = i17 + $i31;
+
+        if $i4 <= 0 goto label22;
+
+        i26 = r4[i25];
+
+        $i6 = i25;
+
+        if i26 == 4194308 goto label19;
+
+        if i26 != 4194307 goto label20;
+
+     label19:
+        $b27 = 2;
+
+        goto label21;
+
+     label20:
+        $b27 = 1;
+
+     label21:
+        i25 = $i6 + $b27;
+
+        $i5 = i21;
+
+        i21 = i21 + 1;
+
+        virtualinvoke r2.<jdk.internal.org.objectweb.asm.MethodWriter: void visitAbstractType(int,int)>($i5, i26);
+
+        goto label18;
+
+     label22:
+        virtualinvoke r2.<jdk.internal.org.objectweb.asm.MethodWriter: void visitFrameEnd()>();
+
+        return;
+    }
+
+    static void putAbstractType(jdk.internal.org.objectweb.asm.SymbolTable, int, jdk.internal.org.objectweb.asm.ByteVector)
+    {
+        jdk.internal.org.objectweb.asm.SymbolTable r2;
+        jdk.internal.org.objectweb.asm.Symbol $r4, $r8, $r10, $r12, $r17;
+        java.lang.StringBuilder $r6, $r7, $r19;
+        long $l7;
+        java.lang.AssertionError $r18, $r20;
+        jdk.internal.org.objectweb.asm.ByteVector r1, $r9, $r13, $r15;
+        int i0, $i1, $i2, $i3, $i4, $i5, $i6, $i8, $i9, i10, i11, $i12, $i14;
+        java.lang.String $r5, $r11, $r16;
+
+        r2 := @parameter0: jdk.internal.org.objectweb.asm.SymbolTable;
+
+        i0 := @parameter1: int;
+
+        r1 := @parameter2: jdk.internal.org.objectweb.asm.ByteVector;
+
+        $i1 = i0 & -67108864;
+
+        i10 = $i1 >> 26;
+
+        if i10 != 0 goto label06;
+
+        i11 = i0 & 1048575;
+
+        $i6 = i0 & 62914560;
+
+        lookupswitch($i6)
+        {
+            case 4194304: goto label01;
+            case 8388608: goto label02;
+            case 12582912: goto label03;
+            default: goto label04;
+        };
+
+     label01:
+        virtualinvoke r1.<jdk.internal.org.objectweb.asm.ByteVector: jdk.internal.org.objectweb.asm.ByteVector putByte(int)>(i11);
+
+        goto label05;
+
+     label02:
+        $r13 = virtualinvoke r1.<jdk.internal.org.objectweb.asm.ByteVector: jdk.internal.org.objectweb.asm.ByteVector putByte(int)>(7);
+
+        $r10 = virtualinvoke r2.<jdk.internal.org.objectweb.asm.SymbolTable: jdk.internal.org.objectweb.asm.Symbol getType(int)>(i11);
+
+        $r11 = $r10.<jdk.internal.org.objectweb.asm.Symbol: java.lang.String value>;
+
+        $r12 = virtualinvoke r2.<jdk.internal.org.objectweb.asm.SymbolTable: jdk.internal.org.objectweb.asm.Symbol addConstantClass(java.lang.String)>($r11);
+
+        $i9 = $r12.<jdk.internal.org.objectweb.asm.Symbol: int index>;
+
+        virtualinvoke $r13.<jdk.internal.org.objectweb.asm.ByteVector: jdk.internal.org.objectweb.asm.ByteVector putShort(int)>($i9);
+
+        goto label05;
+
+     label03:
+        $r9 = virtualinvoke r1.<jdk.internal.org.objectweb.asm.ByteVector: jdk.internal.org.objectweb.asm.ByteVector putByte(int)>(8);
+
+        $r8 = virtualinvoke r2.<jdk.internal.org.objectweb.asm.SymbolTable: jdk.internal.org.objectweb.asm.Symbol getType(int)>(i11);
+
+        $l7 = $r8.<jdk.internal.org.objectweb.asm.Symbol: long data>;
+
+        $i8 = (int) $l7;
+
+        virtualinvoke $r9.<jdk.internal.org.objectweb.asm.ByteVector: jdk.internal.org.objectweb.asm.ByteVector putShort(int)>($i8);
+
+        goto label05;
+
+     label04:
+        $r18 = new java.lang.AssertionError;
+
+        specialinvoke $r18.<java.lang.AssertionError: void <init>()>();
+
+        throw $r18;
+
+     label05:
+        goto label20;
+
+     label06:
+        $r19 = new java.lang.StringBuilder;
+
+        specialinvoke $r19.<java.lang.StringBuilder: void <init>()>();
+
+     label07:
+        $i2 = i10;
+
+        $i14 = (int) -1;
+
+        i10 = i10 + $i14;
+
+        if $i2 <= 0 goto label08;
+
+        virtualinvoke $r19.<java.lang.StringBuilder: java.lang.StringBuilder append(char)>(91);
+
+        goto label07;
+
+     label08:
+        $i3 = i0 & 62914560;
+
+        if $i3 != 8388608 goto label09;
+
+        $r6 = virtualinvoke $r19.<java.lang.StringBuilder: java.lang.StringBuilder append(char)>(76);
+
+        $i5 = i0 & 1048575;
+
+        $r4 = virtualinvoke r2.<jdk.internal.org.objectweb.asm.SymbolTable: jdk.internal.org.objectweb.asm.Symbol getType(int)>($i5);
+
+        $r5 = $r4.<jdk.internal.org.objectweb.asm.Symbol: java.lang.String value>;
+
+        $r7 = virtualinvoke $r6.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>($r5);
+
+        virtualinvoke $r7.<java.lang.StringBuilder: java.lang.StringBuilder append(char)>(59);
+
+        goto label19;
+
+     label09:
+        $i4 = i0 & 1048575;
+
+        tableswitch($i4)
+        {
+            case 1: goto label14;
+            case 2: goto label15;
+            case 3: goto label17;
+            case 4: goto label16;
+            case 5: goto label18;
+            case 6: goto label18;
+            case 7: goto label18;
+            case 8: goto label18;
+            case 9: goto label10;
+            case 10: goto label11;
+            case 11: goto label12;
+            case 12: goto label13;
+            default: goto label18;
+        };
+
+     label10:
+        virtualinvoke $r19.<java.lang.StringBuilder: java.lang.StringBuilder append(char)>(90);
+
+        goto label19;
+
+     label11:
+        virtualinvoke $r19.<java.lang.StringBuilder: java.lang.StringBuilder append(char)>(66);
+
+        goto label19;
+
+     label12:
+        virtualinvoke $r19.<java.lang.StringBuilder: java.lang.StringBuilder append(char)>(67);
+
+        goto label19;
+
+     label13:
+        virtualinvoke $r19.<java.lang.StringBuilder: java.lang.StringBuilder append(char)>(83);
+
+        goto label19;
+
+     label14:
+        virtualinvoke $r19.<java.lang.StringBuilder: java.lang.StringBuilder append(char)>(73);
+
+        goto label19;
+
+     label15:
+        virtualinvoke $r19.<java.lang.StringBuilder: java.lang.StringBuilder append(char)>(70);
+
+        goto label19;
+
+     label16:
+        virtualinvoke $r19.<java.lang.StringBuilder: java.lang.StringBuilder append(char)>(74);
+
+        goto label19;
+
+     label17:
+        virtualinvoke $r19.<java.lang.StringBuilder: java.lang.StringBuilder append(char)>(68);
+
+        goto label19;
+
+     label18:
+        $r20 = new java.lang.AssertionError;
+
+        specialinvoke $r20.<java.lang.AssertionError: void <init>()>();
+
+        throw $r20;
+
+     label19:
+        $r15 = virtualinvoke r1.<jdk.internal.org.objectweb.asm.ByteVector: jdk.internal.org.objectweb.asm.ByteVector putByte(int)>(7);
+
+        $r16 = virtualinvoke $r19.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        $r17 = virtualinvoke r2.<jdk.internal.org.objectweb.asm.SymbolTable: jdk.internal.org.objectweb.asm.Symbol addConstantClass(java.lang.String)>($r16);
+
+        $i12 = $r17.<jdk.internal.org.objectweb.asm.Symbol: int index>;
+
+        virtualinvoke $r15.<jdk.internal.org.objectweb.asm.ByteVector: jdk.internal.org.objectweb.asm.ByteVector putShort(int)>($i12);
+
+     label20:
+        return;
+    }
+
+    public static void <clinit>()
+    {
+        <jdk.internal.org.objectweb.asm.Frame: int UNINITIALIZED_THIS> = 4194310;
+
+        <jdk.internal.org.objectweb.asm.Frame: int NULL> = 4194309;
+
+        <jdk.internal.org.objectweb.asm.Frame: int DOUBLE> = 4194307;
+
+        <jdk.internal.org.objectweb.asm.Frame: int LONG> = 4194308;
+
+        <jdk.internal.org.objectweb.asm.Frame: int FLOAT> = 4194306;
+
+        <jdk.internal.org.objectweb.asm.Frame: int INTEGER> = 4194305;
+
+        <jdk.internal.org.objectweb.asm.Frame: int SHORT> = 4194316;
+
+        <jdk.internal.org.objectweb.asm.Frame: int CHAR> = 4194315;
+
+        <jdk.internal.org.objectweb.asm.Frame: int BYTE> = 4194314;
+
+        <jdk.internal.org.objectweb.asm.Frame: int BOOLEAN> = 4194313;
+
+        <jdk.internal.org.objectweb.asm.Frame: int TOP> = 4194304;
+
+        <jdk.internal.org.objectweb.asm.Frame: int TOP_IF_LONG_OR_DOUBLE_FLAG> = 1048576;
+
+        <jdk.internal.org.objectweb.asm.Frame: int STACK_KIND> = 20971520;
+
+        <jdk.internal.org.objectweb.asm.Frame: int LOCAL_KIND> = 16777216;
+
+        <jdk.internal.org.objectweb.asm.Frame: int UNINITIALIZED_KIND> = 12582912;
+
+        <jdk.internal.org.objectweb.asm.Frame: int REFERENCE_KIND> = 8388608;
+
+        <jdk.internal.org.objectweb.asm.Frame: int CONSTANT_KIND> = 4194304;
+
+        <jdk.internal.org.objectweb.asm.Frame: int ELEMENT_OF> = -67108864;
+
+        <jdk.internal.org.objectweb.asm.Frame: int ARRAY_OF> = 67108864;
+
+        <jdk.internal.org.objectweb.asm.Frame: int VALUE_MASK> = 1048575;
+
+        <jdk.internal.org.objectweb.asm.Frame: int KIND_MASK> = 62914560;
+
+        <jdk.internal.org.objectweb.asm.Frame: int DIM_MASK> = -67108864;
+
+        <jdk.internal.org.objectweb.asm.Frame: int FLAGS_SHIFT> = 20;
+
+        <jdk.internal.org.objectweb.asm.Frame: int KIND_SHIFT> = 22;
+
+        <jdk.internal.org.objectweb.asm.Frame: int DIM_SHIFT> = 26;
+
+        <jdk.internal.org.objectweb.asm.Frame: int VALUE_SIZE> = 20;
+
+        <jdk.internal.org.objectweb.asm.Frame: int FLAGS_SIZE> = 2;
+
+        <jdk.internal.org.objectweb.asm.Frame: int KIND_SIZE> = 4;
+
+        <jdk.internal.org.objectweb.asm.Frame: int DIM_SIZE> = 6;
+
+        <jdk.internal.org.objectweb.asm.Frame: int ITEM_ASM_SHORT> = 12;
+
+        <jdk.internal.org.objectweb.asm.Frame: int ITEM_ASM_CHAR> = 11;
+
+        <jdk.internal.org.objectweb.asm.Frame: int ITEM_ASM_BYTE> = 10;
+
+        <jdk.internal.org.objectweb.asm.Frame: int ITEM_ASM_BOOLEAN> = 9;
+
+        <jdk.internal.org.objectweb.asm.Frame: int ITEM_UNINITIALIZED> = 8;
+
+        <jdk.internal.org.objectweb.asm.Frame: int ITEM_OBJECT> = 7;
+
+        <jdk.internal.org.objectweb.asm.Frame: int ITEM_UNINITIALIZED_THIS> = 6;
+
+        <jdk.internal.org.objectweb.asm.Frame: int ITEM_NULL> = 5;
+
+        <jdk.internal.org.objectweb.asm.Frame: int ITEM_LONG> = 4;
+
+        <jdk.internal.org.objectweb.asm.Frame: int ITEM_DOUBLE> = 3;
+
+        <jdk.internal.org.objectweb.asm.Frame: int ITEM_FLOAT> = 2;
+
+        <jdk.internal.org.objectweb.asm.Frame: int ITEM_INTEGER> = 1;
+
+        <jdk.internal.org.objectweb.asm.Frame: int ITEM_TOP> = 0;
+
+        <jdk.internal.org.objectweb.asm.Frame: int FULL_FRAME> = 255;
+
+        <jdk.internal.org.objectweb.asm.Frame: int APPEND_FRAME> = 252;
+
+        <jdk.internal.org.objectweb.asm.Frame: int SAME_FRAME_EXTENDED> = 251;
+
+        <jdk.internal.org.objectweb.asm.Frame: int CHOP_FRAME> = 248;
+
+        <jdk.internal.org.objectweb.asm.Frame: int SAME_LOCALS_1_STACK_ITEM_FRAME_EXTENDED> = 247;
+
+        <jdk.internal.org.objectweb.asm.Frame: int RESERVED> = 128;
+
+        <jdk.internal.org.objectweb.asm.Frame: int SAME_LOCALS_1_STACK_ITEM_FRAME> = 64;
+
+        <jdk.internal.org.objectweb.asm.Frame: int SAME_FRAME> = 0;
+
+        return;
+    }
+}

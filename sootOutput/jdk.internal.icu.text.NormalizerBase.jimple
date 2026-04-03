@@ -1,0 +1,994 @@
+public final class jdk.internal.icu.text.NormalizerBase extends java.lang.Object implements java.lang.Cloneable
+{
+    private jdk.internal.icu.text.UCharacterIterator text;
+    private jdk.internal.icu.text.Normalizer2 norm2;
+    private jdk.internal.icu.text.NormalizerBase$Mode mode;
+    private int options;
+    private int currentIndex;
+    private int nextIndex;
+    private java.lang.StringBuilder buffer;
+    private int bufferPos;
+    public static final int UNICODE_3_2;
+    public static final int UNICODE_3_2_0_ORIGINAL;
+    public static final int UNICODE_LATEST;
+    public static final int DONE;
+    public static final jdk.internal.icu.text.NormalizerBase$Mode NONE;
+    public static final jdk.internal.icu.text.NormalizerBase$Mode NFD;
+    public static final jdk.internal.icu.text.NormalizerBase$Mode NFKD;
+    public static final jdk.internal.icu.text.NormalizerBase$Mode NFC;
+    public static final jdk.internal.icu.text.NormalizerBase$Mode NFKC;
+
+    private static jdk.internal.icu.text.NormalizerBase$Mode toMode(java.text.Normalizer$Form)
+    {
+        java.lang.IllegalArgumentException $r6;
+        jdk.internal.icu.text.NormalizerBase$Mode $r2, $r3, $r4, $r5;
+        int[] $r1;
+        java.text.Normalizer$Form r0;
+        int $i0, $i1;
+        java.lang.StringBuilder $r7, $r8, $r9;
+        java.lang.String $r10;
+
+        r0 := @parameter0: java.text.Normalizer$Form;
+
+        $r1 = <jdk.internal.icu.text.NormalizerBase$1: int[] $SwitchMap$java$text$Normalizer$Form>;
+
+        $i0 = virtualinvoke r0.<java.text.Normalizer$Form: int ordinal()>();
+
+        $i1 = $r1[$i0];
+
+        tableswitch($i1)
+        {
+            case 1: goto label1;
+            case 2: goto label2;
+            case 3: goto label3;
+            case 4: goto label4;
+            default: goto label5;
+        };
+
+     label1:
+        $r5 = <jdk.internal.icu.text.NormalizerBase: jdk.internal.icu.text.NormalizerBase$Mode NFC>;
+
+        return $r5;
+
+     label2:
+        $r4 = <jdk.internal.icu.text.NormalizerBase: jdk.internal.icu.text.NormalizerBase$Mode NFD>;
+
+        return $r4;
+
+     label3:
+        $r3 = <jdk.internal.icu.text.NormalizerBase: jdk.internal.icu.text.NormalizerBase$Mode NFKC>;
+
+        return $r3;
+
+     label4:
+        $r2 = <jdk.internal.icu.text.NormalizerBase: jdk.internal.icu.text.NormalizerBase$Mode NFKD>;
+
+        return $r2;
+
+     label5:
+        $r6 = new java.lang.IllegalArgumentException;
+
+        $r7 = new java.lang.StringBuilder;
+
+        specialinvoke $r7.<java.lang.StringBuilder: void <init>()>();
+
+        $r8 = virtualinvoke $r7.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("Unexpected normalization form: ");
+
+        $r9 = virtualinvoke $r8.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.Object)>(r0);
+
+        $r10 = virtualinvoke $r9.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        specialinvoke $r6.<java.lang.IllegalArgumentException: void <init>(java.lang.String)>($r10);
+
+        throw $r6;
+    }
+
+    public void <init>(java.lang.String, jdk.internal.icu.text.NormalizerBase$Mode, int)
+    {
+        jdk.internal.icu.text.UCharacterIterator $r2;
+        int i0;
+        jdk.internal.icu.text.NormalizerBase r0;
+        java.lang.StringBuilder $r5;
+        java.lang.String r1;
+        jdk.internal.icu.text.Normalizer2 $r4;
+        jdk.internal.icu.text.NormalizerBase$Mode r3;
+
+        r0 := @this: jdk.internal.icu.text.NormalizerBase;
+
+        r1 := @parameter0: java.lang.String;
+
+        r3 := @parameter1: jdk.internal.icu.text.NormalizerBase$Mode;
+
+        i0 := @parameter2: int;
+
+        specialinvoke r0.<java.lang.Object: void <init>()>();
+
+        $r2 = staticinvoke <jdk.internal.icu.text.UCharacterIterator: jdk.internal.icu.text.UCharacterIterator getInstance(java.lang.String)>(r1);
+
+        r0.<jdk.internal.icu.text.NormalizerBase: jdk.internal.icu.text.UCharacterIterator text> = $r2;
+
+        r0.<jdk.internal.icu.text.NormalizerBase: jdk.internal.icu.text.NormalizerBase$Mode mode> = r3;
+
+        r0.<jdk.internal.icu.text.NormalizerBase: int options> = i0;
+
+        $r4 = virtualinvoke r3.<jdk.internal.icu.text.NormalizerBase$Mode: jdk.internal.icu.text.Normalizer2 getNormalizer2(int)>(i0);
+
+        r0.<jdk.internal.icu.text.NormalizerBase: jdk.internal.icu.text.Normalizer2 norm2> = $r4;
+
+        $r5 = new java.lang.StringBuilder;
+
+        specialinvoke $r5.<java.lang.StringBuilder: void <init>()>();
+
+        r0.<jdk.internal.icu.text.NormalizerBase: java.lang.StringBuilder buffer> = $r5;
+
+        return;
+    }
+
+    public void <init>(java.lang.String, jdk.internal.icu.text.NormalizerBase$Mode)
+    {
+        jdk.internal.icu.text.NormalizerBase r0;
+        java.lang.String r1;
+        jdk.internal.icu.text.NormalizerBase$Mode r2;
+
+        r0 := @this: jdk.internal.icu.text.NormalizerBase;
+
+        r1 := @parameter0: java.lang.String;
+
+        r2 := @parameter1: jdk.internal.icu.text.NormalizerBase$Mode;
+
+        specialinvoke r0.<jdk.internal.icu.text.NormalizerBase: void <init>(java.lang.String,jdk.internal.icu.text.NormalizerBase$Mode,int)>(r1, r2, 0);
+
+        return;
+    }
+
+    public void <init>(java.text.CharacterIterator, jdk.internal.icu.text.NormalizerBase$Mode, int)
+    {
+        java.text.CharacterIterator r1, $r3;
+        jdk.internal.icu.text.UCharacterIterator $r4;
+        jdk.internal.icu.text.NormalizerBase r0;
+        jdk.internal.icu.text.Normalizer2 $r6;
+        jdk.internal.icu.text.NormalizerBase$Mode r5;
+        int i0;
+        java.lang.Object $r2;
+        java.lang.StringBuilder $r7;
+
+        r0 := @this: jdk.internal.icu.text.NormalizerBase;
+
+        r1 := @parameter0: java.text.CharacterIterator;
+
+        r5 := @parameter1: jdk.internal.icu.text.NormalizerBase$Mode;
+
+        i0 := @parameter2: int;
+
+        specialinvoke r0.<java.lang.Object: void <init>()>();
+
+        $r2 = interfaceinvoke r1.<java.text.CharacterIterator: java.lang.Object clone()>();
+
+        $r3 = (java.text.CharacterIterator) $r2;
+
+        $r4 = staticinvoke <jdk.internal.icu.text.UCharacterIterator: jdk.internal.icu.text.UCharacterIterator getInstance(java.text.CharacterIterator)>($r3);
+
+        r0.<jdk.internal.icu.text.NormalizerBase: jdk.internal.icu.text.UCharacterIterator text> = $r4;
+
+        r0.<jdk.internal.icu.text.NormalizerBase: jdk.internal.icu.text.NormalizerBase$Mode mode> = r5;
+
+        r0.<jdk.internal.icu.text.NormalizerBase: int options> = i0;
+
+        $r6 = virtualinvoke r5.<jdk.internal.icu.text.NormalizerBase$Mode: jdk.internal.icu.text.Normalizer2 getNormalizer2(int)>(i0);
+
+        r0.<jdk.internal.icu.text.NormalizerBase: jdk.internal.icu.text.Normalizer2 norm2> = $r6;
+
+        $r7 = new java.lang.StringBuilder;
+
+        specialinvoke $r7.<java.lang.StringBuilder: void <init>()>();
+
+        r0.<jdk.internal.icu.text.NormalizerBase: java.lang.StringBuilder buffer> = $r7;
+
+        return;
+    }
+
+    public void <init>(java.text.CharacterIterator, jdk.internal.icu.text.NormalizerBase$Mode)
+    {
+        jdk.internal.icu.text.NormalizerBase r0;
+        java.text.CharacterIterator r1;
+        jdk.internal.icu.text.NormalizerBase$Mode r2;
+
+        r0 := @this: jdk.internal.icu.text.NormalizerBase;
+
+        r1 := @parameter0: java.text.CharacterIterator;
+
+        r2 := @parameter1: jdk.internal.icu.text.NormalizerBase$Mode;
+
+        specialinvoke r0.<jdk.internal.icu.text.NormalizerBase: void <init>(java.text.CharacterIterator,jdk.internal.icu.text.NormalizerBase$Mode,int)>(r1, r2, 0);
+
+        return;
+    }
+
+    public java.lang.Object clone()
+    {
+        jdk.internal.icu.text.UCharacterIterator $r2, $r4;
+        jdk.internal.icu.text.Normalizer2 $r6;
+        java.lang.CloneNotSupportedException $r9;
+        int $i0, $i1, $i2, $i3;
+        java.lang.InternalError $r10;
+        java.lang.String $r11;
+        jdk.internal.icu.text.NormalizerBase r0, r12;
+        jdk.internal.icu.text.NormalizerBase$Mode $r5;
+        java.lang.Object $r1, $r3;
+        java.lang.StringBuilder $r7, $r8;
+
+        r0 := @this: jdk.internal.icu.text.NormalizerBase;
+
+     label1:
+        $r1 = specialinvoke r0.<java.lang.Object: java.lang.Object clone()>();
+
+        r12 = (jdk.internal.icu.text.NormalizerBase) $r1;
+
+        $r2 = r0.<jdk.internal.icu.text.NormalizerBase: jdk.internal.icu.text.UCharacterIterator text>;
+
+        $r3 = virtualinvoke $r2.<jdk.internal.icu.text.UCharacterIterator: java.lang.Object clone()>();
+
+        $r4 = (jdk.internal.icu.text.UCharacterIterator) $r3;
+
+        r12.<jdk.internal.icu.text.NormalizerBase: jdk.internal.icu.text.UCharacterIterator text> = $r4;
+
+        $r5 = r0.<jdk.internal.icu.text.NormalizerBase: jdk.internal.icu.text.NormalizerBase$Mode mode>;
+
+        r12.<jdk.internal.icu.text.NormalizerBase: jdk.internal.icu.text.NormalizerBase$Mode mode> = $r5;
+
+        $i0 = r0.<jdk.internal.icu.text.NormalizerBase: int options>;
+
+        r12.<jdk.internal.icu.text.NormalizerBase: int options> = $i0;
+
+        $r6 = r0.<jdk.internal.icu.text.NormalizerBase: jdk.internal.icu.text.Normalizer2 norm2>;
+
+        r12.<jdk.internal.icu.text.NormalizerBase: jdk.internal.icu.text.Normalizer2 norm2> = $r6;
+
+        $r7 = new java.lang.StringBuilder;
+
+        $r8 = r0.<jdk.internal.icu.text.NormalizerBase: java.lang.StringBuilder buffer>;
+
+        specialinvoke $r7.<java.lang.StringBuilder: void <init>(java.lang.CharSequence)>($r8);
+
+        r12.<jdk.internal.icu.text.NormalizerBase: java.lang.StringBuilder buffer> = $r7;
+
+        $i1 = r0.<jdk.internal.icu.text.NormalizerBase: int bufferPos>;
+
+        r12.<jdk.internal.icu.text.NormalizerBase: int bufferPos> = $i1;
+
+        $i2 = r0.<jdk.internal.icu.text.NormalizerBase: int currentIndex>;
+
+        r12.<jdk.internal.icu.text.NormalizerBase: int currentIndex> = $i2;
+
+        $i3 = r0.<jdk.internal.icu.text.NormalizerBase: int nextIndex>;
+
+        r12.<jdk.internal.icu.text.NormalizerBase: int nextIndex> = $i3;
+
+     label2:
+        return r12;
+
+     label3:
+        $r9 := @caughtexception;
+
+        $r10 = new java.lang.InternalError;
+
+        $r11 = virtualinvoke $r9.<java.lang.CloneNotSupportedException: java.lang.String toString()>();
+
+        specialinvoke $r10.<java.lang.InternalError: void <init>(java.lang.String,java.lang.Throwable)>($r11, $r9);
+
+        throw $r10;
+
+        catch java.lang.CloneNotSupportedException from label1 to label2 with label3;
+    }
+
+    public static java.lang.String normalize(java.lang.String, jdk.internal.icu.text.NormalizerBase$Mode, int)
+    {
+        int i0;
+        java.lang.String r1, $r3;
+        jdk.internal.icu.text.Normalizer2 $r2;
+        jdk.internal.icu.text.NormalizerBase$Mode r0;
+
+        r1 := @parameter0: java.lang.String;
+
+        r0 := @parameter1: jdk.internal.icu.text.NormalizerBase$Mode;
+
+        i0 := @parameter2: int;
+
+        $r2 = virtualinvoke r0.<jdk.internal.icu.text.NormalizerBase$Mode: jdk.internal.icu.text.Normalizer2 getNormalizer2(int)>(i0);
+
+        $r3 = virtualinvoke $r2.<jdk.internal.icu.text.Normalizer2: java.lang.String normalize(java.lang.CharSequence)>(r1);
+
+        return $r3;
+    }
+
+    public static java.lang.String normalize(java.lang.String, java.text.Normalizer$Form)
+    {
+        java.text.Normalizer$Form r1;
+        java.lang.String r0, $r3;
+        jdk.internal.icu.text.NormalizerBase$Mode $r2;
+
+        r0 := @parameter0: java.lang.String;
+
+        r1 := @parameter1: java.text.Normalizer$Form;
+
+        $r2 = staticinvoke <jdk.internal.icu.text.NormalizerBase: jdk.internal.icu.text.NormalizerBase$Mode toMode(java.text.Normalizer$Form)>(r1);
+
+        $r3 = staticinvoke <jdk.internal.icu.text.NormalizerBase: java.lang.String normalize(java.lang.String,jdk.internal.icu.text.NormalizerBase$Mode,int)>(r0, $r2, 0);
+
+        return $r3;
+    }
+
+    public static java.lang.String normalize(java.lang.String, java.text.Normalizer$Form, int)
+    {
+        java.text.Normalizer$Form r1;
+        int i0;
+        java.lang.String r0, $r3;
+        jdk.internal.icu.text.NormalizerBase$Mode $r2;
+
+        r0 := @parameter0: java.lang.String;
+
+        r1 := @parameter1: java.text.Normalizer$Form;
+
+        i0 := @parameter2: int;
+
+        $r2 = staticinvoke <jdk.internal.icu.text.NormalizerBase: jdk.internal.icu.text.NormalizerBase$Mode toMode(java.text.Normalizer$Form)>(r1);
+
+        $r3 = staticinvoke <jdk.internal.icu.text.NormalizerBase: java.lang.String normalize(java.lang.String,jdk.internal.icu.text.NormalizerBase$Mode,int)>(r0, $r2, i0);
+
+        return $r3;
+    }
+
+    public static boolean isNormalized(java.lang.String, jdk.internal.icu.text.NormalizerBase$Mode, int)
+    {
+        int i0;
+        java.lang.String r1;
+        jdk.internal.icu.text.Normalizer2 $r2;
+        jdk.internal.icu.text.NormalizerBase$Mode r0;
+        boolean $z0;
+
+        r1 := @parameter0: java.lang.String;
+
+        r0 := @parameter1: jdk.internal.icu.text.NormalizerBase$Mode;
+
+        i0 := @parameter2: int;
+
+        $r2 = virtualinvoke r0.<jdk.internal.icu.text.NormalizerBase$Mode: jdk.internal.icu.text.Normalizer2 getNormalizer2(int)>(i0);
+
+        $z0 = virtualinvoke $r2.<jdk.internal.icu.text.Normalizer2: boolean isNormalized(java.lang.CharSequence)>(r1);
+
+        return $z0;
+    }
+
+    public static boolean isNormalized(java.lang.String, java.text.Normalizer$Form)
+    {
+        java.text.Normalizer$Form r1;
+        java.lang.String r0;
+        jdk.internal.icu.text.NormalizerBase$Mode $r2;
+        boolean $z0;
+
+        r0 := @parameter0: java.lang.String;
+
+        r1 := @parameter1: java.text.Normalizer$Form;
+
+        $r2 = staticinvoke <jdk.internal.icu.text.NormalizerBase: jdk.internal.icu.text.NormalizerBase$Mode toMode(java.text.Normalizer$Form)>(r1);
+
+        $z0 = staticinvoke <jdk.internal.icu.text.NormalizerBase: boolean isNormalized(java.lang.String,jdk.internal.icu.text.NormalizerBase$Mode,int)>(r0, $r2, 0);
+
+        return $z0;
+    }
+
+    public static boolean isNormalized(java.lang.String, java.text.Normalizer$Form, int)
+    {
+        java.text.Normalizer$Form r1;
+        int i0;
+        java.lang.String r0;
+        jdk.internal.icu.text.NormalizerBase$Mode $r2;
+        boolean $z0;
+
+        r0 := @parameter0: java.lang.String;
+
+        r1 := @parameter1: java.text.Normalizer$Form;
+
+        i0 := @parameter2: int;
+
+        $r2 = staticinvoke <jdk.internal.icu.text.NormalizerBase: jdk.internal.icu.text.NormalizerBase$Mode toMode(java.text.Normalizer$Form)>(r1);
+
+        $z0 = staticinvoke <jdk.internal.icu.text.NormalizerBase: boolean isNormalized(java.lang.String,jdk.internal.icu.text.NormalizerBase$Mode,int)>(r0, $r2, i0);
+
+        return $z0;
+    }
+
+    public int current()
+    {
+        jdk.internal.icu.text.NormalizerBase r0;
+        int $i0, $i1, $i2, $i3, $i5;
+        java.lang.StringBuilder $r1, $r2;
+        boolean $z0;
+
+        r0 := @this: jdk.internal.icu.text.NormalizerBase;
+
+        $i0 = r0.<jdk.internal.icu.text.NormalizerBase: int bufferPos>;
+
+        $r1 = r0.<jdk.internal.icu.text.NormalizerBase: java.lang.StringBuilder buffer>;
+
+        $i1 = virtualinvoke $r1.<java.lang.StringBuilder: int length()>();
+
+        if $i0 < $i1 goto label1;
+
+        $z0 = virtualinvoke r0.<jdk.internal.icu.text.NormalizerBase: boolean nextNormalize()>();
+
+        if $z0 == false goto label2;
+
+     label1:
+        $r2 = r0.<jdk.internal.icu.text.NormalizerBase: java.lang.StringBuilder buffer>;
+
+        $i2 = r0.<jdk.internal.icu.text.NormalizerBase: int bufferPos>;
+
+        $i3 = virtualinvoke $r2.<java.lang.StringBuilder: int codePointAt(int)>($i2);
+
+        return $i3;
+
+     label2:
+        $i5 = (int) -1;
+
+        return $i5;
+    }
+
+    public int next()
+    {
+        jdk.internal.icu.text.NormalizerBase r0;
+        int $i0, $i1, $i2, $i3, $i4, $i5, $i6, $i8;
+        java.lang.StringBuilder $r1, $r2;
+        boolean $z0;
+
+        r0 := @this: jdk.internal.icu.text.NormalizerBase;
+
+        $i0 = r0.<jdk.internal.icu.text.NormalizerBase: int bufferPos>;
+
+        $r1 = r0.<jdk.internal.icu.text.NormalizerBase: java.lang.StringBuilder buffer>;
+
+        $i1 = virtualinvoke $r1.<java.lang.StringBuilder: int length()>();
+
+        if $i0 < $i1 goto label1;
+
+        $z0 = virtualinvoke r0.<jdk.internal.icu.text.NormalizerBase: boolean nextNormalize()>();
+
+        if $z0 == false goto label2;
+
+     label1:
+        $r2 = r0.<jdk.internal.icu.text.NormalizerBase: java.lang.StringBuilder buffer>;
+
+        $i2 = r0.<jdk.internal.icu.text.NormalizerBase: int bufferPos>;
+
+        $i6 = virtualinvoke $r2.<java.lang.StringBuilder: int codePointAt(int)>($i2);
+
+        $i3 = r0.<jdk.internal.icu.text.NormalizerBase: int bufferPos>;
+
+        $i4 = staticinvoke <java.lang.Character: int charCount(int)>($i6);
+
+        $i5 = $i3 + $i4;
+
+        r0.<jdk.internal.icu.text.NormalizerBase: int bufferPos> = $i5;
+
+        return $i6;
+
+     label2:
+        $i8 = (int) -1;
+
+        return $i8;
+    }
+
+    public int previous()
+    {
+        jdk.internal.icu.text.NormalizerBase r0;
+        int $i0, $i1, $i2, $i3, $i4, $i5, $i7;
+        java.lang.StringBuilder $r1;
+        boolean $z0;
+
+        r0 := @this: jdk.internal.icu.text.NormalizerBase;
+
+        $i0 = r0.<jdk.internal.icu.text.NormalizerBase: int bufferPos>;
+
+        if $i0 > 0 goto label1;
+
+        $z0 = virtualinvoke r0.<jdk.internal.icu.text.NormalizerBase: boolean previousNormalize()>();
+
+        if $z0 == false goto label2;
+
+     label1:
+        $r1 = r0.<jdk.internal.icu.text.NormalizerBase: java.lang.StringBuilder buffer>;
+
+        $i1 = r0.<jdk.internal.icu.text.NormalizerBase: int bufferPos>;
+
+        $i5 = virtualinvoke $r1.<java.lang.StringBuilder: int codePointBefore(int)>($i1);
+
+        $i2 = r0.<jdk.internal.icu.text.NormalizerBase: int bufferPos>;
+
+        $i3 = staticinvoke <java.lang.Character: int charCount(int)>($i5);
+
+        $i4 = $i2 - $i3;
+
+        r0.<jdk.internal.icu.text.NormalizerBase: int bufferPos> = $i4;
+
+        return $i5;
+
+     label2:
+        $i7 = (int) -1;
+
+        return $i7;
+    }
+
+    public void reset()
+    {
+        jdk.internal.icu.text.UCharacterIterator $r1;
+        jdk.internal.icu.text.NormalizerBase r0;
+
+        r0 := @this: jdk.internal.icu.text.NormalizerBase;
+
+        $r1 = r0.<jdk.internal.icu.text.NormalizerBase: jdk.internal.icu.text.UCharacterIterator text>;
+
+        virtualinvoke $r1.<jdk.internal.icu.text.UCharacterIterator: void setIndex(int)>(0);
+
+        r0.<jdk.internal.icu.text.NormalizerBase: int nextIndex> = 0;
+
+        r0.<jdk.internal.icu.text.NormalizerBase: int currentIndex> = 0;
+
+        virtualinvoke r0.<jdk.internal.icu.text.NormalizerBase: void clearBuffer()>();
+
+        return;
+    }
+
+    public void setIndexOnly(int)
+    {
+        int i0;
+        jdk.internal.icu.text.UCharacterIterator $r1;
+        jdk.internal.icu.text.NormalizerBase r0;
+
+        r0 := @this: jdk.internal.icu.text.NormalizerBase;
+
+        i0 := @parameter0: int;
+
+        $r1 = r0.<jdk.internal.icu.text.NormalizerBase: jdk.internal.icu.text.UCharacterIterator text>;
+
+        virtualinvoke $r1.<jdk.internal.icu.text.UCharacterIterator: void setIndex(int)>(i0);
+
+        r0.<jdk.internal.icu.text.NormalizerBase: int nextIndex> = i0;
+
+        r0.<jdk.internal.icu.text.NormalizerBase: int currentIndex> = i0;
+
+        virtualinvoke r0.<jdk.internal.icu.text.NormalizerBase: void clearBuffer()>();
+
+        return;
+    }
+
+    public int setIndex(int)
+    {
+        int i0, $i1;
+        jdk.internal.icu.text.NormalizerBase r0;
+
+        r0 := @this: jdk.internal.icu.text.NormalizerBase;
+
+        i0 := @parameter0: int;
+
+        virtualinvoke r0.<jdk.internal.icu.text.NormalizerBase: void setIndexOnly(int)>(i0);
+
+        $i1 = virtualinvoke r0.<jdk.internal.icu.text.NormalizerBase: int current()>();
+
+        return $i1;
+    }
+
+    public int getBeginIndex()
+    {
+        jdk.internal.icu.text.NormalizerBase r0;
+
+        r0 := @this: jdk.internal.icu.text.NormalizerBase;
+
+        return 0;
+    }
+
+    public int getEndIndex()
+    {
+        int $i0;
+        jdk.internal.icu.text.NormalizerBase r0;
+
+        r0 := @this: jdk.internal.icu.text.NormalizerBase;
+
+        $i0 = virtualinvoke r0.<jdk.internal.icu.text.NormalizerBase: int endIndex()>();
+
+        return $i0;
+    }
+
+    public int getIndex()
+    {
+        int $i0, $i1, $i2, $i3;
+        jdk.internal.icu.text.NormalizerBase r0;
+        java.lang.StringBuilder $r1;
+
+        r0 := @this: jdk.internal.icu.text.NormalizerBase;
+
+        $i0 = r0.<jdk.internal.icu.text.NormalizerBase: int bufferPos>;
+
+        $r1 = r0.<jdk.internal.icu.text.NormalizerBase: java.lang.StringBuilder buffer>;
+
+        $i1 = virtualinvoke $r1.<java.lang.StringBuilder: int length()>();
+
+        if $i0 >= $i1 goto label1;
+
+        $i3 = r0.<jdk.internal.icu.text.NormalizerBase: int currentIndex>;
+
+        return $i3;
+
+     label1:
+        $i2 = r0.<jdk.internal.icu.text.NormalizerBase: int nextIndex>;
+
+        return $i2;
+    }
+
+    public int endIndex()
+    {
+        jdk.internal.icu.text.UCharacterIterator $r1;
+        int $i0;
+        jdk.internal.icu.text.NormalizerBase r0;
+
+        r0 := @this: jdk.internal.icu.text.NormalizerBase;
+
+        $r1 = r0.<jdk.internal.icu.text.NormalizerBase: jdk.internal.icu.text.UCharacterIterator text>;
+
+        $i0 = virtualinvoke $r1.<jdk.internal.icu.text.UCharacterIterator: int getLength()>();
+
+        return $i0;
+    }
+
+    public void setMode(jdk.internal.icu.text.NormalizerBase$Mode)
+    {
+        int $i0;
+        jdk.internal.icu.text.NormalizerBase r0;
+        jdk.internal.icu.text.Normalizer2 $r3;
+        jdk.internal.icu.text.NormalizerBase$Mode r1, $r2;
+
+        r0 := @this: jdk.internal.icu.text.NormalizerBase;
+
+        r1 := @parameter0: jdk.internal.icu.text.NormalizerBase$Mode;
+
+        r0.<jdk.internal.icu.text.NormalizerBase: jdk.internal.icu.text.NormalizerBase$Mode mode> = r1;
+
+        $r2 = r0.<jdk.internal.icu.text.NormalizerBase: jdk.internal.icu.text.NormalizerBase$Mode mode>;
+
+        $i0 = r0.<jdk.internal.icu.text.NormalizerBase: int options>;
+
+        $r3 = virtualinvoke $r2.<jdk.internal.icu.text.NormalizerBase$Mode: jdk.internal.icu.text.Normalizer2 getNormalizer2(int)>($i0);
+
+        r0.<jdk.internal.icu.text.NormalizerBase: jdk.internal.icu.text.Normalizer2 norm2> = $r3;
+
+        return;
+    }
+
+    public jdk.internal.icu.text.NormalizerBase$Mode getMode()
+    {
+        jdk.internal.icu.text.NormalizerBase r0;
+        jdk.internal.icu.text.NormalizerBase$Mode $r1;
+
+        r0 := @this: jdk.internal.icu.text.NormalizerBase;
+
+        $r1 = r0.<jdk.internal.icu.text.NormalizerBase: jdk.internal.icu.text.NormalizerBase$Mode mode>;
+
+        return $r1;
+    }
+
+    public void setText(java.lang.String)
+    {
+        java.lang.IllegalStateException $r3;
+        jdk.internal.icu.text.UCharacterIterator r1;
+        jdk.internal.icu.text.NormalizerBase r2;
+        java.lang.String r0;
+
+        r2 := @this: jdk.internal.icu.text.NormalizerBase;
+
+        r0 := @parameter0: java.lang.String;
+
+        r1 = staticinvoke <jdk.internal.icu.text.UCharacterIterator: jdk.internal.icu.text.UCharacterIterator getInstance(java.lang.String)>(r0);
+
+        if r1 != null goto label1;
+
+        $r3 = new java.lang.IllegalStateException;
+
+        specialinvoke $r3.<java.lang.IllegalStateException: void <init>(java.lang.String)>("Could not create a new UCharacterIterator");
+
+        throw $r3;
+
+     label1:
+        r2.<jdk.internal.icu.text.NormalizerBase: jdk.internal.icu.text.UCharacterIterator text> = r1;
+
+        virtualinvoke r2.<jdk.internal.icu.text.NormalizerBase: void reset()>();
+
+        return;
+    }
+
+    public void setText(java.text.CharacterIterator)
+    {
+        java.lang.IllegalStateException $r3;
+        java.text.CharacterIterator r0;
+        jdk.internal.icu.text.UCharacterIterator r1;
+        jdk.internal.icu.text.NormalizerBase r2;
+
+        r2 := @this: jdk.internal.icu.text.NormalizerBase;
+
+        r0 := @parameter0: java.text.CharacterIterator;
+
+        r1 = staticinvoke <jdk.internal.icu.text.UCharacterIterator: jdk.internal.icu.text.UCharacterIterator getInstance(java.text.CharacterIterator)>(r0);
+
+        if r1 != null goto label1;
+
+        $r3 = new java.lang.IllegalStateException;
+
+        specialinvoke $r3.<java.lang.IllegalStateException: void <init>(java.lang.String)>("Could not create a new UCharacterIterator");
+
+        throw $r3;
+
+     label1:
+        r2.<jdk.internal.icu.text.NormalizerBase: jdk.internal.icu.text.UCharacterIterator text> = r1;
+
+        r2.<jdk.internal.icu.text.NormalizerBase: int nextIndex> = 0;
+
+        r2.<jdk.internal.icu.text.NormalizerBase: int currentIndex> = 0;
+
+        virtualinvoke r2.<jdk.internal.icu.text.NormalizerBase: void clearBuffer()>();
+
+        return;
+    }
+
+    private void clearBuffer()
+    {
+        jdk.internal.icu.text.NormalizerBase r0;
+        java.lang.StringBuilder $r1;
+
+        r0 := @this: jdk.internal.icu.text.NormalizerBase;
+
+        $r1 = r0.<jdk.internal.icu.text.NormalizerBase: java.lang.StringBuilder buffer>;
+
+        virtualinvoke $r1.<java.lang.StringBuilder: void setLength(int)>(0);
+
+        r0.<jdk.internal.icu.text.NormalizerBase: int bufferPos> = 0;
+
+        return;
+    }
+
+    private boolean nextNormalize()
+    {
+        jdk.internal.icu.text.UCharacterIterator $r1, $r2, $r5, $r6, $r11;
+        jdk.internal.icu.text.Normalizer2 $r8, $r10;
+        int $i0, $i1, $i2, $i3, $i4, i5, $i7;
+        boolean $z0, $z1;
+        jdk.internal.icu.text.NormalizerBase r0;
+        java.lang.StringBuilder r4, $r7, $r9, $r12;
+
+        r0 := @this: jdk.internal.icu.text.NormalizerBase;
+
+        virtualinvoke r0.<jdk.internal.icu.text.NormalizerBase: void clearBuffer()>();
+
+        $i0 = r0.<jdk.internal.icu.text.NormalizerBase: int nextIndex>;
+
+        r0.<jdk.internal.icu.text.NormalizerBase: int currentIndex> = $i0;
+
+        $r1 = r0.<jdk.internal.icu.text.NormalizerBase: jdk.internal.icu.text.UCharacterIterator text>;
+
+        $i1 = r0.<jdk.internal.icu.text.NormalizerBase: int nextIndex>;
+
+        virtualinvoke $r1.<jdk.internal.icu.text.UCharacterIterator: void setIndex(int)>($i1);
+
+        $r2 = r0.<jdk.internal.icu.text.NormalizerBase: jdk.internal.icu.text.UCharacterIterator text>;
+
+        i5 = virtualinvoke $r2.<jdk.internal.icu.text.UCharacterIterator: int nextCodePoint()>();
+
+        if i5 >= 0 goto label1;
+
+        return 0;
+
+     label1:
+        $r12 = new java.lang.StringBuilder;
+
+        specialinvoke $r12.<java.lang.StringBuilder: void <init>()>();
+
+        r4 = virtualinvoke $r12.<java.lang.StringBuilder: java.lang.StringBuilder appendCodePoint(int)>(i5);
+
+     label2:
+        $r5 = r0.<jdk.internal.icu.text.NormalizerBase: jdk.internal.icu.text.UCharacterIterator text>;
+
+        $i2 = virtualinvoke $r5.<jdk.internal.icu.text.UCharacterIterator: int nextCodePoint()>();
+
+        if $i2 < 0 goto label4;
+
+        $r10 = r0.<jdk.internal.icu.text.NormalizerBase: jdk.internal.icu.text.Normalizer2 norm2>;
+
+        $z0 = virtualinvoke $r10.<jdk.internal.icu.text.Normalizer2: boolean hasBoundaryBefore(int)>($i2);
+
+        if $z0 == false goto label3;
+
+        $r11 = r0.<jdk.internal.icu.text.NormalizerBase: jdk.internal.icu.text.UCharacterIterator text>;
+
+        $i7 = (int) -1;
+
+        virtualinvoke $r11.<jdk.internal.icu.text.UCharacterIterator: int moveCodePointIndex(int)>($i7);
+
+        goto label4;
+
+     label3:
+        virtualinvoke r4.<java.lang.StringBuilder: java.lang.StringBuilder appendCodePoint(int)>($i2);
+
+        goto label2;
+
+     label4:
+        $r6 = r0.<jdk.internal.icu.text.NormalizerBase: jdk.internal.icu.text.UCharacterIterator text>;
+
+        $i3 = virtualinvoke $r6.<jdk.internal.icu.text.UCharacterIterator: int getIndex()>();
+
+        r0.<jdk.internal.icu.text.NormalizerBase: int nextIndex> = $i3;
+
+        $r8 = r0.<jdk.internal.icu.text.NormalizerBase: jdk.internal.icu.text.Normalizer2 norm2>;
+
+        $r7 = r0.<jdk.internal.icu.text.NormalizerBase: java.lang.StringBuilder buffer>;
+
+        virtualinvoke $r8.<jdk.internal.icu.text.Normalizer2: java.lang.StringBuilder normalize(java.lang.CharSequence,java.lang.StringBuilder)>(r4, $r7);
+
+        $r9 = r0.<jdk.internal.icu.text.NormalizerBase: java.lang.StringBuilder buffer>;
+
+        $i4 = virtualinvoke $r9.<java.lang.StringBuilder: int length()>();
+
+        if $i4 == false goto label5;
+
+        $z1 = 1;
+
+        goto label6;
+
+     label5:
+        $z1 = 0;
+
+     label6:
+        return $z1;
+    }
+
+    private boolean previousNormalize()
+    {
+        jdk.internal.icu.text.UCharacterIterator $r1, $r3, $r4;
+        jdk.internal.icu.text.Normalizer2 $r6, $r10;
+        int $i0, $i1, $i2, $i3, $i4, $i5, $i8;
+        boolean $z0, $z1;
+        jdk.internal.icu.text.NormalizerBase r0;
+        char $c6;
+        char[] $r9;
+        java.lang.StringBuilder $r5, $r7, $r8, $r11;
+
+        r0 := @this: jdk.internal.icu.text.NormalizerBase;
+
+        virtualinvoke r0.<jdk.internal.icu.text.NormalizerBase: void clearBuffer()>();
+
+        $i0 = r0.<jdk.internal.icu.text.NormalizerBase: int currentIndex>;
+
+        r0.<jdk.internal.icu.text.NormalizerBase: int nextIndex> = $i0;
+
+        $r1 = r0.<jdk.internal.icu.text.NormalizerBase: jdk.internal.icu.text.UCharacterIterator text>;
+
+        $i1 = r0.<jdk.internal.icu.text.NormalizerBase: int currentIndex>;
+
+        virtualinvoke $r1.<jdk.internal.icu.text.UCharacterIterator: void setIndex(int)>($i1);
+
+        $r11 = new java.lang.StringBuilder;
+
+        specialinvoke $r11.<java.lang.StringBuilder: void <init>()>();
+
+     label1:
+        $r3 = r0.<jdk.internal.icu.text.NormalizerBase: jdk.internal.icu.text.UCharacterIterator text>;
+
+        $i2 = virtualinvoke $r3.<jdk.internal.icu.text.UCharacterIterator: int previousCodePoint()>();
+
+        if $i2 < 0 goto label4;
+
+        $i8 = (int) 65535;
+
+        if $i2 > $i8 goto label2;
+
+        $c6 = (char) $i2;
+
+        virtualinvoke $r11.<java.lang.StringBuilder: java.lang.StringBuilder insert(int,char)>(0, $c6);
+
+        goto label3;
+
+     label2:
+        $r9 = staticinvoke <java.lang.Character: char[] toChars(int)>($i2);
+
+        virtualinvoke $r11.<java.lang.StringBuilder: java.lang.StringBuilder insert(int,char[])>(0, $r9);
+
+     label3:
+        $r10 = r0.<jdk.internal.icu.text.NormalizerBase: jdk.internal.icu.text.Normalizer2 norm2>;
+
+        $z0 = virtualinvoke $r10.<jdk.internal.icu.text.Normalizer2: boolean hasBoundaryBefore(int)>($i2);
+
+        if $z0 == false goto label1;
+
+        goto label4;
+
+     label4:
+        $r4 = r0.<jdk.internal.icu.text.NormalizerBase: jdk.internal.icu.text.UCharacterIterator text>;
+
+        $i3 = virtualinvoke $r4.<jdk.internal.icu.text.UCharacterIterator: int getIndex()>();
+
+        r0.<jdk.internal.icu.text.NormalizerBase: int currentIndex> = $i3;
+
+        $r6 = r0.<jdk.internal.icu.text.NormalizerBase: jdk.internal.icu.text.Normalizer2 norm2>;
+
+        $r5 = r0.<jdk.internal.icu.text.NormalizerBase: java.lang.StringBuilder buffer>;
+
+        virtualinvoke $r6.<jdk.internal.icu.text.Normalizer2: java.lang.StringBuilder normalize(java.lang.CharSequence,java.lang.StringBuilder)>($r11, $r5);
+
+        $r7 = r0.<jdk.internal.icu.text.NormalizerBase: java.lang.StringBuilder buffer>;
+
+        $i4 = virtualinvoke $r7.<java.lang.StringBuilder: int length()>();
+
+        r0.<jdk.internal.icu.text.NormalizerBase: int bufferPos> = $i4;
+
+        $r8 = r0.<jdk.internal.icu.text.NormalizerBase: java.lang.StringBuilder buffer>;
+
+        $i5 = virtualinvoke $r8.<java.lang.StringBuilder: int length()>();
+
+        if $i5 == false goto label5;
+
+        $z1 = 1;
+
+        goto label6;
+
+     label5:
+        $z1 = 0;
+
+     label6:
+        return $z1;
+    }
+
+    static void <clinit>()
+    {
+        jdk.internal.icu.text.NormalizerBase$NFKCMode $r4;
+        jdk.internal.icu.text.NormalizerBase$NONEMode $r0;
+        jdk.internal.icu.text.NormalizerBase$NFKDMode $r2;
+        jdk.internal.icu.text.NormalizerBase$NFCMode $r3;
+        jdk.internal.icu.text.NormalizerBase$NFDMode $r1;
+
+        <jdk.internal.icu.text.NormalizerBase: int DONE> = -1;
+
+        <jdk.internal.icu.text.NormalizerBase: int UNICODE_LATEST> = 0;
+
+        <jdk.internal.icu.text.NormalizerBase: int UNICODE_3_2_0_ORIGINAL> = 32;
+
+        <jdk.internal.icu.text.NormalizerBase: int UNICODE_3_2> = 32;
+
+        $r0 = new jdk.internal.icu.text.NormalizerBase$NONEMode;
+
+        specialinvoke $r0.<jdk.internal.icu.text.NormalizerBase$NONEMode: void <init>()>();
+
+        <jdk.internal.icu.text.NormalizerBase: jdk.internal.icu.text.NormalizerBase$Mode NONE> = $r0;
+
+        $r1 = new jdk.internal.icu.text.NormalizerBase$NFDMode;
+
+        specialinvoke $r1.<jdk.internal.icu.text.NormalizerBase$NFDMode: void <init>()>();
+
+        <jdk.internal.icu.text.NormalizerBase: jdk.internal.icu.text.NormalizerBase$Mode NFD> = $r1;
+
+        $r2 = new jdk.internal.icu.text.NormalizerBase$NFKDMode;
+
+        specialinvoke $r2.<jdk.internal.icu.text.NormalizerBase$NFKDMode: void <init>()>();
+
+        <jdk.internal.icu.text.NormalizerBase: jdk.internal.icu.text.NormalizerBase$Mode NFKD> = $r2;
+
+        $r3 = new jdk.internal.icu.text.NormalizerBase$NFCMode;
+
+        specialinvoke $r3.<jdk.internal.icu.text.NormalizerBase$NFCMode: void <init>()>();
+
+        <jdk.internal.icu.text.NormalizerBase: jdk.internal.icu.text.NormalizerBase$Mode NFC> = $r3;
+
+        $r4 = new jdk.internal.icu.text.NormalizerBase$NFKCMode;
+
+        specialinvoke $r4.<jdk.internal.icu.text.NormalizerBase$NFKCMode: void <init>()>();
+
+        <jdk.internal.icu.text.NormalizerBase: jdk.internal.icu.text.NormalizerBase$Mode NFKC> = $r4;
+
+        return;
+    }
+}

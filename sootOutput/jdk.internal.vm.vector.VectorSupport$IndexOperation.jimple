@@ -1,0 +1,5 @@
+public interface  jdk.internal.vm.vector.VectorSupport$IndexOperation extends java.lang.Object
+{
+
+    public abstract jdk.internal.vm.vector.VectorSupport$Vector index(jdk.internal.vm.vector.VectorSupport$Vector, int, jdk.internal.vm.vector.VectorSupport$VectorSpecies);
+}

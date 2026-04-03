@@ -1,0 +1,11 @@
+public interface  jdk.internal.access.foreign.UnmapperProxy extends java.lang.Object
+{
+
+    public abstract long address();
+
+    public abstract java.io.FileDescriptor fileDescriptor();
+
+    public abstract boolean isSync();
+
+    public abstract void unmap();
+}

@@ -1,0 +1,102 @@
+final class jdk.internal.icu.util.CodePointTrie$Data32 extends jdk.internal.icu.util.CodePointTrie$Data
+{
+    int[] array;
+
+    void <init>(int[])
+    {
+        jdk.internal.icu.util.CodePointTrie$Data32 r0;
+        int[] r1;
+
+        r0 := @this: jdk.internal.icu.util.CodePointTrie$Data32;
+
+        r1 := @parameter0: int[];
+
+        specialinvoke r0.<jdk.internal.icu.util.CodePointTrie$Data: void <init>()>();
+
+        r0.<jdk.internal.icu.util.CodePointTrie$Data32: int[] array> = r1;
+
+        return;
+    }
+
+    jdk.internal.icu.util.CodePointTrie$ValueWidth getValueWidth()
+    {
+        jdk.internal.icu.util.CodePointTrie$ValueWidth $r0;
+        jdk.internal.icu.util.CodePointTrie$Data32 r1;
+
+        r1 := @this: jdk.internal.icu.util.CodePointTrie$Data32;
+
+        $r0 = <jdk.internal.icu.util.CodePointTrie$ValueWidth: jdk.internal.icu.util.CodePointTrie$ValueWidth BITS_32>;
+
+        return $r0;
+    }
+
+    int getDataLength()
+    {
+        int $i0;
+        jdk.internal.icu.util.CodePointTrie$Data32 r0;
+        int[] $r1;
+
+        r0 := @this: jdk.internal.icu.util.CodePointTrie$Data32;
+
+        $r1 = r0.<jdk.internal.icu.util.CodePointTrie$Data32: int[] array>;
+
+        $i0 = lengthof $r1;
+
+        return $i0;
+    }
+
+    int getFromIndex(int)
+    {
+        int[] $r1;
+        int i0, $i1;
+        jdk.internal.icu.util.CodePointTrie$Data32 r0;
+
+        r0 := @this: jdk.internal.icu.util.CodePointTrie$Data32;
+
+        i0 := @parameter0: int;
+
+        $r1 = r0.<jdk.internal.icu.util.CodePointTrie$Data32: int[] array>;
+
+        $i1 = $r1[i0];
+
+        return $i1;
+    }
+
+    int write(java.io.DataOutputStream) throws java.io.IOException
+    {
+        jdk.internal.icu.util.CodePointTrie$Data32 r0;
+        java.io.DataOutputStream r3;
+        int[] r1, $r2;
+        int i0, $i1, $i2, i3, i4;
+
+        r0 := @this: jdk.internal.icu.util.CodePointTrie$Data32;
+
+        r3 := @parameter0: java.io.DataOutputStream;
+
+        r1 = r0.<jdk.internal.icu.util.CodePointTrie$Data32: int[] array>;
+
+        i0 = lengthof r1;
+
+        i4 = 0;
+
+     label1:
+        if i4 >= i0 goto label2;
+
+        i3 = r1[i4];
+
+        virtualinvoke r3.<java.io.DataOutputStream: void writeInt(int)>(i3);
+
+        i4 = i4 + 1;
+
+        goto label1;
+
+     label2:
+        $r2 = r0.<jdk.internal.icu.util.CodePointTrie$Data32: int[] array>;
+
+        $i1 = lengthof $r2;
+
+        $i2 = $i1 * 4;
+
+        return $i2;
+    }
+}

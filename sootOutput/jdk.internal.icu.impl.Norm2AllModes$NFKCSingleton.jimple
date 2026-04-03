@@ -1,0 +1,28 @@
+final class jdk.internal.icu.impl.Norm2AllModes$NFKCSingleton extends java.lang.Object
+{
+    private static final jdk.internal.icu.impl.Norm2AllModes$Norm2AllModesSingleton INSTANCE;
+
+    private void <init>()
+    {
+        jdk.internal.icu.impl.Norm2AllModes$NFKCSingleton r0;
+
+        r0 := @this: jdk.internal.icu.impl.Norm2AllModes$NFKCSingleton;
+
+        specialinvoke r0.<java.lang.Object: void <init>()>();
+
+        return;
+    }
+
+    static void <clinit>()
+    {
+        jdk.internal.icu.impl.Norm2AllModes$Norm2AllModesSingleton $r0;
+
+        $r0 = new jdk.internal.icu.impl.Norm2AllModes$Norm2AllModesSingleton;
+
+        specialinvoke $r0.<jdk.internal.icu.impl.Norm2AllModes$Norm2AllModesSingleton: void <init>(java.lang.String)>("nfkc");
+
+        <jdk.internal.icu.impl.Norm2AllModes$NFKCSingleton: jdk.internal.icu.impl.Norm2AllModes$Norm2AllModesSingleton INSTANCE> = $r0;
+
+        return;
+    }
+}

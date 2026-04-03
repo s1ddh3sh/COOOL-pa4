@@ -1,0 +1,108 @@
+final class jdk.internal.icu.util.CodePointTrie$Data16 extends jdk.internal.icu.util.CodePointTrie$Data
+{
+    char[] array;
+
+    void <init>(char[])
+    {
+        char[] r1;
+        jdk.internal.icu.util.CodePointTrie$Data16 r0;
+
+        r0 := @this: jdk.internal.icu.util.CodePointTrie$Data16;
+
+        r1 := @parameter0: char[];
+
+        specialinvoke r0.<jdk.internal.icu.util.CodePointTrie$Data: void <init>()>();
+
+        r0.<jdk.internal.icu.util.CodePointTrie$Data16: char[] array> = r1;
+
+        return;
+    }
+
+    jdk.internal.icu.util.CodePointTrie$ValueWidth getValueWidth()
+    {
+        jdk.internal.icu.util.CodePointTrie$ValueWidth $r0;
+        jdk.internal.icu.util.CodePointTrie$Data16 r1;
+
+        r1 := @this: jdk.internal.icu.util.CodePointTrie$Data16;
+
+        $r0 = <jdk.internal.icu.util.CodePointTrie$ValueWidth: jdk.internal.icu.util.CodePointTrie$ValueWidth BITS_16>;
+
+        return $r0;
+    }
+
+    int getDataLength()
+    {
+        int $i0;
+        char[] $r1;
+        jdk.internal.icu.util.CodePointTrie$Data16 r0;
+
+        r0 := @this: jdk.internal.icu.util.CodePointTrie$Data16;
+
+        $r1 = r0.<jdk.internal.icu.util.CodePointTrie$Data16: char[] array>;
+
+        $i0 = lengthof $r1;
+
+        return $i0;
+    }
+
+    int getFromIndex(int)
+    {
+        jdk.internal.icu.util.CodePointTrie$Data16 r0;
+        int i0, $i2;
+        char[] $r1;
+        char $c1;
+
+        r0 := @this: jdk.internal.icu.util.CodePointTrie$Data16;
+
+        i0 := @parameter0: int;
+
+        $r1 = r0.<jdk.internal.icu.util.CodePointTrie$Data16: char[] array>;
+
+        $c1 = $r1[i0];
+
+        $i2 = (int) $c1;
+
+        return $i2;
+    }
+
+    int write(java.io.DataOutputStream) throws java.io.IOException
+    {
+        jdk.internal.icu.util.CodePointTrie$Data16 r0;
+        char c3;
+        java.io.DataOutputStream r3;
+        int i0, $i1, $i2, i4, $i5;
+        char[] r1, $r2;
+
+        r0 := @this: jdk.internal.icu.util.CodePointTrie$Data16;
+
+        r3 := @parameter0: java.io.DataOutputStream;
+
+        r1 = r0.<jdk.internal.icu.util.CodePointTrie$Data16: char[] array>;
+
+        i0 = lengthof r1;
+
+        i4 = 0;
+
+     label1:
+        if i4 >= i0 goto label2;
+
+        c3 = r1[i4];
+
+        $i5 = (int) c3;
+
+        virtualinvoke r3.<java.io.DataOutputStream: void writeChar(int)>($i5);
+
+        i4 = i4 + 1;
+
+        goto label1;
+
+     label2:
+        $r2 = r0.<jdk.internal.icu.util.CodePointTrie$Data16: char[] array>;
+
+        $i1 = lengthof $r2;
+
+        $i2 = $i1 * 2;
+
+        return $i2;
+    }
+}

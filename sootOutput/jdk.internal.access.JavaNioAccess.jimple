@@ -1,0 +1,35 @@
+public interface  jdk.internal.access.JavaNioAccess extends java.lang.Object
+{
+
+    public abstract jdk.internal.misc.VM$BufferPool getDirectBufferPool();
+
+    public abstract java.nio.ByteBuffer newDirectByteBuffer(long, int, java.lang.Object, jdk.internal.access.foreign.MemorySegmentProxy);
+
+    public abstract java.nio.ByteBuffer newMappedByteBuffer(jdk.internal.access.foreign.UnmapperProxy, long, int, java.lang.Object, jdk.internal.access.foreign.MemorySegmentProxy);
+
+    public abstract java.nio.ByteBuffer newHeapByteBuffer(byte[], int, int, jdk.internal.access.foreign.MemorySegmentProxy);
+
+    public abstract java.lang.Object getBufferBase(java.nio.ByteBuffer);
+
+    public abstract long getBufferAddress(java.nio.ByteBuffer);
+
+    public abstract jdk.internal.access.foreign.UnmapperProxy unmapper(java.nio.ByteBuffer);
+
+    public abstract jdk.internal.access.foreign.MemorySegmentProxy bufferSegment(java.nio.Buffer);
+
+    public abstract jdk.internal.misc.ScopedMemoryAccess$Scope$Handle acquireScope(java.nio.Buffer, boolean);
+
+    public abstract void force(java.io.FileDescriptor, long, boolean, long, long);
+
+    public abstract void load(long, boolean, long);
+
+    public abstract void unload(long, boolean, long);
+
+    public abstract boolean isLoaded(long, boolean, long);
+
+    public abstract void reserveMemory(long, long);
+
+    public abstract void unreserveMemory(long, long);
+
+    public abstract int pageSize();
+}

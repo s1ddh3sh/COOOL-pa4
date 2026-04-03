@@ -1,0 +1,122 @@
+public final class jdk.internal.icu.impl.NormalizerImpl$UTF16Plus extends java.lang.Object
+{
+
+    public void <init>()
+    {
+        jdk.internal.icu.impl.NormalizerImpl$UTF16Plus r0;
+
+        r0 := @this: jdk.internal.icu.impl.NormalizerImpl$UTF16Plus;
+
+        specialinvoke r0.<java.lang.Object: void <init>()>();
+
+        return;
+    }
+
+    public static boolean isLeadSurrogate(int)
+    {
+        int i0, $i1, $i3, $i5;
+        boolean $z0;
+
+        i0 := @parameter0: int;
+
+        $i3 = (int) -1024;
+
+        $i1 = i0 & $i3;
+
+        $i5 = (int) 55296;
+
+        if $i1 != $i5 goto label1;
+
+        $z0 = 1;
+
+        goto label2;
+
+     label1:
+        $z0 = 0;
+
+     label2:
+        return $z0;
+    }
+
+    public static boolean isSurrogateLead(int)
+    {
+        int i0, $i1;
+        boolean $z0;
+
+        i0 := @parameter0: int;
+
+        $i1 = i0 & 1024;
+
+        if $i1 != 0 goto label1;
+
+        $z0 = 1;
+
+        goto label2;
+
+     label1:
+        $z0 = 0;
+
+     label2:
+        return $z0;
+    }
+
+    public static boolean equal(java.lang.CharSequence, int, int, java.lang.CharSequence, int, int)
+    {
+        java.lang.CharSequence r0, r1;
+        char $c6, $c7;
+        int i0, i1, $i2, $i3, $i4, $i5, i8, i9, $i10, $i11;
+
+        r0 := @parameter0: java.lang.CharSequence;
+
+        i8 := @parameter1: int;
+
+        i0 := @parameter2: int;
+
+        r1 := @parameter3: java.lang.CharSequence;
+
+        i9 := @parameter4: int;
+
+        i1 := @parameter5: int;
+
+        $i3 = i0 - i8;
+
+        $i2 = i1 - i9;
+
+        if $i3 == $i2 goto label1;
+
+        return 0;
+
+     label1:
+        if r0 != r1 goto label2;
+
+        if i8 != i9 goto label2;
+
+        return 1;
+
+     label2:
+        if i8 >= i0 goto label3;
+
+        $i4 = i8;
+
+        i8 = i8 + 1;
+
+        $c7 = interfaceinvoke r0.<java.lang.CharSequence: char charAt(int)>($i4);
+
+        $i5 = i9;
+
+        i9 = i9 + 1;
+
+        $c6 = interfaceinvoke r1.<java.lang.CharSequence: char charAt(int)>($i5);
+
+        $i10 = (int) $c7;
+
+        $i11 = (int) $c6;
+
+        if $i10 == $i11 goto label2;
+
+        return 0;
+
+     label3:
+        return 1;
+    }
+}

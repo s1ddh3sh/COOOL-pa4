@@ -1,0 +1,849 @@
+public final class jdk.internal.icu.impl.UCharacterProperty extends java.lang.Object
+{
+    public static final jdk.internal.icu.impl.UCharacterProperty INSTANCE;
+    public jdk.internal.icu.impl.Trie2_16 m_trie_;
+    public jdk.internal.icu.util.VersionInfo m_unicodeVersion_;
+    public static final int TYPE_MASK;
+    public static final int SRC_CHAR;
+    public static final int SRC_PROPSVEC;
+    public static final int SRC_BIDI;
+    public static final int SRC_NFC;
+    public static final int SRC_NFKC;
+    private static final int[] gcbToHst;
+    private jdk.internal.icu.impl.UCharacterProperty$IntProperty intProp;
+    jdk.internal.icu.impl.Trie2_16 m_additionalTrie_;
+    int[] m_additionalVectors_;
+    int m_additionalColumnsCount_;
+    int m_maxBlockScriptValue_;
+    int m_maxJTGValue_;
+    public char[] m_scriptExtensions_;
+    private static final java.lang.String DATA_FILE_NAME_;
+    private static final int LEAD_SURROGATE_SHIFT_;
+    private static final int SURROGATE_OFFSET_;
+    private static final int NUMERIC_TYPE_VALUE_SHIFT_;
+    private static final int NTV_NONE_;
+    private static final int NTV_DECIMAL_START_;
+    private static final int NTV_DIGIT_START_;
+    private static final int NTV_NUMERIC_START_;
+    public static final int SCRIPT_X_MASK;
+    public static final int SCRIPT_HIGH_MASK;
+    public static final int SCRIPT_HIGH_SHIFT;
+    public static final int MAX_SCRIPT;
+    private static final int EAST_ASIAN_MASK_;
+    private static final int EAST_ASIAN_SHIFT_;
+    private static final int BLOCK_MASK_;
+    private static final int BLOCK_SHIFT_;
+    public static final int SCRIPT_LOW_MASK;
+    private static final int WHITE_SPACE_PROPERTY_;
+    private static final int DASH_PROPERTY_;
+    private static final int HYPHEN_PROPERTY_;
+    private static final int QUOTATION_MARK_PROPERTY_;
+    private static final int TERMINAL_PUNCTUATION_PROPERTY_;
+    private static final int MATH_PROPERTY_;
+    private static final int HEX_DIGIT_PROPERTY_;
+    private static final int ASCII_HEX_DIGIT_PROPERTY_;
+    private static final int ALPHABETIC_PROPERTY_;
+    private static final int IDEOGRAPHIC_PROPERTY_;
+    private static final int DIACRITIC_PROPERTY_;
+    private static final int EXTENDER_PROPERTY_;
+    private static final int NONCHARACTER_CODE_POINT_PROPERTY_;
+    private static final int GRAPHEME_EXTEND_PROPERTY_;
+    private static final int GRAPHEME_LINK_PROPERTY_;
+    private static final int IDS_BINARY_OPERATOR_PROPERTY_;
+    private static final int IDS_TRINARY_OPERATOR_PROPERTY_;
+    private static final int RADICAL_PROPERTY_;
+    private static final int UNIFIED_IDEOGRAPH_PROPERTY_;
+    private static final int DEFAULT_IGNORABLE_CODE_POINT_PROPERTY_;
+    private static final int DEPRECATED_PROPERTY_;
+    private static final int LOGICAL_ORDER_EXCEPTION_PROPERTY_;
+    private static final int XID_START_PROPERTY_;
+    private static final int XID_CONTINUE_PROPERTY_;
+    private static final int ID_START_PROPERTY_;
+    private static final int ID_CONTINUE_PROPERTY_;
+    private static final int GRAPHEME_BASE_PROPERTY_;
+    private static final int S_TERM_PROPERTY_;
+    private static final int VARIATION_SELECTOR_PROPERTY_;
+    private static final int PATTERN_SYNTAX;
+    private static final int PATTERN_WHITE_SPACE;
+    private static final int LB_MASK;
+    private static final int LB_SHIFT;
+    private static final int SB_MASK;
+    private static final int SB_SHIFT;
+    private static final int WB_MASK;
+    private static final int WB_SHIFT;
+    private static final int GCB_MASK;
+    private static final int GCB_SHIFT;
+    private static final int DECOMPOSITION_TYPE_MASK_;
+    private static final int FIRST_NIBBLE_SHIFT_;
+    private static final int LAST_NIBBLE_MASK_;
+    private static final int AGE_SHIFT_;
+    private static final int DATA_FORMAT;
+    public static final int BIDI_PAIRED_BRACKET_TYPE;
+    static final boolean $assertionsDisabled;
+
+    public final int getProperty(int)
+    {
+        int i0, $i1;
+        jdk.internal.icu.impl.Trie2_16 $r1;
+        jdk.internal.icu.impl.UCharacterProperty r0;
+
+        r0 := @this: jdk.internal.icu.impl.UCharacterProperty;
+
+        i0 := @parameter0: int;
+
+        $r1 = r0.<jdk.internal.icu.impl.UCharacterProperty: jdk.internal.icu.impl.Trie2_16 m_trie_>;
+
+        $i1 = virtualinvoke $r1.<jdk.internal.icu.impl.Trie2_16: int get(int)>(i0);
+
+        return $i1;
+    }
+
+    public int getAdditional(int, int)
+    {
+        java.lang.AssertionError $r3;
+        jdk.internal.icu.impl.UCharacterProperty r0;
+        int[] $r2;
+        int i0, $i1, i2, $i3, $i4, $i5;
+        jdk.internal.icu.impl.Trie2_16 $r1;
+        boolean $z0;
+
+        r0 := @this: jdk.internal.icu.impl.UCharacterProperty;
+
+        i2 := @parameter0: int;
+
+        i0 := @parameter1: int;
+
+        $z0 = <jdk.internal.icu.impl.UCharacterProperty: boolean $assertionsDisabled>;
+
+        if $z0 != 0 goto label1;
+
+        if i0 >= 0 goto label1;
+
+        $r3 = new java.lang.AssertionError;
+
+        specialinvoke $r3.<java.lang.AssertionError: void <init>()>();
+
+        throw $r3;
+
+     label1:
+        $i1 = r0.<jdk.internal.icu.impl.UCharacterProperty: int m_additionalColumnsCount_>;
+
+        if i0 < $i1 goto label2;
+
+        return 0;
+
+     label2:
+        $r2 = r0.<jdk.internal.icu.impl.UCharacterProperty: int[] m_additionalVectors_>;
+
+        $r1 = r0.<jdk.internal.icu.impl.UCharacterProperty: jdk.internal.icu.impl.Trie2_16 m_additionalTrie_>;
+
+        $i3 = virtualinvoke $r1.<jdk.internal.icu.impl.Trie2_16: int get(int)>(i2);
+
+        $i4 = $i3 + i0;
+
+        $i5 = $r2[$i4];
+
+        return $i5;
+    }
+
+    public jdk.internal.icu.util.VersionInfo getAge(int)
+    {
+        jdk.internal.icu.impl.UCharacterProperty r0;
+        int i0, $i1, i2, $i3, $i4, $i5;
+        jdk.internal.icu.util.VersionInfo $r1;
+
+        r0 := @this: jdk.internal.icu.impl.UCharacterProperty;
+
+        i0 := @parameter0: int;
+
+        $i1 = virtualinvoke r0.<jdk.internal.icu.impl.UCharacterProperty: int getAdditional(int,int)>(i0, 0);
+
+        i2 = $i1 >> 24;
+
+        $i3 = i2 >> 4;
+
+        $i5 = $i3 & 15;
+
+        $i4 = i2 & 15;
+
+        $r1 = staticinvoke <jdk.internal.icu.util.VersionInfo: jdk.internal.icu.util.VersionInfo getInstance(int,int,int,int)>($i5, $i4, 0, 0);
+
+        return $r1;
+    }
+
+    public int getType(int)
+    {
+        int i0, $i1, $i2;
+        jdk.internal.icu.impl.UCharacterProperty r0;
+
+        r0 := @this: jdk.internal.icu.impl.UCharacterProperty;
+
+        i0 := @parameter0: int;
+
+        $i1 = virtualinvoke r0.<jdk.internal.icu.impl.UCharacterProperty: int getProperty(int)>(i0);
+
+        $i2 = $i1 & 31;
+
+        return $i2;
+    }
+
+    public int getIntPropertyValue(int, int)
+    {
+        int i0, i1, $i2;
+        jdk.internal.icu.impl.UCharacterProperty$IntProperty $r1;
+        jdk.internal.icu.impl.UCharacterProperty r0;
+
+        r0 := @this: jdk.internal.icu.impl.UCharacterProperty;
+
+        i1 := @parameter0: int;
+
+        i0 := @parameter1: int;
+
+        if i0 != 4117 goto label1;
+
+        $r1 = r0.<jdk.internal.icu.impl.UCharacterProperty: jdk.internal.icu.impl.UCharacterProperty$IntProperty intProp>;
+
+        $i2 = virtualinvoke $r1.<jdk.internal.icu.impl.UCharacterProperty$IntProperty: int getValue(int)>(i1);
+
+        return $i2;
+
+     label1:
+        return 0;
+    }
+
+    public static int getRawSupplementary(char, char)
+    {
+        int $i2, $i3, $i4, $i5, $i6;
+        char c0, c1;
+
+        c0 := @parameter0: char;
+
+        c1 := @parameter1: char;
+
+        $i5 = (int) c0;
+
+        $i2 = $i5 << 10;
+
+        $i6 = (int) c1;
+
+        $i3 = $i2 + $i6;
+
+        $i4 = $i3 + -56613888;
+
+        return $i4;
+    }
+
+    public static final int getMask(int)
+    {
+        int i0, $i1;
+
+        i0 := @parameter0: int;
+
+        $i1 = 1 << i0;
+
+        return $i1;
+    }
+
+    public static int getEuropeanDigit(int)
+    {
+        byte $b7;
+        int i0, $i1, $i2, $i3, $i4, $i5, $i6, $i9, $i11, $i13, $i15, $i17, $i19, $i21, $i23;
+
+        i0 := @parameter0: int;
+
+        if i0 <= 122 goto label1;
+
+        $i9 = (int) 65313;
+
+        if i0 < $i9 goto label3;
+
+     label1:
+        if i0 < 65 goto label3;
+
+        if i0 <= 90 goto label2;
+
+        if i0 < 97 goto label3;
+
+     label2:
+        $i11 = (int) 65370;
+
+        if i0 > $i11 goto label3;
+
+        $i13 = (int) 65338;
+
+        if i0 <= $i13 goto label4;
+
+        $i15 = (int) 65345;
+
+        if i0 >= $i15 goto label4;
+
+     label3:
+        $i17 = (int) -1;
+
+        return $i17;
+
+     label4:
+        if i0 > 122 goto label7;
+
+        $i5 = i0 + 10;
+
+        if i0 > 90 goto label5;
+
+        $b7 = 65;
+
+        goto label6;
+
+     label5:
+        $b7 = 97;
+
+     label6:
+        $i6 = $i5 - $b7;
+
+        return $i6;
+
+     label7:
+        $i19 = (int) 65338;
+
+        if i0 > $i19 goto label8;
+
+        $i3 = i0 + 10;
+
+        $i21 = (int) 65313;
+
+        $i4 = $i3 - $i21;
+
+        return $i4;
+
+     label8:
+        $i1 = i0 + 10;
+
+        $i23 = (int) 65345;
+
+        $i2 = $i1 - $i23;
+
+        return $i2;
+    }
+
+    public int digit(int)
+    {
+        int i0, $i1, $i2, i3, $i5;
+        jdk.internal.icu.impl.UCharacterProperty r0;
+
+        r0 := @this: jdk.internal.icu.impl.UCharacterProperty;
+
+        i0 := @parameter0: int;
+
+        $i1 = virtualinvoke r0.<jdk.internal.icu.impl.UCharacterProperty: int getProperty(int)>(i0);
+
+        $i2 = staticinvoke <jdk.internal.icu.impl.UCharacterProperty: int getNumericTypeValue(int)>($i1);
+
+        i3 = $i2 - 1;
+
+        if i3 > 9 goto label1;
+
+        return i3;
+
+     label1:
+        $i5 = (int) -1;
+
+        return $i5;
+    }
+
+    private static final int getNumericTypeValue(int)
+    {
+        int i0, $i1;
+
+        i0 := @parameter0: int;
+
+        $i1 = i0 >> 6;
+
+        return $i1;
+    }
+
+    private static final int ntvGetType(int)
+    {
+        int i0;
+        byte $b1;
+
+        i0 := @parameter0: int;
+
+        if i0 != 0 goto label1;
+
+        $b1 = 0;
+
+        goto label4;
+
+     label1:
+        if i0 >= 11 goto label2;
+
+        $b1 = 1;
+
+        goto label4;
+
+     label2:
+        if i0 >= 21 goto label3;
+
+        $b1 = 2;
+
+        goto label4;
+
+     label3:
+        $b1 = 3;
+
+     label4:
+        return $b1;
+    }
+
+    public static final int mergeScriptCodeOrIndex(int)
+    {
+        int i0, $i1, $i2, $i3, $i4;
+
+        i0 := @parameter0: int;
+
+        $i1 = i0 & 3145728;
+
+        $i3 = $i1 >> 12;
+
+        $i2 = i0 & 255;
+
+        $i4 = $i3 | $i2;
+
+        return $i4;
+    }
+
+    private void <init>() throws java.io.IOException
+    {
+        jdk.internal.icu.impl.UCharacterProperty$IsAcceptable $r3;
+        java.nio.ByteBuffer r2;
+        jdk.internal.icu.impl.UCharacterProperty$1 $r1;
+        int[] $r11, $r12;
+        jdk.internal.icu.impl.Trie2_16 $r5, $r6, $r9, $r10;
+        jdk.internal.icu.impl.UCharacterProperty r0;
+        int i0, i1, i2, $i3, i4, i5, $i6, $i7, $i8, $i9, $i10, $i11, $i12, $i13, $i15, $i16, $i17, $i18, i19, i20, i21, i22, i23, i24, i25;
+        char $c14;
+        java.io.IOException $r13, $r14;
+        char[] $r7, $r8;
+        jdk.internal.icu.util.VersionInfo $r4;
+
+        r0 := @this: jdk.internal.icu.impl.UCharacterProperty;
+
+        specialinvoke r0.<java.lang.Object: void <init>()>();
+
+        $r1 = new jdk.internal.icu.impl.UCharacterProperty$1;
+
+        specialinvoke $r1.<jdk.internal.icu.impl.UCharacterProperty$1: void <init>(jdk.internal.icu.impl.UCharacterProperty)>(r0);
+
+        r0.<jdk.internal.icu.impl.UCharacterProperty: jdk.internal.icu.impl.UCharacterProperty$IntProperty intProp> = $r1;
+
+        r2 = staticinvoke <jdk.internal.icu.impl.ICUBinary: java.nio.ByteBuffer getRequiredData(java.lang.String)>("/jdk/internal/icu/impl/data/icudt67b/uprops.icu");
+
+        $r3 = new jdk.internal.icu.impl.UCharacterProperty$IsAcceptable;
+
+        specialinvoke $r3.<jdk.internal.icu.impl.UCharacterProperty$IsAcceptable: void <init>()>();
+
+        $r4 = staticinvoke <jdk.internal.icu.impl.ICUBinary: jdk.internal.icu.util.VersionInfo readHeaderAndDataVersion(java.nio.ByteBuffer,int,jdk.internal.icu.impl.ICUBinary$Authenticate)>(r2, 1431335535, $r3);
+
+        r0.<jdk.internal.icu.impl.UCharacterProperty: jdk.internal.icu.util.VersionInfo m_unicodeVersion_> = $r4;
+
+        i0 = virtualinvoke r2.<java.nio.ByteBuffer: int getInt()>();
+
+        virtualinvoke r2.<java.nio.ByteBuffer: int getInt()>();
+
+        virtualinvoke r2.<java.nio.ByteBuffer: int getInt()>();
+
+        i1 = virtualinvoke r2.<java.nio.ByteBuffer: int getInt()>();
+
+        i2 = virtualinvoke r2.<java.nio.ByteBuffer: int getInt()>();
+
+        $i3 = virtualinvoke r2.<java.nio.ByteBuffer: int getInt()>();
+
+        r0.<jdk.internal.icu.impl.UCharacterProperty: int m_additionalColumnsCount_> = $i3;
+
+        i4 = virtualinvoke r2.<java.nio.ByteBuffer: int getInt()>();
+
+        i5 = virtualinvoke r2.<java.nio.ByteBuffer: int getInt()>();
+
+        virtualinvoke r2.<java.nio.ByteBuffer: int getInt()>();
+
+        virtualinvoke r2.<java.nio.ByteBuffer: int getInt()>();
+
+        $i6 = virtualinvoke r2.<java.nio.ByteBuffer: int getInt()>();
+
+        r0.<jdk.internal.icu.impl.UCharacterProperty: int m_maxBlockScriptValue_> = $i6;
+
+        $i7 = virtualinvoke r2.<java.nio.ByteBuffer: int getInt()>();
+
+        r0.<jdk.internal.icu.impl.UCharacterProperty: int m_maxJTGValue_> = $i7;
+
+        staticinvoke <jdk.internal.icu.impl.ICUBinary: void skipBytes(java.nio.ByteBuffer,int)>(r2, 16);
+
+        $r5 = staticinvoke <jdk.internal.icu.impl.Trie2_16: jdk.internal.icu.impl.Trie2_16 createFromSerialized(java.nio.ByteBuffer)>(r2);
+
+        r0.<jdk.internal.icu.impl.UCharacterProperty: jdk.internal.icu.impl.Trie2_16 m_trie_> = $r5;
+
+        $i8 = i0 - 16;
+
+        i19 = $i8 * 4;
+
+        $r6 = r0.<jdk.internal.icu.impl.UCharacterProperty: jdk.internal.icu.impl.Trie2_16 m_trie_>;
+
+        i20 = virtualinvoke $r6.<jdk.internal.icu.impl.Trie2_16: int getSerializedLength()>();
+
+        if i20 <= i19 goto label1;
+
+        $r14 = new java.io.IOException;
+
+        specialinvoke $r14.<java.io.IOException: void <init>(java.lang.String)>("uprops.icu: not enough bytes for main trie");
+
+        throw $r14;
+
+     label1:
+        $i9 = i19 - i20;
+
+        staticinvoke <jdk.internal.icu.impl.ICUBinary: void skipBytes(java.nio.ByteBuffer,int)>(r2, $i9);
+
+        $i10 = i1 - i0;
+
+        $i11 = $i10 * 4;
+
+        staticinvoke <jdk.internal.icu.impl.ICUBinary: void skipBytes(java.nio.ByteBuffer,int)>(r2, $i11);
+
+        $i12 = r0.<jdk.internal.icu.impl.UCharacterProperty: int m_additionalColumnsCount_>;
+
+        if $i12 <= 0 goto label4;
+
+        $r9 = staticinvoke <jdk.internal.icu.impl.Trie2_16: jdk.internal.icu.impl.Trie2_16 createFromSerialized(java.nio.ByteBuffer)>(r2);
+
+        r0.<jdk.internal.icu.impl.UCharacterProperty: jdk.internal.icu.impl.Trie2_16 m_additionalTrie_> = $r9;
+
+        $i15 = i2 - i1;
+
+        i21 = $i15 * 4;
+
+        $r10 = r0.<jdk.internal.icu.impl.UCharacterProperty: jdk.internal.icu.impl.Trie2_16 m_additionalTrie_>;
+
+        i22 = virtualinvoke $r10.<jdk.internal.icu.impl.Trie2_16: int getSerializedLength()>();
+
+        if i22 <= i21 goto label2;
+
+        $r13 = new java.io.IOException;
+
+        specialinvoke $r13.<java.io.IOException: void <init>(java.lang.String)>("uprops.icu: not enough bytes for additional-properties trie");
+
+        throw $r13;
+
+     label2:
+        $i16 = i21 - i22;
+
+        staticinvoke <jdk.internal.icu.impl.ICUBinary: void skipBytes(java.nio.ByteBuffer,int)>(r2, $i16);
+
+        i23 = i4 - i2;
+
+        $r11 = newarray (int)[i23];
+
+        r0.<jdk.internal.icu.impl.UCharacterProperty: int[] m_additionalVectors_> = $r11;
+
+        i24 = 0;
+
+     label3:
+        if i24 >= i23 goto label4;
+
+        $r12 = r0.<jdk.internal.icu.impl.UCharacterProperty: int[] m_additionalVectors_>;
+
+        $i18 = virtualinvoke r2.<java.nio.ByteBuffer: int getInt()>();
+
+        $r12[i24] = $i18;
+
+        i24 = i24 + 1;
+
+        goto label3;
+
+     label4:
+        $i13 = i5 - i4;
+
+        $i17 = $i13 * 2;
+
+        if $i17 <= 0 goto label6;
+
+        $r7 = newarray (char)[$i17];
+
+        r0.<jdk.internal.icu.impl.UCharacterProperty: char[] m_scriptExtensions_> = $r7;
+
+        i25 = 0;
+
+     label5:
+        if i25 >= $i17 goto label6;
+
+        $r8 = r0.<jdk.internal.icu.impl.UCharacterProperty: char[] m_scriptExtensions_>;
+
+        $c14 = virtualinvoke r2.<java.nio.ByteBuffer: char getChar()>();
+
+        $r8[i25] = $c14;
+
+        i25 = i25 + 1;
+
+        goto label5;
+
+     label6:
+        return;
+    }
+
+    public void upropsvec_addPropertyStarts(jdk.internal.icu.text.UnicodeSet)
+    {
+        java.util.Iterator r2;
+        jdk.internal.icu.impl.UCharacterProperty r0;
+        jdk.internal.icu.text.UnicodeSet r5;
+        jdk.internal.icu.impl.Trie2$Range $r4;
+        int $i0, $i1;
+        jdk.internal.icu.impl.Trie2_16 $r1;
+        java.lang.Object $r3;
+        boolean $z0, $z1;
+
+        r0 := @this: jdk.internal.icu.impl.UCharacterProperty;
+
+        r5 := @parameter0: jdk.internal.icu.text.UnicodeSet;
+
+        $i0 = r0.<jdk.internal.icu.impl.UCharacterProperty: int m_additionalColumnsCount_>;
+
+        if $i0 <= 0 goto label2;
+
+        $r1 = r0.<jdk.internal.icu.impl.UCharacterProperty: jdk.internal.icu.impl.Trie2_16 m_additionalTrie_>;
+
+        r2 = virtualinvoke $r1.<jdk.internal.icu.impl.Trie2_16: java.util.Iterator iterator()>();
+
+     label1:
+        $z0 = interfaceinvoke r2.<java.util.Iterator: boolean hasNext()>();
+
+        if $z0 == false goto label2;
+
+        $r3 = interfaceinvoke r2.<java.util.Iterator: java.lang.Object next()>();
+
+        $r4 = (jdk.internal.icu.impl.Trie2$Range) $r3;
+
+        $z1 = $r4.<jdk.internal.icu.impl.Trie2$Range: boolean leadSurrogate>;
+
+        if $z1 != 0 goto label2;
+
+        $i1 = $r4.<jdk.internal.icu.impl.Trie2$Range: int startCodePoint>;
+
+        virtualinvoke r5.<jdk.internal.icu.text.UnicodeSet: jdk.internal.icu.text.UnicodeSet add(int)>($i1);
+
+        goto label1;
+
+     label2:
+        return;
+    }
+
+    static void <clinit>()
+    {
+        java.util.MissingResourceException $r4;
+        java.io.IOException $r3;
+        jdk.internal.icu.impl.UCharacterProperty $r2;
+        int[] $r1;
+        java.lang.Class $r0;
+        java.lang.String $r5;
+        boolean $z0, $z1;
+
+        <jdk.internal.icu.impl.UCharacterProperty: int BIDI_PAIRED_BRACKET_TYPE> = 4117;
+
+        <jdk.internal.icu.impl.UCharacterProperty: int DATA_FORMAT> = 1431335535;
+
+        <jdk.internal.icu.impl.UCharacterProperty: int AGE_SHIFT_> = 24;
+
+        <jdk.internal.icu.impl.UCharacterProperty: int LAST_NIBBLE_MASK_> = 15;
+
+        <jdk.internal.icu.impl.UCharacterProperty: int FIRST_NIBBLE_SHIFT_> = 4;
+
+        <jdk.internal.icu.impl.UCharacterProperty: int DECOMPOSITION_TYPE_MASK_> = 31;
+
+        <jdk.internal.icu.impl.UCharacterProperty: int GCB_SHIFT> = 5;
+
+        <jdk.internal.icu.impl.UCharacterProperty: int GCB_MASK> = 992;
+
+        <jdk.internal.icu.impl.UCharacterProperty: int WB_SHIFT> = 10;
+
+        <jdk.internal.icu.impl.UCharacterProperty: int WB_MASK> = 31744;
+
+        <jdk.internal.icu.impl.UCharacterProperty: int SB_SHIFT> = 15;
+
+        <jdk.internal.icu.impl.UCharacterProperty: int SB_MASK> = 1015808;
+
+        <jdk.internal.icu.impl.UCharacterProperty: int LB_SHIFT> = 20;
+
+        <jdk.internal.icu.impl.UCharacterProperty: int LB_MASK> = 66060288;
+
+        <jdk.internal.icu.impl.UCharacterProperty: int PATTERN_WHITE_SPACE> = 30;
+
+        <jdk.internal.icu.impl.UCharacterProperty: int PATTERN_SYNTAX> = 29;
+
+        <jdk.internal.icu.impl.UCharacterProperty: int VARIATION_SELECTOR_PROPERTY_> = 28;
+
+        <jdk.internal.icu.impl.UCharacterProperty: int S_TERM_PROPERTY_> = 27;
+
+        <jdk.internal.icu.impl.UCharacterProperty: int GRAPHEME_BASE_PROPERTY_> = 26;
+
+        <jdk.internal.icu.impl.UCharacterProperty: int ID_CONTINUE_PROPERTY_> = 25;
+
+        <jdk.internal.icu.impl.UCharacterProperty: int ID_START_PROPERTY_> = 24;
+
+        <jdk.internal.icu.impl.UCharacterProperty: int XID_CONTINUE_PROPERTY_> = 23;
+
+        <jdk.internal.icu.impl.UCharacterProperty: int XID_START_PROPERTY_> = 22;
+
+        <jdk.internal.icu.impl.UCharacterProperty: int LOGICAL_ORDER_EXCEPTION_PROPERTY_> = 21;
+
+        <jdk.internal.icu.impl.UCharacterProperty: int DEPRECATED_PROPERTY_> = 20;
+
+        <jdk.internal.icu.impl.UCharacterProperty: int DEFAULT_IGNORABLE_CODE_POINT_PROPERTY_> = 19;
+
+        <jdk.internal.icu.impl.UCharacterProperty: int UNIFIED_IDEOGRAPH_PROPERTY_> = 18;
+
+        <jdk.internal.icu.impl.UCharacterProperty: int RADICAL_PROPERTY_> = 17;
+
+        <jdk.internal.icu.impl.UCharacterProperty: int IDS_TRINARY_OPERATOR_PROPERTY_> = 16;
+
+        <jdk.internal.icu.impl.UCharacterProperty: int IDS_BINARY_OPERATOR_PROPERTY_> = 15;
+
+        <jdk.internal.icu.impl.UCharacterProperty: int GRAPHEME_LINK_PROPERTY_> = 14;
+
+        <jdk.internal.icu.impl.UCharacterProperty: int GRAPHEME_EXTEND_PROPERTY_> = 13;
+
+        <jdk.internal.icu.impl.UCharacterProperty: int NONCHARACTER_CODE_POINT_PROPERTY_> = 12;
+
+        <jdk.internal.icu.impl.UCharacterProperty: int EXTENDER_PROPERTY_> = 11;
+
+        <jdk.internal.icu.impl.UCharacterProperty: int DIACRITIC_PROPERTY_> = 10;
+
+        <jdk.internal.icu.impl.UCharacterProperty: int IDEOGRAPHIC_PROPERTY_> = 9;
+
+        <jdk.internal.icu.impl.UCharacterProperty: int ALPHABETIC_PROPERTY_> = 8;
+
+        <jdk.internal.icu.impl.UCharacterProperty: int ASCII_HEX_DIGIT_PROPERTY_> = 7;
+
+        <jdk.internal.icu.impl.UCharacterProperty: int HEX_DIGIT_PROPERTY_> = 6;
+
+        <jdk.internal.icu.impl.UCharacterProperty: int MATH_PROPERTY_> = 5;
+
+        <jdk.internal.icu.impl.UCharacterProperty: int TERMINAL_PUNCTUATION_PROPERTY_> = 4;
+
+        <jdk.internal.icu.impl.UCharacterProperty: int QUOTATION_MARK_PROPERTY_> = 3;
+
+        <jdk.internal.icu.impl.UCharacterProperty: int HYPHEN_PROPERTY_> = 2;
+
+        <jdk.internal.icu.impl.UCharacterProperty: int DASH_PROPERTY_> = 1;
+
+        <jdk.internal.icu.impl.UCharacterProperty: int WHITE_SPACE_PROPERTY_> = 0;
+
+        <jdk.internal.icu.impl.UCharacterProperty: int SCRIPT_LOW_MASK> = 255;
+
+        <jdk.internal.icu.impl.UCharacterProperty: int BLOCK_SHIFT_> = 8;
+
+        <jdk.internal.icu.impl.UCharacterProperty: int BLOCK_MASK_> = 130816;
+
+        <jdk.internal.icu.impl.UCharacterProperty: int EAST_ASIAN_SHIFT_> = 17;
+
+        <jdk.internal.icu.impl.UCharacterProperty: int EAST_ASIAN_MASK_> = 917504;
+
+        <jdk.internal.icu.impl.UCharacterProperty: int MAX_SCRIPT> = 1023;
+
+        <jdk.internal.icu.impl.UCharacterProperty: int SCRIPT_HIGH_SHIFT> = 12;
+
+        <jdk.internal.icu.impl.UCharacterProperty: int SCRIPT_HIGH_MASK> = 3145728;
+
+        <jdk.internal.icu.impl.UCharacterProperty: int SCRIPT_X_MASK> = 15728895;
+
+        <jdk.internal.icu.impl.UCharacterProperty: int NTV_NUMERIC_START_> = 21;
+
+        <jdk.internal.icu.impl.UCharacterProperty: int NTV_DIGIT_START_> = 11;
+
+        <jdk.internal.icu.impl.UCharacterProperty: int NTV_DECIMAL_START_> = 1;
+
+        <jdk.internal.icu.impl.UCharacterProperty: int NTV_NONE_> = 0;
+
+        <jdk.internal.icu.impl.UCharacterProperty: int NUMERIC_TYPE_VALUE_SHIFT_> = 6;
+
+        <jdk.internal.icu.impl.UCharacterProperty: int SURROGATE_OFFSET_> = -56613888;
+
+        <jdk.internal.icu.impl.UCharacterProperty: int LEAD_SURROGATE_SHIFT_> = 10;
+
+        <jdk.internal.icu.impl.UCharacterProperty: java.lang.String DATA_FILE_NAME_> = "/jdk/internal/icu/impl/data/icudt67b/uprops.icu";
+
+        <jdk.internal.icu.impl.UCharacterProperty: int SRC_NFKC> = 9;
+
+        <jdk.internal.icu.impl.UCharacterProperty: int SRC_NFC> = 8;
+
+        <jdk.internal.icu.impl.UCharacterProperty: int SRC_BIDI> = 5;
+
+        <jdk.internal.icu.impl.UCharacterProperty: int SRC_PROPSVEC> = 2;
+
+        <jdk.internal.icu.impl.UCharacterProperty: int SRC_CHAR> = 1;
+
+        <jdk.internal.icu.impl.UCharacterProperty: int TYPE_MASK> = 31;
+
+        $r0 = class "Ljdk/internal/icu/impl/UCharacterProperty;";
+
+        $z0 = virtualinvoke $r0.<java.lang.Class: boolean desiredAssertionStatus()>();
+
+        if $z0 != 0 goto label1;
+
+        $z1 = 1;
+
+        goto label2;
+
+     label1:
+        $z1 = 0;
+
+     label2:
+        <jdk.internal.icu.impl.UCharacterProperty: boolean $assertionsDisabled> = $z1;
+
+        $r1 = newarray (int)[10];
+
+        $r1[0] = 0;
+
+        $r1[1] = 0;
+
+        $r1[2] = 0;
+
+        $r1[3] = 0;
+
+        $r1[4] = 1;
+
+        $r1[5] = 0;
+
+        $r1[6] = 4;
+
+        $r1[7] = 5;
+
+        $r1[8] = 3;
+
+        $r1[9] = 2;
+
+        <jdk.internal.icu.impl.UCharacterProperty: int[] gcbToHst> = $r1;
+
+     label3:
+        $r2 = new jdk.internal.icu.impl.UCharacterProperty;
+
+        specialinvoke $r2.<jdk.internal.icu.impl.UCharacterProperty: void <init>()>();
+
+        <jdk.internal.icu.impl.UCharacterProperty: jdk.internal.icu.impl.UCharacterProperty INSTANCE> = $r2;
+
+     label4:
+        goto label6;
+
+     label5:
+        $r3 := @caughtexception;
+
+        $r4 = new java.util.MissingResourceException;
+
+        $r5 = virtualinvoke $r3.<java.io.IOException: java.lang.String getMessage()>();
+
+        specialinvoke $r4.<java.util.MissingResourceException: void <init>(java.lang.String,java.lang.String,java.lang.String)>($r5, "/jdk/internal/icu/impl/data/icudt67b/uprops.icu", "");
+
+        throw $r4;
+
+     label6:
+        return;
+
+        catch java.io.IOException from label3 to label4 with label5;
+    }
+}

@@ -1,0 +1,5 @@
+public interface  jdk.internal.invoke.ABIDescriptorProxy extends java.lang.Object
+{
+
+    public abstract int shadowSpaceBytes();
+}

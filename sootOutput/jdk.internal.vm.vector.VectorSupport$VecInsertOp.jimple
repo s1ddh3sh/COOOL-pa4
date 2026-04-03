@@ -1,0 +1,5 @@
+public interface  jdk.internal.vm.vector.VectorSupport$VecInsertOp extends java.lang.Object
+{
+
+    public abstract java.lang.Object apply(java.lang.Object, int, long);
+}

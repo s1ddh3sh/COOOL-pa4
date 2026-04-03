@@ -1,0 +1,5 @@
+public interface  jdk.internal.vm.vector.VectorSupport$VectorBroadcastIntOp extends java.lang.Object
+{
+
+    public abstract jdk.internal.vm.vector.VectorSupport$Vector apply(jdk.internal.vm.vector.VectorSupport$Vector, int);
+}

@@ -1,0 +1,96 @@
+final class jdk.internal.misc.ThreadTracker$ThreadRef extends java.lang.Record
+{
+    private final java.lang.Thread thread;
+
+    private void <init>(java.lang.Thread)
+    {
+        jdk.internal.misc.ThreadTracker$ThreadRef r0;
+        java.lang.Thread r1;
+
+        r0 := @this: jdk.internal.misc.ThreadTracker$ThreadRef;
+
+        r1 := @parameter0: java.lang.Thread;
+
+        specialinvoke r0.<java.lang.Record: void <init>()>();
+
+        r0.<jdk.internal.misc.ThreadTracker$ThreadRef: java.lang.Thread thread> = r1;
+
+        return;
+    }
+
+    public int hashCode()
+    {
+        java.lang.Thread $r1;
+        int $i1;
+        jdk.internal.misc.ThreadTracker$ThreadRef r0;
+        long $l0;
+
+        r0 := @this: jdk.internal.misc.ThreadTracker$ThreadRef;
+
+        $r1 = r0.<jdk.internal.misc.ThreadTracker$ThreadRef: java.lang.Thread thread>;
+
+        $l0 = virtualinvoke $r1.<java.lang.Thread: long getId()>();
+
+        $i1 = staticinvoke <java.lang.Long: int hashCode(long)>($l0);
+
+        return $i1;
+    }
+
+    public boolean equals(java.lang.Object)
+    {
+        java.lang.Thread $r3, $r4;
+        jdk.internal.misc.ThreadTracker$ThreadRef r1, r2;
+        java.lang.Object r0;
+        boolean $z0, $z1;
+
+        r2 := @this: jdk.internal.misc.ThreadTracker$ThreadRef;
+
+        r0 := @parameter0: java.lang.Object;
+
+        $z0 = r0 instanceof jdk.internal.misc.ThreadTracker$ThreadRef;
+
+        if $z0 == false goto label1;
+
+        r1 = (jdk.internal.misc.ThreadTracker$ThreadRef) r0;
+
+        $r4 = r2.<jdk.internal.misc.ThreadTracker$ThreadRef: java.lang.Thread thread>;
+
+        $r3 = r1.<jdk.internal.misc.ThreadTracker$ThreadRef: java.lang.Thread thread>;
+
+        if $r4 != $r3 goto label1;
+
+        $z1 = 1;
+
+        goto label2;
+
+     label1:
+        $z1 = 0;
+
+     label2:
+        return $z1;
+    }
+
+    public final java.lang.String toString()
+    {
+        jdk.internal.misc.ThreadTracker$ThreadRef r0;
+        java.lang.String $r1;
+
+        r0 := @this: jdk.internal.misc.ThreadTracker$ThreadRef;
+
+        $r1 = dynamicinvoke "toString" <java.lang.String (jdk.internal.misc.ThreadTracker$ThreadRef)>(r0) <java.lang.runtime.ObjectMethods: java.lang.Object bootstrap(java.lang.invoke.MethodHandles$Lookup,java.lang.String,java.lang.invoke.TypeDescriptor,java.lang.Class,java.lang.String,java.lang.invoke.MethodHandle[])>(class "Ljdk/internal/misc/ThreadTracker$ThreadRef;", "thread", methodhandle: "REF_GET_FIELD" <jdk.internal.misc.ThreadTracker$ThreadRef: java.lang.Thread thread>);
+
+        return $r1;
+    }
+
+    public java.lang.Thread thread()
+    {
+        jdk.internal.misc.ThreadTracker$ThreadRef r0;
+        java.lang.Thread $r1;
+
+        r0 := @this: jdk.internal.misc.ThreadTracker$ThreadRef;
+
+        $r1 = r0.<jdk.internal.misc.ThreadTracker$ThreadRef: java.lang.Thread thread>;
+
+        return $r1;
+    }
+}

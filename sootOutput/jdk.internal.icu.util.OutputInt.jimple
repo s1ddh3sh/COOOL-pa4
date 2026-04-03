@@ -1,0 +1,15 @@
+public class jdk.internal.icu.util.OutputInt extends java.lang.Object
+{
+    public int value;
+
+    public void <init>()
+    {
+        jdk.internal.icu.util.OutputInt r0;
+
+        r0 := @this: jdk.internal.icu.util.OutputInt;
+
+        specialinvoke r0.<java.lang.Object: void <init>()>();
+
+        return;
+    }
+}
