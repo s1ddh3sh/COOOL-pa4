@@ -1,5 +1,0 @@
-public interface  jdk.internal.icu.util.CodePointMap$ValueFilter extends java.lang.Object
-{
-
-    public abstract int apply(int);
-}

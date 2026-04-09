@@ -1,5 +1,0 @@
-public interface  jdk.internal.access.JavaAWTAccess extends java.lang.Object
-{
-
-    public abstract java.lang.Object getAppletContext();
-}

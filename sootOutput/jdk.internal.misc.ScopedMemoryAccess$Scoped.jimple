@@ -1,3 +1,0 @@
-annotation interface  jdk.internal.misc.ScopedMemoryAccess$Scoped extends java.lang.Object implements java.lang.'annotation'.Annotation
-{
-}

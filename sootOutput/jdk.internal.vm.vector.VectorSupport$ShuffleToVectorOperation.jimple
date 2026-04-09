@@ -1,5 +1,0 @@
-public interface  jdk.internal.vm.vector.VectorSupport$ShuffleToVectorOperation extends java.lang.Object
-{
-
-    public abstract java.lang.Object apply(java.lang.Object);
-}

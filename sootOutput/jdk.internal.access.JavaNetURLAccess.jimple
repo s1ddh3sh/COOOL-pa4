@@ -1,5 +1,0 @@
-public interface  jdk.internal.access.JavaNetURLAccess extends java.lang.Object
-{
-
-    public abstract java.net.URLStreamHandler getHandler(java.net.URL);
-}

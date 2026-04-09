@@ -1,5 +1,0 @@
-public interface  jdk.internal.access.JavaObjectInputStreamAccess extends java.lang.Object
-{
-
-    public abstract void checkArray(java.io.ObjectInputStream, java.lang.Class, int) throws java.io.InvalidClassException;
-}

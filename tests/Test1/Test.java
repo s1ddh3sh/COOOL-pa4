@@ -1,5 +1,3 @@
-package tests.Test1;
-
 class A {
     void foo() {
         System.out.println("A.foo");

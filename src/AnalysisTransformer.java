@@ -1,17 +1,15 @@
 package src;
-
+import soot.jimple.spark.*;
 import java.util.*;
 import soot.*;
 import soot.jimple.*;
 
 public class AnalysisTransformer extends SceneTransformer {
 
-    private static final Map<Unit, Set<Type>> possibleTypes = new HashMap<>();
-    private static final Map<Unit, Set<SootMethod>> possibleTargets = new HashMap<>();
+    private static final Map<Unit, Set<Type>> resolvedType = new HashMap<>();
 
     @Override
     public void internalTransform(String phaseName, Map<String, String> options) {
-        PointsToAnalysis pta = Scene.v().getPointsToAnalysis();
 
         for (SootClass cls : Scene.v().getApplicationClasses()) {
             for (SootMethod meth : cls.getMethods()) {
@@ -25,102 +23,56 @@ public class AnalysisTransformer extends SceneTransformer {
 
                     InvokeExpr expr = stmt.getInvokeExpr();
                     if (expr instanceof VirtualInvokeExpr || expr instanceof InterfaceInvokeExpr) {
-                        // monomorphize the call
-                        monomorph(stmt, expr, pta);
+                        SootMethod target = expr.getMethod();
+                        if (!target.getDeclaringClass().isApplicationClass()) {
+                            continue;
+                        }
+                        monomorph(stmt, expr);
                     }
                 }
             }
         }
-        printResults();
+        // printResults();
 
     }
 
-    private void monomorph(Stmt stmt, InvokeExpr expr, PointsToAnalysis pta) {
+    private void monomorph(Stmt stmt, InvokeExpr expr) {
         Value base;
         if (expr instanceof VirtualInvokeExpr) {
             base = ((VirtualInvokeExpr) expr).getBase();
         } else {
             base = ((InterfaceInvokeExpr) expr).getBase();
         }
-
         if (!(base instanceof Local))
             return;
-        PointsToSet pts = pta.reachingObjects((Local) base);
 
-        Set<Type> types = new HashSet<>(pts.possibleTypes());
-        Set<SootMethod> targets = new HashSet<>();
+        
 
-        for (Type t : types) {
-            if (t instanceof RefType) {
-                SootClass cls = ((RefType) t).getSootClass();
-                SootMethod m = resolveMethod(cls, expr.getMethod());
-                if (m != null)
-                    targets.add(m);
-            } 
-            // else if (t instanceof AnySubType) {
-            //     RefType baseType = ((AnySubType) t).getBase();
-            //     SootClass baseClass = baseType.getSootClass();
-
-            //     SootMethod m = resolveMethod(baseClass, expr.getMethod());
-            //     if (m != null)
-            //         targets.add(m);
-
-            //     for (SootClass sub : Scene.v().getActiveHierarchy().getSubclassesOf(baseClass)) {
-            //         SootMethod subM = resolveMethod(sub, expr.getMethod());
-            //         if (subM != null)
-            //             targets.add(subM);
-            //     }
-            // }
-        }
-        possibleTypes.put(stmt, types);
-        possibleTargets.put(stmt, targets);
+        // System.out.println(base.getType());
     }
 
-    private SootMethod resolveMethod(SootClass cls, SootMethod method) {
+    // private void printResults() {
 
-        String subSig = method.getSubSignature();
-        SootClass current = cls;
+    // for (Unit u : possibleTypes.keySet()) {
 
-        while (current != null) {
+    // System.out.println("\nCall Site: " + u);
 
-            if (current.declaresMethod(subSig)) {
-                SootMethod m = current.getMethod(subSig);
+    // System.out.println("Possible Types:");
+    // for (Type t : possibleTypes.get(u)) {
+    // System.out.println(" : " + t);
+    // }
 
-                if (!m.isAbstract()) {
-                    return m;
-                }
-            }
+    // System.out.println("Resolved Targets:");
+    // Set<SootMethod> targets = possibleTargets.get(u);
+    // for (SootMethod m : targets) {
+    // System.out.println(" : " + m.getSignature());
+    // }
 
-            if (!current.hasSuperclass())
-                break;
-            current = current.getSuperclass();
-        }
-
-        return null;
-    }
-
-    private void printResults() {
-
-        for (Unit u : possibleTypes.keySet()) {
-
-            System.out.println("\nCall Site: " + u);
-
-            System.out.println("Possible Types:");
-            for (Type t : possibleTypes.get(u)) {
-                System.out.println(" : " + t);
-            }
-
-            System.out.println("Resolved Targets:");
-            Set<SootMethod> targets = possibleTargets.get(u);
-            for (SootMethod m : targets) {
-                System.out.println(" : " + m.getSignature());
-            }
-
-            if (targets.size() == 1) {
-                System.out.println("monomorphic");
-            } else {
-                System.out.println("not monomorphic");
-            }
-        }
-    }
+    // if (targets.size() == 1) {
+    // System.out.println("monomorphic");
+    // } else {
+    // System.out.println("not monomorphic");
+    // }
+    // }
+    // }
 }

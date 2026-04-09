@@ -1,7 +1,0 @@
-interface  jdk.internal.math.FloatingDecimal$ASCIIToBinaryConverter extends java.lang.Object
-{
-
-    public abstract double doubleValue();
-
-    public abstract float floatValue();
-}

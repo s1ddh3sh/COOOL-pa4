@@ -1,9 +1,0 @@
-interface  jdk.internal.logger.LazyLoggers$LoggerAccessor extends java.lang.Object
-{
-
-    public abstract java.lang.String getLoggerName();
-
-    public abstract java.lang.System$Logger wrapped();
-
-    public abstract sun.util.logging.PlatformLogger$Bridge platform();
-}

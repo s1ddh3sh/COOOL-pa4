@@ -1,5 +1,0 @@
-public interface  jdk.internal.icu.impl.ICUBinary$Authenticate extends java.lang.Object
-{
-
-    public abstract boolean isDataVersionAcceptable(byte[]);
-}

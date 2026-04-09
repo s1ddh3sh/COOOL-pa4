@@ -1,5 +1,0 @@
-public interface  jdk.internal.access.JavaNetUriAccess extends java.lang.Object
-{
-
-    public abstract java.net.URI create(java.lang.String, java.lang.String);
-}

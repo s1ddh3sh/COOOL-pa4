@@ -1,5 +1,0 @@
-public interface  jdk.internal.vm.vector.VectorSupport$VectorCompareOp extends java.lang.Object
-{
-
-    public abstract java.lang.Object apply(int, java.lang.Object, java.lang.Object);
-}

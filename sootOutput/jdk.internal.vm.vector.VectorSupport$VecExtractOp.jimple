@@ -1,5 +1,0 @@
-public interface  jdk.internal.vm.vector.VectorSupport$VecExtractOp extends java.lang.Object
-{
-
-    public abstract long apply(java.lang.Object, int);
-}

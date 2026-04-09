@@ -1,4 +1,4 @@
-class C extends tests.Test1.A
+class C extends A
 {
 
     void <init>()
@@ -7,7 +7,7 @@ class C extends tests.Test1.A
 
         r0 := @this: C;
 
-        specialinvoke r0.<tests.Test1.A: void <init>()>();
+        specialinvoke r0.<A: void <init>()>();
 
         return;
     }
