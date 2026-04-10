@@ -13,12 +13,13 @@ public class AnalysisTransformer extends SceneTransformer {
 
     @Override
     public void internalTransform(String phaseName, Map<String, String> options) {
-
+        InterProcedural.cg = Scene.v().getCallGraph();
         for (SootClass cls : Scene.v().getApplicationClasses()) {
             for (SootMethod method : cls.getMethods()) {
                 if (!method.isConcrete())
                     continue;
                 Body body = method.retrieveActiveBody();
+
                 UnitGraph graph = new BriefUnitGraph(body);
                 Map<Unit, PointsToState> ptsIn = new HashMap<>();
                 Map<Unit, PointsToState> ptsOut = new HashMap<>();
@@ -33,19 +34,20 @@ public class AnalysisTransformer extends SceneTransformer {
                     InvokeExpr expr = stmt.getInvokeExpr();
                     if (expr instanceof VirtualInvokeExpr || expr instanceof InterfaceInvokeExpr) {
                         SootMethod target = expr.getMethod();
-                        if (!target.getDeclaringClass().isApplicationClass()) {
+                        if (!InterProcedural.shouldAnalyze(target)) {
                             continue;
                         }
-                        monomorph(stmt, expr);
+                        System.out.println(expr);
+                        monomorph(stmt, expr, ptsIn);
                     }
                 }
             }
         }
-        // printResults();
+        printResults();
 
     }
 
-    private void monomorph(Stmt stmt, InvokeExpr expr) {
+    private void monomorph(Stmt stmt, InvokeExpr expr, Map<Unit, PointsToState> ptsIn) {
         Value base;
         if (expr instanceof VirtualInvokeExpr) {
             base = ((VirtualInvokeExpr) expr).getBase();
@@ -55,31 +57,43 @@ public class AnalysisTransformer extends SceneTransformer {
         if (!(base instanceof Local))
             return;
 
+        PointsToState state = ptsIn.get(stmt);
+        if (state == null)
+            return;
+
+        Set<AllocSite> pts = state.getValue().getVar((Local) base);
+        if (!pts.contains(InterProcedural.UNKNOWN_ALLOC)) {
+            for (AllocSite site : pts) {
+                Unit unit = site.unit;
+                AssignStmt as = (AssignStmt) unit;
+                Value rhs = as.getRightOp();
+                NewExpr exp = (NewExpr) rhs;
+                Type t = exp.getType();
+                resolvedType.computeIfAbsent((Unit) stmt, k -> new HashSet<>()).add(t);
+            }
+
+        }
+
         // System.out.println(base.getType());
     }
 
-    // private void printResults() {
+    private void printResults() {
 
-    // for (Unit u : possibleTypes.keySet()) {
+        for (Unit u : resolvedType.keySet()) {
 
-    // System.out.println("\nCall Site: " + u);
+            System.out.println("\nCall Site: " + u);
 
-    // System.out.println("Possible Types:");
-    // for (Type t : possibleTypes.get(u)) {
-    // System.out.println(" : " + t);
-    // }
+            System.out.println("Possible Types:");
+            Set<Type> types = resolvedType.get(u);
+            for (Type t : types) {
+                System.out.println(" : " + t);
+            }
 
-    // System.out.println("Resolved Targets:");
-    // Set<SootMethod> targets = possibleTargets.get(u);
-    // for (SootMethod m : targets) {
-    // System.out.println(" : " + m.getSignature());
-    // }
-
-    // if (targets.size() == 1) {
-    // System.out.println("monomorphic");
-    // } else {
-    // System.out.println("not monomorphic");
-    // }
-    // }
-    // }
+            if (types.size() == 1) {
+                System.out.println("monomorphic");
+            } else {
+                System.out.println("not monomorphic");
+            }
+        }
+    }
 }

@@ -10,12 +10,11 @@ import soot.jimple.toolkits.callgraph.Edge;
 
 public class InterProcedural extends SceneTransformer {
     static CallGraph cg;
-    private static final AllocSite UNKNOWN_ALLOC = new AllocSite(-1, true, -1, null);
-    private static final Map<AllocSite, EscapeStatus> escapeStatus = new HashMap<>();
-    private static final Map<AllocSite, Set<Integer>> rewriteLines = new HashMap<>();
-    private static final Map<Integer, AllocSite> totalAllocSites = new TreeMap<>();
-    private static int totalTargets = 0;
-    private static int processedTargets = 0;
+    public static final AllocSite UNKNOWN_ALLOC = new AllocSite(-1, true, -1, null);
+    public static final Map<AllocSite, EscapeStatus> escapeStatus = new HashMap<>();
+    public static final Map<Integer, AllocSite> totalAllocSites = new TreeMap<>();
+    public static int totalTargets = 0;
+    public static int processedTargets = 0;
 
     @Override
     protected void internalTransform(String phaseName, Map<String, String> options) {
@@ -29,28 +28,28 @@ public class InterProcedural extends SceneTransformer {
                 }
             }
         }
-        if (totalTargets == processedTargets)
-            printResults();
+        // if (totalTargets == processedTargets)
+        //     printResults();
     }
 
-    private void printResults() {
-        for (Map.Entry<Integer, AllocSite> entry : totalAllocSites.entrySet()) {
-            AllocSite info = entry.getValue();
-            EscapeStatus status = escapeStatus.getOrDefault(info, EscapeStatus.LOCAL);
-            String prefix = "O" + info.lineNumber + " = ";
-            if (status == EscapeStatus.ESCAPED) {
-                System.out.println(prefix + "N");
-            } else {
-                Set<Integer> lines = rewriteLines.getOrDefault(info, new TreeSet<>());
-                if (lines.isEmpty()) {
-                    System.out.println(prefix + "Y[]");
-                } else {
-                    System.out.println(prefix + "Y" + lines.toString()
-                            .replace(" ", ""));
-                }
-            }
-        }
-    }
+    // private void printResults() {
+    //     for (Map.Entry<Integer, AllocSite> entry : totalAllocSites.entrySet()) {
+    //         AllocSite info = entry.getValue();
+    //         EscapeStatus status = escapeStatus.getOrDefault(info, EscapeStatus.LOCAL);
+    //         String prefix = "O" + info.lineNumber + " = ";
+    //         if (status == EscapeStatus.ESCAPED) {
+    //             System.out.println(prefix + "N");
+    //         } else {
+    //             Set<Integer> lines = rewriteLines.getOrDefault(info, new TreeSet<>());
+    //             if (lines.isEmpty()) {
+    //                 System.out.println(prefix + "Y[]");
+    //             } else {
+    //                 System.out.println(prefix + "Y" + lines.toString()
+    //                         .replace(" ", ""));
+    //             }
+    //         }
+    //     }
+    // }
 
     void analyzeMethod(SootMethod method) {
 
@@ -71,7 +70,7 @@ public class InterProcedural extends SceneTransformer {
         }
     }
 
-    private static boolean shouldAnalyze(SootMethod method) {
+    public static boolean shouldAnalyze(SootMethod method) {
         if (method == null || !method.isConcrete() || method.isPhantom()) {
             return false;
         }
@@ -133,7 +132,7 @@ public class InterProcedural extends SceneTransformer {
         }
     }
 
-    private static void runEscapeAnalysisForMain(UnitGraph graph, Map<Unit, PointsToState> inMap) {
+    public static void runEscapeAnalysisForMain(UnitGraph graph, Map<Unit, PointsToState> inMap) {
         for (Unit unit : graph) {
             PointsToState state = inMap.get(unit);
             if (state == null)
@@ -174,7 +173,7 @@ public class InterProcedural extends SceneTransformer {
         propagateEscape(graph, inMap);
     }
 
-    private static void runEscapeAnalysis(UnitGraph graph, Map<Unit, PointsToState> inMap, boolean isCallee) {
+    public static void runEscapeAnalysis(UnitGraph graph, Map<Unit, PointsToState> inMap, boolean isCallee) {
         for (Unit unit : graph) {
             PointsToState state = inMap.get(unit);
             if (state == null)
@@ -229,7 +228,7 @@ public class InterProcedural extends SceneTransformer {
         propagateEscape(graph, inMap);
     }
 
-    private static boolean allocatedInThisMethod(AllocSite site, UnitGraph graph) {
+    public static boolean allocatedInThisMethod(AllocSite site, UnitGraph graph) {
         for (Unit u : graph) {
             if (u.equals(site.unit)) {
                 return true;
@@ -238,7 +237,7 @@ public class InterProcedural extends SceneTransformer {
         return false;
     }
 
-    private static void propagateEscape(UnitGraph graph, Map<Unit, PointsToState> inMap) {
+    public static void propagateEscape(UnitGraph graph, Map<Unit, PointsToState> inMap) {
         Unit lasUnit = graph.getBody().getUnits().getLast();
         PointsToState state = inMap.get(lasUnit);
         // for (PointsToState s : inMap.values()) {
@@ -270,7 +269,7 @@ public class InterProcedural extends SceneTransformer {
         }
     }
 
-    private static void markEscape(Set<AllocSite> sites) {
+    public static void markEscape(Set<AllocSite> sites) {
         for (AllocSite site : sites) {
             if (!site.equals(UNKNOWN_ALLOC)) {
                 updateStatus(site, EscapeStatus.ESCAPED);
@@ -278,14 +277,14 @@ public class InterProcedural extends SceneTransformer {
         }
     }
 
-    private static void updateStatus(AllocSite site, EscapeStatus status) {
+    public static void updateStatus(AllocSite site, EscapeStatus status) {
         EscapeStatus curr = escapeStatus.getOrDefault(site, EscapeStatus.LOCAL);
         if (status.greaterThan(curr)) {
             escapeStatus.put(site, status);
         }
     }
 
-    private static PointsToState mergePointsTo(
+    public static PointsToState mergePointsTo(
             List<Unit> preds, Map<Unit, PointsToState> inMap, Map<Unit, PointsToState> outMap, Set<Unit> visited,
             Unit unit) {
         if (preds == null || preds.isEmpty()) {
@@ -307,7 +306,7 @@ public class InterProcedural extends SceneTransformer {
         return merged == null ? PointsToState.empty() : merged;
     }
 
-    private static void processInvokeExpr(PointsToState state, InvokeExpr invokeExpr, Unit callUnit) {
+    public static void processInvokeExpr(PointsToState state, InvokeExpr invokeExpr, Unit callUnit) {
 
         Iterator<Edge> edges = cg.edgesOutOf(callUnit);
         if (!edges.hasNext())
@@ -339,38 +338,9 @@ public class InterProcedural extends SceneTransformer {
             mergeCalleeState(state, calleeOutState, invokeExpr, target);
         }
 
-        if (invokeExpr.getMethod().getName().equals("<init>")) {
-            return;
-        }
-        // receiver
-        if (invokeExpr instanceof InstanceInvokeExpr) {
-            InstanceInvokeExpr instanceInvoke = (InstanceInvokeExpr) invokeExpr;
-            Value base = instanceInvoke.getBase();
-            if (base instanceof Local) {
-                Set<AllocSite> basePts = state.getVar((Local) base);
-                for (AllocSite site : basePts) {
-                    rewriteLines.computeIfAbsent(site, k -> new TreeSet<>())
-                            .add(callUnit.getJavaSourceStartLineNumber());
-                }
-            }
-        }
-
-        // args
-        List<Value> args = invokeExpr.getArgs();
-
-        for (int i = 0; i < args.size(); i++) {
-            Value arg = args.get(i);
-            if (arg instanceof Local) {
-                Set<AllocSite> argPts = state.getVar((Local) arg);
-                for (AllocSite site : argPts) {
-                    rewriteLines.computeIfAbsent(site, k -> new TreeSet<>())
-                            .add(callUnit.getJavaSourceStartLineNumber());
-                }
-            }
-        }
     }
 
-    private static void mergeCalleeState(PointsToState callerState, PointsToState calleeState, InvokeExpr invokeExpr,
+    public static void mergeCalleeState(PointsToState callerState, PointsToState calleeState, InvokeExpr invokeExpr,
             SootMethod target) {
         if (calleeState == null)
             return;
@@ -430,7 +400,7 @@ public class InterProcedural extends SceneTransformer {
         }
     }
 
-    private static PointsToState buildCalleeState(PointsToState callerState, InvokeExpr invokeExpr, SootMethod target) {
+    public static PointsToState buildCalleeState(PointsToState callerState, InvokeExpr invokeExpr, SootMethod target) {
         PointsToState calleeState = callerState.copy();
 
         Body calleeBody = target.retrieveActiveBody();
@@ -469,7 +439,7 @@ public class InterProcedural extends SceneTransformer {
         return calleeState;
     }
 
-    private static Local getThisLocal(Body body) {
+    public static Local getThisLocal(Body body) {
         for (Unit u : body.getUnits()) {
             if (!(u instanceof IdentityStmt))
                 continue;
@@ -481,7 +451,7 @@ public class InterProcedural extends SceneTransformer {
         return null;
     }
 
-    private static Local getParamLocal(Body body, int index) {
+    public static Local getParamLocal(Body body, int index) {
         for (Unit u : body.getUnits()) {
             if (!(u instanceof IdentityStmt))
                 continue;
@@ -496,7 +466,7 @@ public class InterProcedural extends SceneTransformer {
         return null;
     }
 
-    private static PointsToState transferPointsTo(
+    public static PointsToState transferPointsTo(
             Unit unit, PointsToState inState) {
 
         int line = unit.getJavaSourceStartLineNumber();
@@ -540,7 +510,6 @@ public class InterProcedural extends SceneTransformer {
             if (rhs instanceof AnyNewExpr) {
                 outState.setVar(left, setOf(getAllocSite(line, unit)));
                 escapeStatus.put(getAllocSite(line, unit), EscapeStatus.LOCAL);
-                rewriteLines.put(getAllocSite(line, unit), new TreeSet<>());
             } else if (rhs instanceof Local) {
                 outState.setVar(left, outState.getVar((Local) rhs));
             } else if (rhs instanceof StaticFieldRef) {
@@ -606,7 +575,7 @@ public class InterProcedural extends SceneTransformer {
         return outState;
     }
 
-    private static void printPointsToState(String label, PointsToState state) {
+    public static void printPointsToState(String label, PointsToState state) {
         System.out.println("  " + label + ":");
         if (state == null) {
             System.out.println("    [NULL STATE]");
@@ -665,13 +634,13 @@ public class InterProcedural extends SceneTransformer {
         }
     }
 
-    private static String allocSiteStr(AllocSite site) {
+    public static String allocSiteStr(AllocSite site) {
         if (site.unknown)
             return "UNKNOWN";
         return "AllocSite#" + site.id;
     }
 
-    private static String allocSiteSetStr(Set<AllocSite> sites) {
+    public static String allocSiteSetStr(Set<AllocSite> sites) {
         StringBuilder sb = new StringBuilder();
         boolean first = true;
         for (AllocSite s : sites) {
@@ -683,13 +652,13 @@ public class InterProcedural extends SceneTransformer {
         return sb.toString();
     }
 
-    private static Set<AllocSite> setOf(AllocSite site) {
+    public static Set<AllocSite> setOf(AllocSite site) {
         Set<AllocSite> set = new HashSet<>();
         set.add(site);
         return set;
     }
 
-    private static AllocSite getAllocSite(int line, Unit unit) {
+    public static AllocSite getAllocSite(int line, Unit unit) {
         AllocSite site = totalAllocSites.get(line);
         if (site == null) {
             int id = unit.getJavaSourceStartLineNumber();
@@ -709,10 +678,10 @@ public class InterProcedural extends SceneTransformer {
         }
     }
 
-    private static final class AllocSite {
+    public static final class AllocSite {
         private final int id;
         private final boolean unknown;
-        private final Unit unit;
+        public final Unit unit;
         private int lineNumber;
 
         AllocSite(int id, boolean unknown, int lineNumber, Unit unit) {
@@ -740,7 +709,7 @@ public class InterProcedural extends SceneTransformer {
         }
     }
 
-    private static final class FieldKey {
+    public static final class FieldKey {
         private final AllocSite site;
         private final SootField field;
 
@@ -780,7 +749,7 @@ public class InterProcedural extends SceneTransformer {
             this.lastWriteLine = new HashMap<>();
         }
 
-        private static PointsToState empty() {
+        public static PointsToState empty() {
             return new PointsToState();
         }
 
@@ -836,7 +805,7 @@ public class InterProcedural extends SceneTransformer {
             return result;
         }
 
-        private Set<AllocSite> getVar(Local local) {
+        public Set<AllocSite> getVar(Local local) {
             return varPts.getOrDefault(local, setOf(UNKNOWN_ALLOC));
         }
 
