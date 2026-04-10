@@ -61,7 +61,7 @@ public class AnalysisTransformer extends SceneTransformer {
         if (state == null)
             return;
 
-        Set<AllocSite> pts = state.getValue().getVar((Local) base);
+        Set<AllocSite> pts = state.getVar((Local) base);
         if (!pts.contains(InterProcedural.UNKNOWN_ALLOC)) {
             for (AllocSite site : pts) {
                 Unit unit = site.unit;
