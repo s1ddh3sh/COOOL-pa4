@@ -43,7 +43,7 @@ public class AnalysisTransformer extends SceneTransformer {
                 }
             }
         }
-        printResults();
+        // printResults();
 
     }
 
@@ -62,6 +62,16 @@ public class AnalysisTransformer extends SceneTransformer {
             return;
 
         Set<AllocSite> pts = state.getVar((Local) base);
+        // System.out.println(stmt);
+        // for (AllocSite pt : pts) {
+        //     if (!pt.equals(InterProcedural.UNKNOWN_ALLOC))
+        //         System.out.println("\n" + pt.unit.getJavaSourceStartLineNumber() + "\n");
+        //     else {
+        //         System.out.println("UNKNOWN");
+        //     }
+
+        // }
+
         if (!pts.contains(InterProcedural.UNKNOWN_ALLOC)) {
             for (AllocSite site : pts) {
                 Unit unit = site.unit;
