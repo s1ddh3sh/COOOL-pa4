@@ -1,8 +1,11 @@
 package src;
-import soot.jimple.spark.*;
+
+import src.InterProcedural.*;
 import java.util.*;
 import soot.*;
 import soot.jimple.*;
+import soot.toolkits.graph.BriefUnitGraph;
+import soot.toolkits.graph.UnitGraph;
 
 public class AnalysisTransformer extends SceneTransformer {
 
@@ -12,10 +15,16 @@ public class AnalysisTransformer extends SceneTransformer {
     public void internalTransform(String phaseName, Map<String, String> options) {
 
         for (SootClass cls : Scene.v().getApplicationClasses()) {
-            for (SootMethod meth : cls.getMethods()) {
-                if (!meth.isConcrete())
+            for (SootMethod method : cls.getMethods()) {
+                if (!method.isConcrete())
                     continue;
-                Body body = meth.retrieveActiveBody();
+                Body body = method.retrieveActiveBody();
+                UnitGraph graph = new BriefUnitGraph(body);
+                Map<Unit, PointsToState> ptsIn = new HashMap<>();
+                Map<Unit, PointsToState> ptsOut = new HashMap<>();
+                InterProcedural.runPointsToAnalysis(graph, ptsIn, ptsOut, method, false);
+
+                // Body body = meth.retrieveActiveBody();
                 for (Unit u : body.getUnits()) {
                     Stmt stmt = (Stmt) u;
                     if (!stmt.containsInvokeExpr())
@@ -45,8 +54,6 @@ public class AnalysisTransformer extends SceneTransformer {
         }
         if (!(base instanceof Local))
             return;
-
-        
 
         // System.out.println(base.getType());
     }

@@ -82,7 +82,7 @@ public class InterProcedural extends SceneTransformer {
         return true;
     }
 
-    private static void runPointsToAnalysis(
+    public static void runPointsToAnalysis(
             UnitGraph graph,
             Map<Unit, PointsToState> inMap,
             Map<Unit, PointsToState> outMap, SootMethod method, boolean isCallee) {
@@ -767,7 +767,7 @@ public class InterProcedural extends SceneTransformer {
         }
     }
 
-    private static final class PointsToState {
+    public static final class PointsToState {
         private final Map<Local, Set<AllocSite>> varPts;
         private final Map<FieldKey, Set<AllocSite>> fieldPts;
         private final Map<AllocSite, Set<Local>> revVarPts;
