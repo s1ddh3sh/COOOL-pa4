@@ -68,7 +68,7 @@ public class PointsToTransformer extends BodyTransformer {
     return !"<init>".equals(name) && !"<clinit>".equals(name);
   }
 
-  private static Map<Unit, Integer> buildUnitToIndex(Body body) {
+  public static Map<Unit, Integer> buildUnitToIndex(Body body) {
     Map<Unit, Integer> map = new HashMap<>();
     int index = 0;
     for (Unit u : body.getUnits()) {
@@ -77,7 +77,7 @@ public class PointsToTransformer extends BodyTransformer {
     return map;
   }
 
-  private static void runPointsToAnalysis(
+  public static void runPointsToAnalysis(
       UnitGraph graph,
       Map<Unit, Integer> unitToIndex,
       Map<Unit, PointsToState> inMap,
@@ -530,9 +530,9 @@ public class PointsToTransformer extends BodyTransformer {
   }
 
   public static final class AllocSite {
-    private final int id;
-    private final Unit unit;
-    private final boolean unknown;
+    public final int id;
+    public final Unit unit;
+    public final boolean unknown;
 
     AllocSite(int id, Unit unit, boolean unknown) {
       this.id = id;

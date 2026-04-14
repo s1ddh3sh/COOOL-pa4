@@ -1,37 +1,16 @@
 package src;
+
 import java.util.*;
 import soot.*;
 import soot.jimple.*;
+import soot.toolkits.graph.BriefUnitGraph;
+import soot.toolkits.graph.UnitGraph;
+import src.PointsToTransformer.AllocSite;
+import src.PointsToTransformer.PointsToState;
 
 public class AnalysisTransformer extends SceneTransformer {
 
     private static final Map<Unit, Set<Type>> resolvedType = new HashMap<>();
-
-    public static Map<Unit, Set<Type>> getResolvedTypes() {
-        return new HashMap<>(resolvedType);
-    }
-
-    public static void printResults() {
-        System.out.println("\n=== Monomorphism Analysis Results ===");
-        int monomorphicCount = 0;
-        int polymorphicCount = 0;
-        
-        for (Map.Entry<Unit, Set<Type>> entry : resolvedType.entrySet()) {
-            Set<Type> types = entry.getValue();
-            if (types.size() == 1) {
-                monomorphicCount++;
-                System.out.println("[MONOMORPHIC] " + entry.getKey() + " -> " + types.iterator().next());
-            } else if (types.size() > 1) {
-                polymorphicCount++;
-                System.out.println("[POLYMORPHIC] " + entry.getKey() + " -> " + types);
-            }
-        }
-        
-        System.out.println("\nSummary:");
-        System.out.println("  Monomorphic call sites: " + monomorphicCount);
-        System.out.println("  Polymorphic call sites: " + polymorphicCount);
-        System.out.println("  Total call sites analyzed: " + resolvedType.size());
-    }
 
     @Override
     public void internalTransform(String phaseName, Map<String, String> options) {
@@ -41,18 +20,24 @@ public class AnalysisTransformer extends SceneTransformer {
                 if (!meth.isConcrete())
                     continue;
                 Body body = meth.retrieveActiveBody();
+
+                UnitGraph graph = new BriefUnitGraph(body);
+                Map<Unit, Integer> unitToIndex = PointsToTransformer.buildUnitToIndex(body);
+                Map<Unit, PointsToState> ptsIn = new HashMap<>();
+                Map<Unit, PointsToState> ptsOut = new HashMap<>();
+                PointsToTransformer.runPointsToAnalysis(graph, unitToIndex, ptsIn, ptsOut);
+
                 for (Unit u : body.getUnits()) {
                     Stmt stmt = (Stmt) u;
                     if (!stmt.containsInvokeExpr())
                         continue;
-
                     InvokeExpr expr = stmt.getInvokeExpr();
                     if (expr instanceof VirtualInvokeExpr || expr instanceof InterfaceInvokeExpr) {
                         SootMethod target = expr.getMethod();
                         if (!target.getDeclaringClass().isApplicationClass()) {
                             continue;
                         }
-                        monomorph(meth, stmt, expr);
+                        monomorph(ptsIn, stmt, expr);
                     }
                 }
             }
@@ -61,7 +46,7 @@ public class AnalysisTransformer extends SceneTransformer {
 
     }
 
-    private void monomorph(SootMethod method, Stmt stmt, InvokeExpr expr) {
+    private void monomorph(Map<Unit, PointsToState> ptsIn, Stmt stmt, InvokeExpr expr) {
         Value base;
         if (expr instanceof VirtualInvokeExpr) {
             base = ((VirtualInvokeExpr) expr).getBase();
@@ -71,50 +56,46 @@ public class AnalysisTransformer extends SceneTransformer {
         if (!(base instanceof Local))
             return;
 
-        Local baseLocal = (Local) base;
-
-        // Get the points-to state at this statement
-        PointsToTransformer.PointsToState ptsState = PointsToTransformer.getPointsToStateAtUnit(method, stmt);
-        if (ptsState == null) {
-            resolvedType.put(stmt, new HashSet<>());
+        Local receiver = (Local) base;
+        // System.out.println(receiver);
+        PointsToState state = ptsIn.get(stmt);
+        if (state == null)
             return;
-        }
-
-        Set<Type> possibleTypes = new HashSet<>();
-        Set<PointsToTransformer.AllocSite> basePointsTo = ptsState.getVar(baseLocal);
-        
-        for (PointsToTransformer.AllocSite allocSite : basePointsTo) {
-            Type type = PointsToTransformer.getTypeFromAllocSite(allocSite);
-            if (type != null) {
-                possibleTypes.add(type);
+        Set<AllocSite> possibleTypes = state.getVar(receiver);
+        if (possibleTypes == null)
+            return;
+        for (AllocSite a : possibleTypes) {
+            if (!(a.unit instanceof AssignStmt))
+                continue;
+            AssignStmt st = (AssignStmt) a.unit;
+            Value rhs = st.getRightOp();
+            if (rhs instanceof NewExpr) {
+                Type type = ((NewExpr) rhs).getType();
+                // System.out.println(type);
+                resolvedType.computeIfAbsent(stmt, k -> new HashSet<>()).add(type);
             }
+
         }
 
-        resolvedType.put(stmt, possibleTypes);
     }
 
-    // private void printResults() {
+    private void printResults() {
 
-    // for (Unit u : possibleTypes.keySet()) {
+        for (Unit u : resolvedType.keySet()) {
 
-    // System.out.println("\nCall Site: " + u);
+            System.out.println("\nCall Site: " + u);
 
-    // System.out.println("Possible Types:");
-    // for (Type t : possibleTypes.get(u)) {
-    // System.out.println(" : " + t);
-    // }
+            System.out.println("Possible Types:");
+            Set<Type> resolvedCalls = resolvedType.get(u);
+            for (Type t : resolvedCalls) {
+                System.out.println(" : " + t);
+            }
 
-    // System.out.println("Resolved Targets:");
-    // Set<SootMethod> targets = possibleTargets.get(u);
-    // for (SootMethod m : targets) {
-    // System.out.println(" : " + m.getSignature());
-    // }
-
-    // if (targets.size() == 1) {
-    // System.out.println("monomorphic");
-    // } else {
-    // System.out.println("not monomorphic");
-    // }
-    // }
-    // }
+            if (resolvedCalls.size() == 1) {
+                System.out.println("monomorphic");
+            } else {
+                System.out.println("not monomorphic");
+            }
+        }
+    }
 }

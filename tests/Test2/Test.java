@@ -16,10 +16,22 @@ class B extends A {
     }
 }
 
+class C extends A {
+    void foo(A c) {
+        System.out.println(c.x);
+    }
+}
+
 class Test {
     public static void main(String[] args) {
         A a = new A(); // O19
-        B b = new B(); // O20
+        A b;
+        int i = 2;
+        if (i == 2) {
+            b = new B(); // O20
+        } else {
+            b = new C();
+        }
         a.foo(b);
         b.foo(b);
     }
