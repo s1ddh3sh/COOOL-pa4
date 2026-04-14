@@ -10,6 +10,10 @@ public class Main {
         Options.v().set_keep_line_number(true);
         Options.v().set_whole_program(true);
 
+        BodyTransformer pointsToTransformer = new PointsToTransformer();
+        PackManager.v().getPack("jtp").add(new Transform("jtp.pta", pointsToTransformer));
+
+        // Register monomorphism analysis (SceneTransformer - runs on whole program)
         SceneTransformer sceneTransformer = new AnalysisTransformer();
         PackManager.v().getPack("wjtp").add(new Transform("wjtp.dfa", sceneTransformer));
 
