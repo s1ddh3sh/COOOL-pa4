@@ -10,7 +10,7 @@ import src.PointsToTransformer.PointsToState;
 
 public class AnalysisTransformer extends SceneTransformer {
 
-    private static final Map<Unit, Set<Type>> resolvedType = new HashMap<>();
+    private final Map<Unit, Set<Type>> resolvedType = new HashMap<>();
 
     @Override
     public void internalTransform(String phaseName, Map<String, String> options) {
@@ -20,6 +20,8 @@ public class AnalysisTransformer extends SceneTransformer {
                 if (!meth.isConcrete())
                     continue;
                 Body body = meth.retrieveActiveBody();
+
+                Map<Unit, Set<Type>> localResolved = new HashMap<>();
 
                 UnitGraph graph = new BriefUnitGraph(body);
                 Map<Unit, Integer> unitToIndex = PointsToTransformer.buildUnitToIndex(body);
@@ -37,7 +39,15 @@ public class AnalysisTransformer extends SceneTransformer {
                         if (!target.getDeclaringClass().isApplicationClass()) {
                             continue;
                         }
-                        monomorph(ptsIn, stmt, expr);
+                        monomorph(ptsIn, stmt, expr, localResolved);
+                    }
+                }
+
+                resolvedType.putAll(localResolved);
+
+                for (Map.Entry<Unit, Set<Type>> entry : localResolved.entrySet()) {
+                    if (entry.getValue().size() == 1) {
+                        transformInvoke(body, entry.getKey(), entry.getValue().iterator().next());
                     }
                 }
             }
@@ -46,7 +56,8 @@ public class AnalysisTransformer extends SceneTransformer {
 
     }
 
-    private void monomorph(Map<Unit, PointsToState> ptsIn, Stmt stmt, InvokeExpr expr) {
+    private void monomorph(Map<Unit, PointsToState> ptsIn, Stmt stmt, InvokeExpr expr,
+                           Map<Unit, Set<Type>> localResolved) {
         Value base;
         if (expr instanceof VirtualInvokeExpr) {
             base = ((VirtualInvokeExpr) expr).getBase();
@@ -57,7 +68,6 @@ public class AnalysisTransformer extends SceneTransformer {
             return;
 
         Local receiver = (Local) base;
-        // System.out.println(receiver);
         PointsToState state = ptsIn.get(stmt);
         if (state == null)
             return;
@@ -71,12 +81,46 @@ public class AnalysisTransformer extends SceneTransformer {
             Value rhs = st.getRightOp();
             if (rhs instanceof NewExpr) {
                 Type type = ((NewExpr) rhs).getType();
-                // System.out.println(type);
-                resolvedType.computeIfAbsent(stmt, k -> new HashSet<>()).add(type);
+                localResolved.computeIfAbsent(stmt, k -> new HashSet<>()).add(type);
             }
-
         }
+    }
 
+    private void transformInvoke(Body body, Unit callUnit, Type resolvedType) {
+        if (!(callUnit instanceof Stmt))
+            return;
+
+        Stmt stmt = (Stmt) callUnit;
+        if (!stmt.containsInvokeExpr())
+            return;
+
+        InvokeExpr expr = stmt.getInvokeExpr();
+        if (!(expr instanceof VirtualInvokeExpr) && !(expr instanceof InterfaceInvokeExpr))
+            return;
+
+        Local base;
+        if (expr instanceof VirtualInvokeExpr) {
+            base = (Local) ((VirtualInvokeExpr) expr).getBase();
+        } else {
+            base = (Local) ((InterfaceInvokeExpr) expr).getBase();
+        }
+        if (!(resolvedType instanceof RefType))
+            return;
+
+        SootClass cls = ((RefType) resolvedType).getSootClass();
+        SootMethod meth = expr.getMethod();
+
+        SootMethod target = cls.getMethod(meth.getName(), meth.getParameterTypes(), meth.getReturnType());
+        SpecialInvokeExpr specialExpr = Jimple.v().newSpecialInvokeExpr(base, target.makeRef(), expr.getArgs());
+
+        Unit sub;
+        if (stmt instanceof AssignStmt) {
+            Value lhs = ((AssignStmt) stmt).getLeftOp();
+            sub = Jimple.v().newAssignStmt(lhs, specialExpr);
+        } else {
+            sub = Jimple.v().newInvokeStmt(specialExpr);
+        }
+        body.getUnits().swapWith(callUnit, sub);
     }
 
     private void printResults() {
@@ -93,6 +137,7 @@ public class AnalysisTransformer extends SceneTransformer {
 
             if (resolvedCalls.size() == 1) {
                 System.out.println("monomorphic");
+
             } else {
                 System.out.println("not monomorphic");
             }
