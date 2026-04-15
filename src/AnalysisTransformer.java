@@ -50,14 +50,16 @@ public class AnalysisTransformer extends SceneTransformer {
                         transformInvoke(body, entry.getKey(), entry.getValue().iterator().next());
                     }
                 }
+
+                MethodInline.inline(meth);
             }
         }
-        printResults();
+        // printResults();
 
     }
 
     private void monomorph(Map<Unit, PointsToState> ptsIn, Stmt stmt, InvokeExpr expr,
-                           Map<Unit, Set<Type>> localResolved) {
+            Map<Unit, Set<Type>> localResolved) {
         Value base;
         if (expr instanceof VirtualInvokeExpr) {
             base = ((VirtualInvokeExpr) expr).getBase();
