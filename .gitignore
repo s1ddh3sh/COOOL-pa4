@@ -2,3 +2,5 @@
 **/*.class
 sootOutput
 **/*_copy.java
+.tmp_compare
+.build-algorithms/

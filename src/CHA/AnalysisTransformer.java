@@ -1,0 +1,197 @@
+package src;
+
+import java.util.*;
+import soot.*;
+import soot.jimple.*;
+import soot.jimple.toolkits.invoke.SiteInliner;
+
+public class AnalysisTransformer extends SceneTransformer {
+    private final Map<SootMethod, List<CallSiteInfo>> callGraph = new LinkedHashMap<>();
+
+    @Override
+    protected void internalTransform(String phaseName, Map<String, String> options) {
+        Hierarchy hierarchy = Scene.v().getActiveHierarchy();
+
+        for (SootClass cls : Scene.v().getApplicationClasses()) {
+            for (SootMethod method : cls.getMethods()) {
+                if (!method.isConcrete()) continue;
+
+                Body body = method.retrieveActiveBody();
+                Map<Unit, SootMethod> monomorphicCalls = new LinkedHashMap<>();
+                List<CallSiteInfo> sites = new ArrayList<>();
+
+                for (Unit unit : body.getUnits()) {
+                    Stmt stmt = (Stmt) unit;
+                    if (!stmt.containsInvokeExpr()) continue;
+
+                    InvokeExpr invoke = stmt.getInvokeExpr();
+                    if (!(invoke instanceof VirtualInvokeExpr) && !(invoke instanceof InterfaceInvokeExpr)) continue;
+
+                    SootMethod declared = invoke.getMethod();
+                    SootClass declaredClass = declared.getDeclaringClass();
+                    if (!declaredClass.isApplicationClass()) continue;
+
+                    Set<SootMethod> targets = resolveCHA(hierarchy, invoke, declared, declaredClass);
+                    if (targets.size() == 1) {
+                        monomorphicCalls.put(stmt, targets.iterator().next());
+                    }
+
+                    int line = stmt.getJavaSourceStartLineNumber();
+                    sites.add(new CallSiteInfo(line, declared.getName(), targets));
+                }
+
+                for (Map.Entry<Unit, SootMethod> entry : monomorphicCalls.entrySet()) {
+                    transformInvoke(body, entry.getKey(), entry.getValue());
+                }
+                inlineSpecialInvokes(method);
+
+                if (!sites.isEmpty()) {
+                    callGraph.put(method, sites);
+                }
+            }
+        }
+
+        printCallGraph();
+    }
+
+    private Set<SootMethod> resolveCHA(
+            Hierarchy hierarchy,
+            InvokeExpr invoke,
+            SootMethod declared,
+            SootClass declaredClass) {
+        List<SootClass> concreteSubtypes = new ArrayList<>();
+
+        if (invoke instanceof InterfaceInvokeExpr) {
+            if (declaredClass.isInterface()) {
+                for (SootClass impl : hierarchy.getImplementersOf(declaredClass)) {
+                    addConcreteSubtypes(hierarchy, impl, concreteSubtypes);
+                }
+            }
+        } else {
+            addConcreteSubtypes(hierarchy, declaredClass, concreteSubtypes);
+        }
+
+        Set<SootMethod> targets = new LinkedHashSet<>();
+        for (SootClass sub : concreteSubtypes) {
+            SootMethod resolved = dispatch(sub, declared);
+            if (resolved != null) targets.add(resolved);
+        }
+
+        return targets;
+    }
+
+    private void addConcreteSubtypes(Hierarchy hierarchy, SootClass cls, List<SootClass> out) {
+        if (!cls.isAbstract() && !cls.isInterface()) out.add(cls);
+        for (SootClass sub : hierarchy.getSubclassesOf(cls)) {
+            if (!sub.isAbstract() && !sub.isInterface()) out.add(sub);
+        }
+    }
+
+    private SootMethod dispatch(SootClass cls, SootMethod declared) {
+        String name = declared.getName();
+        List<Type> params = declared.getParameterTypes();
+        Type ret = declared.getReturnType();
+
+        SootClass cur = cls;
+        while (cur != null) {
+            if (cur.declaresMethod(name, params, ret)) {
+                return cur.getMethod(name, params, ret);
+            }
+            cur = cur.hasSuperclass() ? cur.getSuperclass() : null;
+        }
+        return null;
+    }
+
+    private void transformInvoke(Body body, Unit callUnit, SootMethod target) {
+        if (!(callUnit instanceof Stmt)) return;
+
+        Stmt stmt = (Stmt) callUnit;
+        if (!stmt.containsInvokeExpr()) return;
+
+        InvokeExpr expr = stmt.getInvokeExpr();
+        if (!(expr instanceof VirtualInvokeExpr) && !(expr instanceof InterfaceInvokeExpr)) return;
+
+        Local base;
+        if (expr instanceof VirtualInvokeExpr) {
+            base = (Local) ((VirtualInvokeExpr) expr).getBase();
+        } else {
+            base = (Local) ((InterfaceInvokeExpr) expr).getBase();
+        }
+
+        SpecialInvokeExpr specialExpr = Jimple.v().newSpecialInvokeExpr(base, target.makeRef(), expr.getArgs());
+
+        Unit replacement;
+        if (stmt instanceof AssignStmt) {
+            Value lhs = ((AssignStmt) stmt).getLeftOp();
+            replacement = Jimple.v().newAssignStmt(lhs, specialExpr);
+        } else {
+            replacement = Jimple.v().newInvokeStmt(specialExpr);
+        }
+        body.getUnits().swapWith(callUnit, replacement);
+    }
+
+    private void inlineSpecialInvokes(SootMethod method) {
+        if (!method.isConcrete()) return;
+
+        List<Stmt> toInline = new ArrayList<>();
+        Body body = method.retrieveActiveBody();
+
+        for (Unit unit : body.getUnits()) {
+            Stmt stmt = (Stmt) unit;
+            if (!stmt.containsInvokeExpr()) continue;
+            if (stmt.getInvokeExpr() instanceof SpecialInvokeExpr) {
+                toInline.add(stmt);
+            }
+        }
+
+        for (Stmt stmt : toInline) {
+            SootMethod target = stmt.getInvokeExpr().getMethod();
+            if (!target.isConcrete()) continue;
+            String targetName = target.getName();
+            if ("<init>".equals(targetName) || "<clinit>".equals(targetName)) continue;
+            SiteInliner.inlineSite(target, stmt, method);
+        }
+    }
+
+    private void printCallGraph() {
+        System.out.println("\n========== CHA Call Graph ==========\n");
+
+        if (callGraph.isEmpty()) {
+            System.out.println("(no virtual / interface call sites found in application classes)");
+            return;
+        }
+
+        for (Map.Entry<SootMethod, List<CallSiteInfo>> entry : callGraph.entrySet()) {
+            System.out.println("Caller: " + entry.getKey().getSignature());
+
+            for (CallSiteInfo site : entry.getValue()) {
+                System.out.print("  Line " + site.line + ": " + site.methodName + "() -> ");
+
+                if (site.targets.isEmpty()) {
+                    System.out.println("NO TARGETS FOUND");
+                } else if (site.targets.size() == 1) {
+                    System.out.println("MONOMORPHIC: "
+                            + site.targets.iterator().next().getSignature());
+                } else {
+                    System.out.println("POLYMORPHIC (" + site.targets.size() + " targets):");
+                    for (SootMethod t : site.targets) {
+                        System.out.println("      " + t.getSignature());
+                    }
+                }
+            }
+            System.out.println();
+        }
+    }
+
+    private static class CallSiteInfo {
+        final int line;
+        final String methodName;
+        final Set<SootMethod> targets;
+
+        CallSiteInfo(int line, String methodName, Set<SootMethod> targets) {
+            this.line = line;
+            this.methodName = methodName;
+            this.targets = targets;
+        }
+    }
+}

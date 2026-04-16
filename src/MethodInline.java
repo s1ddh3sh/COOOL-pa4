@@ -28,6 +28,9 @@ public class MethodInline {
             SootMethod target = stmt.getInvokeExpr().getMethod();
             if (!target.isConcrete())
                 continue;
+            String targetName = target.getName();
+            if ("<init>".equals(targetName) || "<clinit>".equals(targetName))
+                continue;
 
             SiteInliner.inlineSite(target, stmt, method);
         }
