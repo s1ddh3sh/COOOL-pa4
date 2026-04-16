@@ -1,12 +1,13 @@
 package src;
 
 import java.util.*;
+
 import soot.*;
 import soot.jimple.*;
 import soot.toolkits.graph.BriefUnitGraph;
 import soot.toolkits.graph.UnitGraph;
-import src.PointsToTransformer.AllocSite;
-import src.PointsToTransformer.PointsToState;
+import src.Interprocedural.AllocSite;
+import src.Interprocedural.PointsToState;
 
 public class AnalysisTransformer extends SceneTransformer {
 
@@ -14,7 +15,7 @@ public class AnalysisTransformer extends SceneTransformer {
 
     @Override
     public void internalTransform(String phaseName, Map<String, String> options) {
-
+        Interprocedural.cg = Scene.v().getCallGraph();
         for (SootClass cls : Scene.v().getApplicationClasses()) {
             for (SootMethod meth : cls.getMethods()) {
                 if (!meth.isConcrete())
@@ -24,10 +25,10 @@ public class AnalysisTransformer extends SceneTransformer {
                 Map<Unit, Set<Type>> localResolved = new HashMap<>();
 
                 UnitGraph graph = new BriefUnitGraph(body);
-                Map<Unit, Integer> unitToIndex = PointsToTransformer.buildUnitToIndex(body);
+                // Map<Unit, Integer> unitToIndex = PointsToTransformer.buildUnitToIndex(body);
                 Map<Unit, PointsToState> ptsIn = new HashMap<>();
                 Map<Unit, PointsToState> ptsOut = new HashMap<>();
-                PointsToTransformer.runPointsToAnalysis(graph, unitToIndex, ptsIn, ptsOut);
+                Interprocedural.runPointsToAnalysis(graph, ptsIn, ptsOut, meth, false);
 
                 for (Unit u : body.getUnits()) {
                     Stmt stmt = (Stmt) u;
