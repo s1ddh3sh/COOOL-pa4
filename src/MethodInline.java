@@ -20,6 +20,9 @@ public class MethodInline {
             InvokeExpr expr = stmt.getInvokeExpr();
 
             if (expr instanceof SpecialInvokeExpr) {
+                if (expr.getMethod().getName().equals("<init>")) {
+                    continue;
+                }
                 toInline.add(stmt);
             }
         }

@@ -2,14 +2,14 @@ class A {
     int x;
 
     void foo(A a) {
-        System.out.println(x);
+        x += 2;
     }
 }
 
 class B extends A {
 
     void foo(A b) {
-        b.x = 10;
+        b.x += 10;
         A p = new A(); // O10
         b = p;
         return;
@@ -18,7 +18,7 @@ class B extends A {
 
 class C extends A {
     void foo(A c) {
-        System.out.println(c.x);
+        c.x -= 5;
     }
 }
 
@@ -32,7 +32,10 @@ class Test {
         } else {
             b = new C();
         }
-        a.foo(b);
-        b.foo(b);
+        for (long j = 0; j < 100000000L; j++) {
+            a.foo(b);
+            b.foo(b);
+        }
+        System.out.println(a.x);
     }
 }
