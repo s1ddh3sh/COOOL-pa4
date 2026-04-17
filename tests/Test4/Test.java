@@ -31,7 +31,7 @@ public class Test {
             w3.obj = new Base();
         }
 
-        for (long i = 0; i < 50000000L; i++) {
+        for (long i = 0; i < 100000000L; i++) {
             w1.obj.compute(); // Monomorphic
             w2.obj.compute(); // Monomorphic
             w3.obj.compute(); // Polymorphic

@@ -26,14 +26,14 @@ public class Test {
         A a3 = new B();
 
         // Loop preserving monomorphism.
-        for (int i = 0; i < 50000000; i++) {
+        for (int i = 0; i < 100000000; i++) {
             a1.doWork(); // Monomorphic B
             a3.doWork(); // Monomorphic B
         }
 
         // Loop degrading to polymorphism.
         A poly = new B();
-        for (int i = 0; i < 50000000; i++) {
+        for (int i = 0; i < 100000000; i++) {
             poly.doWork(); // Polymorphic because poly could be B or C
             if (i == 50) {
                 poly = new C();
