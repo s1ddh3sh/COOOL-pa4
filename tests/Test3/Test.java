@@ -1,26 +1,43 @@
-class O {
-    int x;
+class A {
+    int v = 0;
+    void doWork() { 
+        v++; 
+    }
 }
 
-class A {
-    O f;
+class B extends A {
+    @Override
+    void doWork() { 
+        v += 10; 
+    }
+}
 
-    void func(O global) {
-        O obj = new O();
-        A a = new A();
-        a.f = obj;
-        global.x = 10;
+class C extends A {
+    @Override
+    void doWork() { 
+        v -= 5; 
     }
 }
 
 public class Test {
-    static A global = new A();
-
     public static void main(String[] args) {
-        A a = new A();
-        // a.f = global;
-        // a.func(global);
-        global.f = new O();
-        a.func(global.f);
+        A a1 = new B();
+        A a2 = new C();
+        A a3 = new B();
+
+        // Loop preserving monomorphism.
+        for (int i = 0; i < 50000000; i++) {
+            a1.doWork(); // Monomorphic B
+            a3.doWork(); // Monomorphic B
+        }
+
+        // Loop degrading to polymorphism.
+        A poly = new B();
+        for (int i = 0; i < 50000000; i++) {
+            poly.doWork(); // Polymorphic because poly could be B or C
+            if (i == 50) {
+                poly = new C();
+            }
+        }
     }
 }

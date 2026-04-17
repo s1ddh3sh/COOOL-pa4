@@ -114,7 +114,12 @@ public class AnalysisTransformer extends SceneTransformer {
         SootMethod meth = expr.getMethod();
 
         SootMethod target = cls.getMethod(meth.getName(), meth.getParameterTypes(), meth.getReturnType());
-        SpecialInvokeExpr specialExpr = Jimple.v().newSpecialInvokeExpr(base, target.makeRef(), expr.getArgs());
+        
+        Local castedBase = Jimple.v().newLocal("casted_" + base.getName(), RefType.v(cls));
+        body.getLocals().add(castedBase);
+        Unit castStmt = Jimple.v().newAssignStmt(castedBase, Jimple.v().newCastExpr(base, RefType.v(cls)));
+
+        SpecialInvokeExpr specialExpr = Jimple.v().newSpecialInvokeExpr(castedBase, target.makeRef(), expr.getArgs());
 
         Unit sub;
         if (stmt instanceof AssignStmt) {
@@ -123,6 +128,7 @@ public class AnalysisTransformer extends SceneTransformer {
         } else {
             sub = Jimple.v().newInvokeStmt(specialExpr);
         }
+        body.getUnits().insertBefore(castStmt, callUnit);
         body.getUnits().swapWith(callUnit, sub);
     }
 

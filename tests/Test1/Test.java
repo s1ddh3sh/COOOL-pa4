@@ -1,20 +1,22 @@
 class A {
+    int x = 0;
+
     void foo() {
-        System.out.println("A.foo");
+        x += 1;
     }
 }
 
 class B extends A {
     @Override
     void foo() {
-        System.out.println("B.foo");
+        x += 2;
     }
 }
 
 class C extends A {
     @Override
     void foo() {
-        System.out.println("C.foo");
+        x -= 1;
     }
 }
 
@@ -49,13 +51,13 @@ public class Test {
         a.foo(); // polymorphic (B or C)
     }
 
-    static void callFoo(A a) {
-        a.foo();
-    }
+    // static void callFoo(A a) {
+    //     a.foo();
+    // }
 
     static void case5() {
         A b = new B();
-        callFoo(b);
+        b.foo();
     }
 
     static void case6(boolean flag) {
@@ -65,15 +67,17 @@ public class Test {
         } else {
             a = new C();
         }
-        callFoo(a);
+        a.foo();
     }
 
     public static void main(String[] args) {
-        case1();
-        case2(true);
-        case3();
-        case4(false);
-        case5();
-        case6(true);
+        for (long j = 0; j < 50000000L; j++) {
+            case1();
+            case2(true);
+            case3();
+            case4(false);
+            case5();
+            case6(true);
+        }
     }
 }
