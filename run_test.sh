@@ -6,8 +6,9 @@ soot_jar="$root/soot-4.6.0-jar-with-dependencies.jar"
 algorithms=(CHA RTA VTA)
 build_root="$root/.build-algorithms"
 output_root="$root/sootOutput"
+csv_file="$root/run_test.csv"
 
-iters="5"
+iters="10"
 tests=(Test1 Test2 Test3 Test4 Test5 Test6 Test7 Test8 Test9 Test10 out-fop out-avrora out-batik out-luindex out-xalan)
 
 usage() {
@@ -32,6 +33,8 @@ if [[ ! -f "$soot_jar" ]]; then
   echo "Missing: $soot_jar" >&2
   exit 1
 fi
+
+printf '%s\n' 'testcase,baseline,cha,rta,vta,speedup_cha,speedup_rta,speedup_vta' > "$csv_file"
 
 to_ms() {
   awk -v n="$1" 'BEGIN { printf "%.3f", n / 1000000.0 }'
@@ -140,6 +143,10 @@ for t in "${tests[@]}"; do
 
   dacapo_jar="$root/decapo/dacapo-9.12-MR1-bach.jar"
   if [[ "$is_dacapo" -eq 1 ]]; then
+    if [[ ! -f "$dacapo_jar" ]]; then
+      echo "ensure decapo/ folder and it has testcases along with decapo .jar" >&2
+      exit 1
+    fi
     orig_cp="$orig_cp:$dacapo_jar"
     cha_cp="$cha_cp:$dacapo_jar"
     rta_cp="$rta_cp:$dacapo_jar"
@@ -203,8 +210,8 @@ for t in "${tests[@]}"; do
 
   orig_ms="$(to_ms "$orig_ns")"
 
-  printf '\n%-10s %-12s %s\n' "Variant" "AvgTime(ms)" "SpeedupVsOriginal"
-  printf '%-10s %-12s %s\n' "Original" "$orig_ms" "1.000"
+  declare -A after_ms
+  declare -A after_sp
 
   for algo in "${algorithms[@]}"; do
     after_cp="$output_root/$t/$algo/after"
@@ -213,10 +220,31 @@ for t in "${tests[@]}"; do
     fi
 
     if [[ "${valid_after[$algo]}" == "1" ]]; then
-      ns="$(measure "$after_cp" "$main_class" "$measure_scratch" "${extra_args[@]}")"
-      ms="$(to_ms "$ns")"
-      sp="$(speedup "$orig_ns" "$ns")"
-      printf '%-10s %-12s %s\n' "$algo" "$ms" "$sp"
+      if ns="$(measure "$after_cp" "$main_class" "$measure_scratch" "${extra_args[@]}")"; then
+        after_ms["$algo"]="$(to_ms "$ns")"
+        after_sp["$algo"]="$(speedup "$orig_ns" "$ns")"
+      else
+        after_ms["$algo"]="INVALID"
+        after_sp["$algo"]="INVALID"
+      fi
+    else
+      after_ms["$algo"]="INVALID"
+      after_sp["$algo"]="INVALID"
+    fi
+  done
+
+  printf '%s,%s,%s,%s,%s,%s,%s,%s\n' \
+    "$t" \
+    "$orig_ms" \
+    "${after_ms[CHA]}" "${after_ms[RTA]}" "${after_ms[VTA]}" \
+    "${after_sp[CHA]}" "${after_sp[RTA]}" "${after_sp[VTA]}" >> "$csv_file"
+
+  printf '\n%-10s %-12s %s\n' "Variant" "AvgTime(ms)" "SpeedupVsOriginal"
+  printf '%-10s %-12s %s\n' "Original" "$orig_ms" "1.000"
+
+  for algo in "${algorithms[@]}"; do
+    if [[ "${valid_after[$algo]}" == "1" && "${after_ms[$algo]}" != "INVALID" ]]; then
+      printf '%-10s %-12s %s\n' "$algo" "${after_ms[$algo]}" "${after_sp[$algo]}"
     else
       printf '%-10s %-12s %s\n' "$algo" "INVALID" "${invalid_reason[$algo]}"
     fi
