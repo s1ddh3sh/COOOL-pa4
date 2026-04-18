@@ -1,79 +1,58 @@
-class A {
-    void foo() {
-        System.out.println("A.foo");
+package tests.Test1;
+
+abstract class Op {
+    abstract int apply(int x);
+}
+
+class Add extends Op {
+    @Override
+    int apply(int x) {
+        return x + 3;
     }
 }
 
-class B extends A {
+class Mul extends Op {
     @Override
-    void foo() {
-        System.out.println("B.foo");
+    int apply(int x) {
+        return x * 3 + 1;
     }
 }
 
-class C extends A {
-    @Override
-    void foo() {
-        System.out.println("C.foo");
+class Engine {
+    private final Op op;
+
+    Engine(Op op) {
+        this.op = op;
+    }
+
+    int run(int rounds) {
+        int acc = 1;
+        for (int i = 0; i < rounds; i++) {
+            acc = op.apply(acc + i);
+            acc ^= acc << 5;
+        }
+        return acc;
     }
 }
 
 public class Test {
+    private static volatile int sink;
 
-    static void case1() {
-        A a = new B();
-        a.foo(); // monomorphized : B.foo()
-    }
-
-    static void case2(boolean flag) {
-        A a;
-        if (flag) {
-            a = new B();
-        } else {
-            a = new C();
+    private static int repeat(Engine engine, int times, int rounds) {
+        int out = 0;
+        for (int i = 0; i < times; i++) {
+            out ^= engine.run(rounds);
         }
-        a.foo(); // cannot be monomorphized
-    }
-
-    static void case3() {
-        A a = new B();
-        a = new B();
-        a.foo(); // monomorphic : B.foo()
-    }
-
-    static void case4(boolean flag) {
-        A a = new B();
-        if (flag) {
-            a = new C();
-        }
-        a.foo(); // polymorphic (B or C)
-    }
-
-    static void callFoo(A a) {
-        a.foo();
-    }
-
-    static void case5() {
-        A b = new B();
-        callFoo(b);
-    }
-
-    static void case6(boolean flag) {
-        A a;
-        if (flag) {
-            a = new B();
-        } else {
-            a = new C();
-        }
-        callFoo(a);
+        return out;
     }
 
     public static void main(String[] args) {
-        case1();
-        case2(true);
-        case3();
-        case4(false);
-        case5();
-        case6(true);
+        Op hot = new Add();
+        Op noise = new Mul();
+        int warm = noise.apply(7);
+
+        Engine engine = new Engine(hot);
+        sink = warm ^ repeat(engine, 20, 150000);
+        System.out.println(sink);
     }
 }

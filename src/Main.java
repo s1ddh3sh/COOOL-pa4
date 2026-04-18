@@ -14,13 +14,15 @@ public class Main {
         String algorithm = args.length >= 2 ? args[1].toUpperCase() : "BASELINE";
         String outputFormat = parseOutputFormat(args.length >= 3 ? args[2] : "J");
 
-        String classpath = "./tests/" + testName;
+        String classpath = ".";
+        String processDir = "./tests/" + testName;
+        String mainClass = "tests." + testName + ".Test";
         String outputRoot = "./sootOutput/" + testName + "/" + algorithm;
         String baselineOutputDir = outputRoot + "/before";
         String transformedOutputDir = outputRoot + "/after";
 
-        runSoot(classpath, baselineOutputDir, false, algorithm, outputFormat);
-        runSoot(classpath, transformedOutputDir, true, algorithm, outputFormat);
+        runSoot(classpath, processDir, mainClass, baselineOutputDir, false, algorithm, outputFormat);
+        runSoot(classpath, processDir, mainClass, transformedOutputDir, true, algorithm, outputFormat);
     }
 
     private static String parseOutputFormat(String raw) {
@@ -38,7 +40,14 @@ public class Main {
         return "BASELINE".equals(algorithm) || "NONE".equals(algorithm) || "NOOPT".equals(algorithm);
     }
 
-    private static void runSoot(String classpath, String outputDir, boolean transformedPass, String algorithm, String outputFormat) {
+    private static void runSoot(
+            String classpath,
+            String processDir,
+            String mainClass,
+            String outputDir,
+            boolean transformedPass,
+            String algorithm,
+            String outputFormat) {
         G.reset();
 
         Options.v().set_keep_line_number(true);
@@ -68,8 +77,8 @@ public class Main {
                 "-f", outputFormat,
                 "-d", outputDir,
                 "-t", "1",
-                "-main-class", "Test",
-                "-process-dir", classpath,
+                "-main-class", mainClass,
+                "-process-dir", processDir,
 
         };
         soot.Main.main(sootArgs);

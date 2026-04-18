@@ -1,26 +1,55 @@
-class O {
-    int x;
+package tests.Test3;
+
+abstract class Filter {
+    abstract int map(int x);
 }
 
-class A {
-    O f;
+class Low extends Filter {
+    @Override
+    int map(int x) {
+        return x + 7;
+    }
+}
 
-    void func(O global) {
-        O obj = new O();
-        A a = new A();
-        a.f = obj;
-        global.x = 10;
+class High extends Filter {
+    @Override
+    int map(int x) {
+        return x * 5;
+    }
+}
+
+class Mixer {
+    int processMono(Filter f, int n) {
+        int acc = 0;
+        for (int i = 0; i < n; i++) {
+            acc += f.map(i);
+            acc ^= acc >>> 3;
+        }
+        return acc;
+    }
+
+    int processPoly(Filter a, Filter b, int n) {
+        int acc = 0;
+        for (int i = 0; i < n; i++) {
+            Filter f = ((i & 1) == 0) ? a : b;
+            acc += f.map(i);
+            acc ^= acc << 1;
+        }
+        return acc;
     }
 }
 
 public class Test {
-    static A global = new A();
+    private static volatile int sink;
 
     public static void main(String[] args) {
-        A a = new A();
-        // a.f = global;
-        // a.func(global);
-        global.f = new O();
-        a.func(global.f);
+        Filter low = new Low();
+        Filter high = new High();
+        Mixer mixer = new Mixer();
+
+        int x = mixer.processMono(low, 1600000);
+        int y = mixer.processPoly(low, high, 1600000);
+        sink = x ^ y;
+        System.out.println(sink);
     }
 }

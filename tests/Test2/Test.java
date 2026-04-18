@@ -1,38 +1,62 @@
-class A {
-    int x;
+package tests.Test2;
 
-    void foo(A a) {
-        System.out.println(x);
+abstract class Stepper {
+    abstract int step(int x);
+}
+
+class Inc extends Stepper {
+    @Override
+    int step(int x) {
+        return x + 1;
     }
 }
 
-class B extends A {
-
-    void foo(A b) {
-        b.x = 10;
-        A p = new A(); // O10
-        b = p;
-        return;
+class Dec extends Stepper {
+    @Override
+    int step(int x) {
+        return x - 1;
     }
 }
 
-class C extends A {
-    void foo(A c) {
-        System.out.println(c.x);
+class Noise {
+    static Stepper side = new Dec();
+
+    static int warmup() {
+        return side.step(1);
     }
 }
 
-class Test {
-    public static void main(String[] args) {
-        A a = new A(); // O19
-        A b;
-        int i = 2;
-        if (i == 2) {
-            b = new B(); // O20
-        } else {
-            b = new C();
+class Runner {
+    Stepper newHotStepper() {
+        return new Inc();
+    }
+
+    int run(int n) {
+        Stepper s = newHotStepper();
+        int acc = 0;
+        for (int i = 0; i < n; i++) {
+            acc += s.step(i);
+            acc ^= acc << 2;
         }
-        a.foo(b);
-        b.foo(b);
+        return acc;
+    }
+}
+
+public class Test {
+    private static volatile int sink;
+
+    private static int repeat(Runner runner, int times, int rounds) {
+        int out = 0;
+        for (int i = 0; i < times; i++) {
+            out ^= runner.run(rounds);
+        }
+        return out;
+    }
+
+    public static void main(String[] args) {
+        int warm = Noise.warmup();
+        Runner runner = new Runner();
+        sink = warm ^ repeat(runner, 14, 200000);
+        System.out.println(sink);
     }
 }

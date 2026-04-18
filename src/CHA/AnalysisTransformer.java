@@ -41,9 +41,8 @@ public class AnalysisTransformer extends SceneTransformer {
                 }
 
                 for (Map.Entry<Unit, SootMethod> entry : monomorphicCalls.entrySet()) {
-                    transformInvoke(body, entry.getKey(), entry.getValue());
+                    inlineMonomorphicCall(method, entry.getKey(), entry.getValue());
                 }
-                inlineSpecialInvokes(method);
 
                 if (!sites.isEmpty()) {
                     callGraph.put(method, sites);
@@ -102,55 +101,26 @@ public class AnalysisTransformer extends SceneTransformer {
         return null;
     }
 
-    private void transformInvoke(Body body, Unit callUnit, SootMethod target) {
+    private void inlineMonomorphicCall(SootMethod caller, Unit callUnit, SootMethod target) {
         if (!(callUnit instanceof Stmt)) return;
+        if (!canInline(caller, target)) return;
 
         Stmt stmt = (Stmt) callUnit;
-        if (!stmt.containsInvokeExpr()) return;
-
-        InvokeExpr expr = stmt.getInvokeExpr();
-        if (!(expr instanceof VirtualInvokeExpr) && !(expr instanceof InterfaceInvokeExpr)) return;
-
-        Local base;
-        if (expr instanceof VirtualInvokeExpr) {
-            base = (Local) ((VirtualInvokeExpr) expr).getBase();
-        } else {
-            base = (Local) ((InterfaceInvokeExpr) expr).getBase();
+        try {
+            SiteInliner.inlineSite(target, stmt, caller);
+        } catch (RuntimeException ignored) {
+            // Keep the original call site when inlining is unsafe for this method.
         }
-
-        SpecialInvokeExpr specialExpr = Jimple.v().newSpecialInvokeExpr(base, target.makeRef(), expr.getArgs());
-
-        Unit replacement;
-        if (stmt instanceof AssignStmt) {
-            Value lhs = ((AssignStmt) stmt).getLeftOp();
-            replacement = Jimple.v().newAssignStmt(lhs, specialExpr);
-        } else {
-            replacement = Jimple.v().newInvokeStmt(specialExpr);
-        }
-        body.getUnits().swapWith(callUnit, replacement);
     }
 
-    private void inlineSpecialInvokes(SootMethod method) {
-        if (!method.isConcrete()) return;
+    private boolean canInline(SootMethod caller, SootMethod target) {
+        if (caller == null || target == null) return false;
+        if (!target.isConcrete()) return false;
+        String targetName = target.getName();
+        if ("<init>".equals(targetName) || "<clinit>".equals(targetName)) return false;
 
-        List<Stmt> toInline = new ArrayList<>();
-        Body body = method.retrieveActiveBody();
-
-        for (Unit unit : body.getUnits()) {
-            Stmt stmt = (Stmt) unit;
-            if (!stmt.containsInvokeExpr()) continue;
-            if (stmt.getInvokeExpr() instanceof SpecialInvokeExpr) {
-                toInline.add(stmt);
-            }
-        }
-
-        for (Stmt stmt : toInline) {
-            SootMethod target = stmt.getInvokeExpr().getMethod();
-            if (!target.isConcrete()) continue;
-            String targetName = target.getName();
-            if ("<init>".equals(targetName) || "<clinit>".equals(targetName)) continue;
-            SiteInliner.inlineSite(target, stmt, method);
-        }
+        // Avoid illegal access after inlining private members across classes.
+        return caller.getDeclaringClass().equals(target.getDeclaringClass());
     }
 
     private void printCallGraph() {
