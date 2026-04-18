@@ -12,7 +12,15 @@ public class Main {
 
         String testName = args[0];
         String algorithm = args.length >= 2 ? args[1].toUpperCase() : "BASELINE";
-        String outputFormat = parseOutputFormat(args.length >= 3 ? args[2] : "J");
+        String format = args.length >= 3 ? args[2].trim().toUpperCase() : "J";
+        String outputFormat;
+        if ("J".equals(format)) {
+            outputFormat = "J";
+        } else if ("C".equals(format)) {
+            outputFormat = "c";
+        } else {
+            throw new IllegalArgumentException("Output format must be J or C");
+        }
 
         String classpath = ".";
         String processDir = "./tests/" + testName;
@@ -23,21 +31,6 @@ public class Main {
 
         runSoot(classpath, processDir, mainClass, baselineOutputDir, false, algorithm, outputFormat);
         runSoot(classpath, processDir, mainClass, transformedOutputDir, true, algorithm, outputFormat);
-    }
-
-    private static String parseOutputFormat(String raw) {
-        String format = raw == null ? "J" : raw.trim().toUpperCase();
-        if ("J".equals(format)) {
-            return "J";
-        }
-        if ("C".equals(format)) {
-            return "c";
-        }
-        throw new IllegalArgumentException("Output format must be J or C");
-    }
-
-    private static boolean isBaseline(String algorithm) {
-        return "BASELINE".equals(algorithm) || "NONE".equals(algorithm) || "NOOPT".equals(algorithm);
     }
 
     private static void runSoot(
@@ -53,7 +46,10 @@ public class Main {
         Options.v().set_keep_line_number(true);
         Options.v().set_whole_program(true);
 
-        boolean applyTransform = transformedPass && !isBaseline(algorithm);
+        boolean applyTransform = transformedPass
+            && !"BASELINE".equals(algorithm)
+            && !"NONE".equals(algorithm)
+            && !"NOOPT".equals(algorithm);
         if (applyTransform) {
             SceneTransformer sceneTransformer = new AnalysisTransformer();
             PackManager.v().getPack("wjtp").add(new Transform("wjtp.dfa", sceneTransformer));
