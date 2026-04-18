@@ -2,7 +2,6 @@ package src;
 
 import soot.*;
 import soot.options.Options;
-import java.io.File;
 import java.util.*;
 
 public class Main {
@@ -24,33 +23,20 @@ public class Main {
             throw new IllegalArgumentException("Output format must be J or C");
         }
 
-        String classpath;
-        String processDir;
-        String mainClass;
-
-        File decapoDir = new File("./decapo/" + testName);
-        if (decapoDir.exists() && decapoDir.isDirectory()) {
-            processDir = "./decapo/" + testName;
-            mainClass = "Harness";
-            classpath = processDir;
-        } else {
-            processDir = "./tests/" + testName;
-            mainClass = "tests." + testName + ".Test";
-            classpath = ".";
-        }
+        String classpath = ".";
+        String processDir = "./tests/" + testName;
+        String mainClass = "tests." + testName + ".Test";
 
         String outputRoot = "./sootOutput/" + testName + "/" + algorithm;
         String baselineOutputDir = outputRoot + "/before";
         String transformedOutputDir = outputRoot + "/after";
 
-        boolean isDaCapo = decapoDir.exists() && decapoDir.isDirectory();
-
-        runSoot(classpath, processDir, mainClass, baselineOutputDir, false, algorithm, outputFormat, isDaCapo);
-        runSoot(classpath, processDir, mainClass, transformedOutputDir, true, algorithm, outputFormat, isDaCapo);
+        runSoot(classpath, processDir, mainClass, baselineOutputDir, false, algorithm, outputFormat);
+        runSoot(classpath, processDir, mainClass, transformedOutputDir, true, algorithm, outputFormat);
     }
 
-        private static void runSoot(String classpath, String processDir, String mainClass, String outputDir,
-            boolean transformedPass, String algorithm, String outputFormat, boolean isDaCapo) {
+    private static void runSoot(String classpath, String processDir, String mainClass, String outputDir,
+            boolean transformedPass, String algorithm, String outputFormat) {
         G.reset();
 
         Options.v().set_keep_line_number(true);
@@ -83,40 +69,12 @@ public class Main {
             "-process-dir",
             processDir));
 
-        if (isDaCapo) {
-            argsList.add("-soot-classpath");
-            File dacapoJar = new File("./decapo/dacapo-9.12-MR1-bach.jar");
-            if (dacapoJar.exists()) {
-                argsList.add(classpath + ":" + dacapoJar.getPath());
-            } else {
-                argsList.add(classpath);
-            }
-            argsList.add("-prepend-classpath");
-
-            File reflLog = new File(processDir + "/refl.log");
-            if (reflLog.exists()) {
-                argsList.add("-p");
-                argsList.add("cg");
-                argsList.add("reflection-log:" + reflLog.getPath());
-            }
-
-            argsList.add("-p");
-            argsList.add("cg.spark");
-            argsList.add("on");
-            argsList.add("-ire");
-            for (String pkg : new String[] { "org.apache.*", "org.dacapo.*", "jdt.*", "jdk.*", "java.*", "org.*",
-                    "com.*" }) {
-                argsList.add("-i");
-                argsList.add(pkg);
-            }
-        } else {
-            argsList.add("-cp");
-            argsList.add(classpath);
-            argsList.add("-pp");
-            for (String pkg : new String[] { "java.*", "javax.*", "sun.*", "com.sun.*", "jdk.*" }) {
-                argsList.add("-exclude");
-                argsList.add(pkg);
-            }
+        argsList.add("-cp");
+        argsList.add(classpath);
+        argsList.add("-pp");
+        for (String pkg : new String[] { "java.*", "javax.*", "sun.*", "com.sun.*", "jdk.*" }) {
+            argsList.add("-exclude");
+            argsList.add(pkg);
         }
 
         String[] sootArgs = argsList.toArray(new String[0]);

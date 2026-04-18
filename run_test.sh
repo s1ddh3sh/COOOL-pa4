@@ -9,7 +9,7 @@ output_root="$root/sootOutput"
 csv_file="$root/run_test.csv"
 
 iters="10"
-tests=(Test1 Test2 Test3 Test4 Test5 Test6 Test7 Test8 Test9 Test10 out-fop out-avrora out-batik out-luindex out-xalan)
+tests=(Test1 Test2 Test3 Test4 Test5 Test6 Test7 Test8 Test9 Test10)
 
 usage() {
   echo "Usage: ./run_test.sh [iterations] [TestName ...]" >&2
@@ -19,7 +19,7 @@ if [[ "$#" -ge 1 ]]; then
   if [[ "$1" =~ ^[0-9]+$ ]] && [[ "$1" -gt 0 ]]; then
     iters="$1"
     shift
-  elif [[ "$1" != Test* && "$1" != out-* ]]; then
+  elif [[ "$1" != Test* ]]; then
     usage
     exit 1
   fi
@@ -85,36 +85,22 @@ for algo in "${algorithms[@]}"; do
 done
 
 for t in "${tests[@]}"; do
-  scratch_dir="$root/.tmp_scratch"
-  if [[ -d "$root/decapo/$t" ]]; then
-    is_dacapo=1
-    main_class="Harness"
-    class_rel="Harness.class"
-    orig_cp_base="$root/decapo/$t"
-    bench_id="${t#out-}"
-    # Use isolated scratch directory for DaCapo
-    extra_args=("-s" "small" "--scratch-directory" "$scratch_dir" "$bench_id")
-    measure_scratch="$scratch_dir"
-  else
-    is_dacapo=0
-    test_file="$root/tests/$t/Test.java"
-    main_class="tests.${t}.Test"
-    class_rel="tests/$t/Test.class"
-    orig_cp_base="$root"
-    extra_args=()
-    measure_scratch=""
+  scratch_dir=""
+  test_file="$root/tests/$t/Test.java"
+  main_class="tests.${t}.Test"
+  class_rel="tests/$t/Test.class"
+  orig_cp_base="$root"
+  extra_args=()
+  measure_scratch=""
 
-    if [[ ! -f "$test_file" ]]; then
-      echo "Unknown test: $t" >&2
-      exit 1
-    fi
+  if [[ ! -f "$test_file" ]]; then
+    echo "Unknown test: $t" >&2
+    exit 1
   fi
 
   printf '\n================ %s ================\n' "$t"
 
-  if [[ "$is_dacapo" -eq 0 ]]; then
-    javac "$test_file"
-  fi
+  javac "$test_file"
 
   echo "Generating optimized bytecode..."
   for algo in "${algorithms[@]}"; do
@@ -141,21 +127,6 @@ for t in "${tests[@]}"; do
     fi
   done
 
-  dacapo_jar="$root/decapo/dacapo-9.12-MR1-bach.jar"
-  if [[ "$is_dacapo" -eq 1 ]]; then
-    if [[ ! -f "$dacapo_jar" ]]; then
-      echo "ensure decapo/ folder and it has testcases along with decapo .jar" >&2
-      exit 1
-    fi
-    orig_cp="$orig_cp:$dacapo_jar"
-    cha_cp="$cha_cp:$dacapo_jar"
-    rta_cp="$rta_cp:$dacapo_jar"
-    vta_cp="$vta_cp:$dacapo_jar"
-    cha_before_cp="$cha_before_cp:$dacapo_jar"
-    rta_before_cp="$rta_before_cp:$dacapo_jar"
-    vta_before_cp="$vta_before_cp:$dacapo_jar"
-  fi
-
   echo "Validating functional equivalence..."
   rm -rf "$scratch_dir"
   if ! expected_output="$(java -Xint -cp "$orig_cp" "$main_class" "${extra_args[@]}" 2>&1)"; then
@@ -170,10 +141,6 @@ for t in "${tests[@]}"; do
   for algo in "${algorithms[@]}"; do
     before_cp="$output_root/$t/$algo/before"
     after_cp="$output_root/$t/$algo/after"
-    if [[ "$is_dacapo" -eq 1 ]]; then
-      before_cp="$before_cp:$dacapo_jar"
-      after_cp="$after_cp:$dacapo_jar"
-    fi
 
     rm -rf "$scratch_dir"
     if ! before_output="$(java -Xint -cp "$before_cp" "$main_class" "${extra_args[@]}" 2>&1)"; then
@@ -181,7 +148,7 @@ for t in "${tests[@]}"; do
       invalid_reason["$algo"]="before crashed"
       continue
     fi
-    if [[ "$is_dacapo" -eq 0 && "$before_output" != "$expected_output" ]]; then
+    if [[ "$before_output" != "$expected_output" ]]; then
       valid_after["$algo"]=0
       invalid_reason["$algo"]="before output mismatch"
       continue
@@ -193,7 +160,7 @@ for t in "${tests[@]}"; do
       invalid_reason["$algo"]="after crashed"
       continue
     fi
-    if [[ "$is_dacapo" -eq 0 && "$after_output" != "$expected_output" ]]; then
+    if [[ "$after_output" != "$expected_output" ]]; then
       valid_after["$algo"]=0
       invalid_reason["$algo"]="after output mismatch"
       continue
@@ -215,9 +182,6 @@ for t in "${tests[@]}"; do
 
   for algo in "${algorithms[@]}"; do
     after_cp="$output_root/$t/$algo/after"
-    if [[ "$is_dacapo" -eq 1 ]]; then
-      after_cp="$after_cp:$dacapo_jar"
-    fi
 
     if [[ "${valid_after[$algo]}" == "1" ]]; then
       if ns="$(measure "$after_cp" "$main_class" "$measure_scratch" "${extra_args[@]}")"; then
