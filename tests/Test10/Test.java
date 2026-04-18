@@ -1,5 +1,8 @@
 package tests.Test10;
 
+// Scenario: one mono-looking loop and one clearly polymorphic loop over three stages.
+// Expected: apply call in mono loop is still non-inline in this pass; poly loop is non-inline too.
+
 abstract class Stage {
     abstract int apply(int x);
 }
@@ -29,6 +32,7 @@ class Program {
     int runMono(Stage s, int rounds) {
         int acc = 0;
         for (int i = 0; i < rounds; i++) {
+            // Should NOT inline: call goes through Stage reference.
             acc += s.apply(i);
             acc ^= acc << 2;
         }
@@ -47,6 +51,7 @@ class Program {
             } else {
                 s = c;
             }
+            // Should NOT inline: this site is intentionally polymorphic.
             acc += s.apply(i);
             acc ^= acc >>> 1;
         }

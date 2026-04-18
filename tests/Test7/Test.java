@@ -1,5 +1,8 @@
 package tests.Test7;
 
+// Scenario: holder keeps strategy in a field and calls it in a hot loop.
+// Expected: strategy call stays non-inline.
+
 abstract class Strategy {
     abstract int act(int x);
 }
@@ -28,6 +31,7 @@ class Holder {
     int run(int rounds) {
         int acc = 0;
         for (int i = 0; i < rounds; i++) {
+            // Should NOT inline: virtual call through Strategy field.
             acc += strategy.act(i);
             acc ^= acc >>> 2;
         }

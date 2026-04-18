@@ -1,0 +1,2 @@
+We declare that AI tools were used to assist in generating test cases for our optimization implemented using the Soot framework.
+We also used AI resources were also used to learn the about the Soot API.

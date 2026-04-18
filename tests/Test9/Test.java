@@ -1,5 +1,8 @@
 package tests.Test9;
 
+// Scenario: same-class helper chain builds a primary converter, then loop calls virtual cvt.
+// Expected: helper calls inline, cvt call non-inline.
+
 abstract class Converter {
     abstract int cvt(int x);
 }
@@ -33,13 +36,16 @@ class Pipeline {
 
     Converter buildPrimary() {
         Converter c = new PlusOne();
+        // Should inline: same-class helper call.
         return id(c);
     }
 
     int run(int rounds) {
+        // Should inline: same-class helper call.
         Converter c = buildPrimary();
         int acc = 0;
         for (int i = 0; i < rounds; i++) {
+            // Should NOT inline: virtual call on Converter.
             acc += c.cvt(i);
             acc ^= acc >>> 3;
         }

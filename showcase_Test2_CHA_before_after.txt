@@ -1,0 +1,84 @@
+]633;E;echo "Testcase: Test2 | Algorithm: CHA";2b1c4fa8-df69-486e-9b6a-bc71227b12b3]633;CTestcase: Test2 | Algorithm: CHA
+File: tests.Test2.Runner.run(int)
+
+===== BEFORE =====
+    int run(int)
+    {
+        tests.Test2.Runner r0;
+        tests.Test2.Stepper r1;
+        int i0, $i1, $i2, i3, i4, i5;
+
+        r0 := @this: tests.Test2.Runner;
+
+        i0 := @parameter0: int;
+
+        r1 = virtualinvoke r0.<tests.Test2.Runner: tests.Test2.Stepper newHotStepper()>();
+
+        i3 = 0;
+
+        i4 = 0;
+
+     label1:
+        if i4 >= i0 goto label2;
+
+        $i1 = virtualinvoke r1.<tests.Test2.Stepper: int step(int)>(i4);
+
+        i5 = i3 + $i1;
+
+        $i2 = i5 << 2;
+
+        i3 = i5 ^ $i2;
+
+        i4 = i4 + 1;
+
+        goto label1;
+
+     label2:
+        return i3;
+    }
+
+===== AFTER =====
+    int run(int)
+    {
+        tests.Test2.Runner r0, r3;
+        tests.Test2.Stepper r1;
+        tests.Test2.Inc $r2;
+        int i0, $i1, $i2, i3, i4, i5;
+
+        r0 := @this: tests.Test2.Runner;
+
+        i0 := @parameter0: int;
+
+        r3 = r0;
+
+        $r2 = new tests.Test2.Inc;
+
+        specialinvoke $r2.<tests.Test2.Inc: void <init>()>();
+
+        r1 = $r2;
+
+        goto label1;
+
+     label1:
+        i3 = 0;
+
+        i4 = 0;
+
+     label2:
+        if i4 >= i0 goto label3;
+
+        $i1 = virtualinvoke r1.<tests.Test2.Stepper: int step(int)>(i4);
+
+        i5 = i3 + $i1;
+
+        $i2 = i5 << 2;
+
+        i3 = i5 ^ $i2;
+
+        i4 = i4 + 1;
+
+        goto label2;
+
+     label3:
+        return i3;
+    }

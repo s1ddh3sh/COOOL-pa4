@@ -8,8 +8,7 @@ import java.util.*;
 public class Main {
     public static void main(String[] args) {
         if (args.length < 1) {
-            System.err
-                    .println("Usage: java -cp .:soot-4.6.0-jar-with-dependencies.jar src/Main <TestDir> [ALGO] [J|C]");
+            System.err.println("Usage: java -cp .:soot-4.6.0-jar-with-dependencies.jar src/Main <TestDir> [ALGO] [J|C]");
             return;
         }
 
@@ -50,15 +49,8 @@ public class Main {
         runSoot(classpath, processDir, mainClass, transformedOutputDir, true, algorithm, outputFormat, isDaCapo);
     }
 
-    private static void runSoot(
-            String classpath,
-            String processDir,
-            String mainClass,
-            String outputDir,
-            boolean transformedPass,
-            String algorithm,
-            String outputFormat,
-            boolean isDaCapo) {
+        private static void runSoot(String classpath, String processDir, String mainClass, String outputDir,
+            boolean transformedPass, String algorithm, String outputFormat, boolean isDaCapo) {
         G.reset();
 
         Options.v().set_keep_line_number(true);
@@ -77,15 +69,19 @@ public class Main {
         }
 
         List<String> argsList = new ArrayList<>(Arrays.asList(
-                "-w",
-                "-app",
-                "-allow-phantom-refs",
-                "-no-bodies-for-excluded",
-                "-keep-line-number",
-                "-f", outputFormat,
-                "-d", outputDir,
-                "-main-class", mainClass,
-                "-process-dir", processDir));
+            "-w",
+            "-app",
+            "-allow-phantom-refs",
+            "-no-bodies-for-excluded",
+            "-keep-line-number",
+            "-f",
+            outputFormat,
+            "-d",
+            outputDir,
+            "-main-class",
+            mainClass,
+            "-process-dir",
+            processDir));
 
         if (isDaCapo) {
             argsList.add("-soot-classpath");

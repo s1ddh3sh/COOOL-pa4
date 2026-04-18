@@ -1,5 +1,8 @@
 package tests.Test5;
 
+// Scenario: warm up one cold implementation, then run a hot task in a loop.
+// Expected: task virtual calls remain non-inline.
+
 abstract class Task {
     abstract int run(int x);
 }
@@ -21,6 +24,7 @@ class Cold extends Task {
 class Boot {
     static int touchColdPath() {
         Task t = new Cold();
+        // Should NOT inline: virtual call through Task reference.
         return t.run(3);
     }
 }
@@ -29,6 +33,7 @@ class Bench {
     int execute(Task t, int rounds) {
         int acc = 1;
         for (int i = 0; i < rounds; i++) {
+            // Should NOT inline: virtual dispatch on Task.
             acc ^= t.run(i);
             acc += acc >>> 1;
         }

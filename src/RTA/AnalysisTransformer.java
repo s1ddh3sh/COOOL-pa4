@@ -30,20 +30,28 @@ public class AnalysisTransformer extends SceneTransformer {
     }
 
     private void processMethod(SootMethod method, Hierarchy hierarchy) {
-        if (!method.isConcrete()) return;
+        if (!method.isConcrete()) {
+            return;
+        }
 
         Body body = method.retrieveActiveBody();
         Map<Unit, SootMethod> monomorphicCalls = new LinkedHashMap<>();
 
         for (Unit unit : body.getUnits()) {
-            if (!(unit instanceof AssignStmt)) continue;
+            if (!(unit instanceof AssignStmt)) {
+                continue;
+            }
             Value rhs = ((AssignStmt) unit).getRightOp();
-            if (!(rhs instanceof NewExpr)) continue;
+            if (!(rhs instanceof NewExpr)) {
+                continue;
+            }
 
             SootClass allocated = ((RefType) ((NewExpr) rhs).getType()).getSootClass();
             if (instantiatedClasses.add(allocated)) {
                 for (SootMethod visited : new ArrayList<>(reachableMethods)) {
-                    if (!visited.equals(method)) enqueue(visited);
+                    if (!visited.equals(method)) {
+                        enqueue(visited);
+                    }
                 }
             }
         }
@@ -52,19 +60,25 @@ public class AnalysisTransformer extends SceneTransformer {
 
         for (Unit unit : body.getUnits()) {
             Stmt stmt = (Stmt) unit;
-            if (!stmt.containsInvokeExpr()) continue;
+            if (!stmt.containsInvokeExpr()) {
+                continue;
+            }
 
             InvokeExpr invoke = stmt.getInvokeExpr();
             if (!(invoke instanceof VirtualInvokeExpr)
                     && !(invoke instanceof InterfaceInvokeExpr)) {
                 SootMethod callee = invoke.getMethod();
-                if (callee.getDeclaringClass().isApplicationClass()) enqueue(callee);
+                if (callee.getDeclaringClass().isApplicationClass()) {
+                    enqueue(callee);
+                }
                 continue;
             }
 
-            SootMethod declared   = invoke.getMethod();
-            SootClass  declClass  = declared.getDeclaringClass();
-            if (!declClass.isApplicationClass()) continue;
+            SootMethod declared = invoke.getMethod();
+            SootClass declClass = declared.getDeclaringClass();
+            if (!declClass.isApplicationClass()) {
+                continue;
+            }
 
             Set<SootMethod> targets = resolveRTA(hierarchy, invoke, declared, declClass);
 
@@ -72,7 +86,9 @@ public class AnalysisTransformer extends SceneTransformer {
                 monomorphicCalls.put(stmt, targets.iterator().next());
             }
 
-            for (SootMethod t : targets) enqueue(t);
+            for (SootMethod t : targets) {
+                enqueue(t);
+            }
 
             int line = stmt.getJavaSourceStartLineNumber();
             sites.add(new CallSiteInfo(line, declared.getName(), targets));
@@ -82,12 +98,18 @@ public class AnalysisTransformer extends SceneTransformer {
             inlineMonomorphicCall(method, entry.getKey(), entry.getValue());
         }
 
-        if (!sites.isEmpty()) callGraph.put(method, sites);
+        if (!sites.isEmpty()) {
+            callGraph.put(method, sites);
+        }
     }
 
     private void inlineMonomorphicCall(SootMethod caller, Unit callUnit, SootMethod target) {
-        if (!(callUnit instanceof Stmt)) return;
-        if (!canInline(caller, target)) return;
+        if (!(callUnit instanceof Stmt)) {
+            return;
+        }
+        if (!canInline(caller, target)) {
+            return;
+        }
 
         Stmt stmt = (Stmt) callUnit;
         try {
@@ -98,24 +120,28 @@ public class AnalysisTransformer extends SceneTransformer {
     }
 
     private boolean canInline(SootMethod caller, SootMethod target) {
-        if (caller == null || target == null) return false;
-        if (!target.isConcrete()) return false;
+        if (caller == null || target == null) {
+            return false;
+        }
+        if (!target.isConcrete()) {
+            return false;
+        }
         String targetName = target.getName();
-        if ("<init>".equals(targetName) || "<clinit>".equals(targetName)) return false;
+        if ("<init>".equals(targetName) || "<clinit>".equals(targetName)) {
+            return false;
+        }
 
         // Avoid illegal access after inlining private members across classes.
         return caller.getDeclaringClass().equals(target.getDeclaringClass());
     }
 
-    // ─────────────────────────────────────────────────────────────────────────
-    // RTA resolution  =  CHA candidate set  ∩  instantiatedClasses
-    // ─────────────────────────────────────────────────────────────────────────
+    // RTA resolution = CHA candidate set intersect instantiated classes.
 
     private Set<SootMethod> resolveRTA(
             Hierarchy hierarchy,
             InvokeExpr invoke,
             SootMethod declared,
-            SootClass  declaredClass) {
+            SootClass declaredClass) {
 
         Set<SootMethod> targets = new LinkedHashSet<>();
 
@@ -131,47 +157,68 @@ public class AnalysisTransformer extends SceneTransformer {
         }
 
         for (SootClass sub : chaSubtypes) {
-            if (!instantiatedClasses.contains(sub)) continue;
+            if (!instantiatedClasses.contains(sub)) {
+                continue;
+            }
 
             SootMethod resolved = dispatch(sub, declared);
-            if (resolved != null) targets.add(resolved);
+            if (resolved != null) {
+                targets.add(resolved);
+            }
         }
 
         return targets;
     }
 
     private void addConcreteSubtypes(Hierarchy hierarchy, SootClass cls, List<SootClass> out) {
-        if (!cls.isAbstract() && !cls.isInterface()) out.add(cls);
+        if (!cls.isAbstract() && !cls.isInterface()) {
+            out.add(cls);
+        }
         for (SootClass sub : hierarchy.getSubclassesOf(cls)) {
-            if (!sub.isAbstract() && !sub.isInterface()) out.add(sub);
+            if (!sub.isAbstract() && !sub.isInterface()) {
+                out.add(sub);
+            }
         }
     }
 
     private SootMethod dispatch(SootClass cls, SootMethod declared) {
-        String     name   = declared.getName();
+        String name = declared.getName();
         List<Type> params = declared.getParameterTypes();
-        Type       ret    = declared.getReturnType();
+        Type ret = declared.getReturnType();
 
         SootClass cur = cls;
         while (cur != null) {
-            if (cur.declaresMethod(name, params, ret))
+            if (cur.declaresMethod(name, params, ret)) {
                 return cur.getMethod(name, params, ret);
+            }
             cur = cur.hasSuperclass() ? cur.getSuperclass() : null;
         }
         return null;
     }
 
     private boolean isEntryPoint(SootMethod m) {
-        if (!m.isConcrete() || m.isPhantom()) return false;
-        if (m.getName().equals("main") && m.isPublic() && m.isStatic()) return true;
-        if (m.getName().equals("<clinit>"))                               return true;
+        if (!m.isConcrete() || m.isPhantom()) {
+            return false;
+        }
+        if (m.getName().equals("main") && m.isPublic() && m.isStatic()) {
+            return true;
+        }
+        if (m.getName().equals("<clinit>")) {
+            return true;
+        }
         return false;
     }
 
     private void enqueue(SootMethod m) {
-        if (m == null || !m.isConcrete() || m.isPhantom()) return;
-        if (!m.getDeclaringClass().isApplicationClass())    return;
-        if (reachableMethods.add(m)) worklist.add(m);
+        if (m == null || !m.isConcrete() || m.isPhantom()) {
+            return;
+        }
+        if (!m.getDeclaringClass().isApplicationClass()) {
+            return;
+        }
+        if (reachableMethods.add(m)) {
+            worklist.add(m);
+        }
     }
 
     private void printCallGraph() {
@@ -211,14 +258,14 @@ public class AnalysisTransformer extends SceneTransformer {
     }
 
     private static class CallSiteInfo {
-        final int             line;
-        final String          methodName;
+        final int line;
+        final String methodName;
         final Set<SootMethod> targets;
 
         CallSiteInfo(int line, String methodName, Set<SootMethod> targets) {
-            this.line       = line;
+            this.line = line;
             this.methodName = methodName;
-            this.targets    = targets;
+            this.targets = targets;
         }
     }
 }

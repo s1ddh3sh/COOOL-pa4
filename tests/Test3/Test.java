@@ -1,5 +1,8 @@
 package tests.Test3;
 
+// Scenario: compare one stable receiver loop with one alternating receiver loop.
+// Expected: both map calls stay non-inline for this pass.
+
 abstract class Filter {
     abstract int map(int x);
 }
@@ -22,6 +25,7 @@ class Mixer {
     int processMono(Filter f, int n) {
         int acc = 0;
         for (int i = 0; i < n; i++) {
+            // Should NOT inline: call goes to Filter implementation class.
             acc += f.map(i);
             acc ^= acc >>> 3;
         }
@@ -32,6 +36,7 @@ class Mixer {
         int acc = 0;
         for (int i = 0; i < n; i++) {
             Filter f = ((i & 1) == 0) ? a : b;
+            // Should NOT inline: this site is intentionally polymorphic.
             acc += f.map(i);
             acc ^= acc << 1;
         }

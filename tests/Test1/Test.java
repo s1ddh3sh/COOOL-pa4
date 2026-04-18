@@ -1,5 +1,8 @@
 package tests.Test1;
 
+// Scenario: hot loop calls one abstract method while an alternate impl is also allocated.
+// Expected here: mostly non-inlining callsites.
+
 abstract class Op {
     abstract int apply(int x);
 }
@@ -28,6 +31,7 @@ class Engine {
     int run(int rounds) {
         int acc = 1;
         for (int i = 0; i < rounds; i++) {
+            // Should NOT inline: receiver type can be Add or Mul in this test setup.
             acc = op.apply(acc + i);
             acc ^= acc << 5;
         }
@@ -41,6 +45,7 @@ public class Test {
     private static int repeat(Engine engine, int times, int rounds) {
         int out = 0;
         for (int i = 0; i < times; i++) {
+            // Should NOT inline in our pass: caller/callee are different classes.
             out ^= engine.run(rounds);
         }
         return out;

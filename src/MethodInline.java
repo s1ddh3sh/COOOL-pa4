@@ -7,15 +7,18 @@ import soot.jimple.toolkits.invoke.SiteInliner;
 
 public class MethodInline {
     public static void inline(SootMethod method) {
-        if (!method.isConcrete())
+        if (!method.isConcrete()) {
             return;
+        }
+
         List<Stmt> toInline = new ArrayList<>();
         Body body = method.retrieveActiveBody();
         for (Unit u : body.getUnits()) {
             Stmt stmt = (Stmt) u;
 
-            if (!stmt.containsInvokeExpr())
+            if (!stmt.containsInvokeExpr()) {
                 continue;
+            }
 
             InvokeExpr expr = stmt.getInvokeExpr();
 
@@ -26,11 +29,13 @@ public class MethodInline {
 
         for (Stmt stmt : toInline) {
             SootMethod target = stmt.getInvokeExpr().getMethod();
-            if (!target.isConcrete())
+            if (!target.isConcrete()) {
                 continue;
+            }
             String targetName = target.getName();
-            if ("<init>".equals(targetName) || "<clinit>".equals(targetName))
+            if ("<init>".equals(targetName) || "<clinit>".equals(targetName)) {
                 continue;
+            }
 
             SiteInliner.inlineSite(target, stmt, method);
         }

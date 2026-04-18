@@ -1,5 +1,8 @@
 package tests.Test6;
 
+// Scenario: loop rotates through three kernel implementations.
+// Expected: eval call should stay non-inline (polymorphic receiver set).
+
 abstract class Kernel {
     abstract int eval(int x);
 }
@@ -30,6 +33,7 @@ class Loop {
         int acc = 0;
         for (int i = 0; i < rounds; i++) {
             Kernel k = kernels[i % kernels.length];
+            // Should NOT inline: receiver can be K1, K2, or K3.
             acc += k.eval(i);
             acc ^= acc << 4;
         }

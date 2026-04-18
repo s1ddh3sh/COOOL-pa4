@@ -69,9 +69,13 @@ public class AnalysisTransformer extends SceneTransformer {
         }
 
         Node lhsNode = null;
-        if      (lhs instanceof Local)           lhsNode = localNode(method, (Local) lhs);
-        else if (lhs instanceof InstanceFieldRef) lhsNode = fieldNode(((InstanceFieldRef) lhs).getField());
-        else if (lhs instanceof StaticFieldRef)   lhsNode = fieldNode(((StaticFieldRef)   lhs).getField());
+        if (lhs instanceof Local) {
+            lhsNode = localNode(method, (Local) lhs);
+        } else if (lhs instanceof InstanceFieldRef) {
+            lhsNode = fieldNode(((InstanceFieldRef) lhs).getField());
+        } else if (lhs instanceof StaticFieldRef) {
+            lhsNode = fieldNode(((StaticFieldRef) lhs).getField());
+        }
 
         if (lhsNode == null) return;
 
@@ -93,38 +97,41 @@ public class AnalysisTransformer extends SceneTransformer {
         }
     }
 
-    private void addCallEdges(InvokeExpr invoke, Local retLocal,
-                              SootMethod caller, Hierarchy hierarchy) {
+    private void addCallEdges(InvokeExpr invoke, Local retLocal, SootMethod caller, Hierarchy hierarchy) {
 
         List<SootMethod> targets = new ArrayList<>();
 
         if (invoke instanceof VirtualInvokeExpr || invoke instanceof InterfaceInvokeExpr) {
-            SootMethod declared  = invoke.getMethod();
-            SootClass  declClass = declared.getDeclaringClass();
-            if (declClass.isApplicationClass())
+            SootMethod declared = invoke.getMethod();
+            SootClass declClass = declared.getDeclaringClass();
+            if (declClass.isApplicationClass()) {
                 targets.addAll(resolveCHA(hierarchy, invoke, declared, declClass));
+            }
 
         } else if (invoke instanceof StaticInvokeExpr || invoke instanceof SpecialInvokeExpr) {
             SootMethod callee = invoke.getMethod();
-            if (callee.getDeclaringClass().isApplicationClass() && callee.isConcrete())
+            if (callee.getDeclaringClass().isApplicationClass() && callee.isConcrete()) {
                 targets.add(callee);
+            }
         }
 
         for (SootMethod target : targets) {
             if (!target.isConcrete()) continue;
 
-            List<Value> args         = invoke.getArgs();
+            List<Value> args = invoke.getArgs();
             List<Local> formalParams = target.retrieveActiveBody().getParameterLocals();
 
             int n = Math.min(args.size(), formalParams.size());
             for (int i = 0; i < n; i++) {
-                if (args.get(i) instanceof Local)
+                if (args.get(i) instanceof Local) {
                     addEdge(localNode(caller, (Local) args.get(i)),
                             localNode(target, formalParams.get(i)));
+                }
             }
 
-            if (retLocal != null)
+            if (retLocal != null) {
                 addEdge(retNode(target), localNode(caller, retLocal));
+            }
         }
     }
 
@@ -160,22 +167,22 @@ public class AnalysisTransformer extends SceneTransformer {
             if (!(invoke instanceof VirtualInvokeExpr)
                     && !(invoke instanceof InterfaceInvokeExpr)) continue;
 
-            SootMethod declared  = invoke.getMethod();
-            SootClass  declClass = declared.getDeclaringClass();
+            SootMethod declared = invoke.getMethod();
+            SootClass declClass = declared.getDeclaringClass();
             if (!declClass.isApplicationClass()) continue;
 
             Value base = (invoke instanceof VirtualInvokeExpr)
-                    ? ((VirtualInvokeExpr)   invoke).getBase()
+                    ? ((VirtualInvokeExpr) invoke).getBase()
                     : ((InterfaceInvokeExpr) invoke).getBase();
             if (!(base instanceof Local)) continue;
 
-            Node           receiverNode  = localNode(method, (Local) base);
+                Node receiverNode = localNode(method, (Local) base);
             Set<SootClass> receiverTypes = typeMap.getOrDefault(receiverNode, Collections.emptySet());
 
             Set<SootMethod> targets = new LinkedHashSet<>();
             for (SootClass cls : receiverTypes) {
-                if (cls.isAbstract() || cls.isInterface())      continue;
-                if (!isSubtype(hierarchy, cls, declClass))       continue;
+                if (cls.isAbstract() || cls.isInterface()) continue;
+                if (!isSubtype(hierarchy, cls, declClass)) continue;
                 SootMethod resolved = dispatch(cls, declared);
                 if (resolved != null) targets.add(resolved);
             }
@@ -192,7 +199,9 @@ public class AnalysisTransformer extends SceneTransformer {
             inlineMonomorphicCall(method, entry.getKey(), entry.getValue());
         }
 
-        if (!sites.isEmpty()) callGraph.put(method, sites);
+        if (!sites.isEmpty()) {
+            callGraph.put(method, sites);
+        }
     }
 
     private void inlineMonomorphicCall(SootMethod caller, Unit callUnit, SootMethod target) {
@@ -225,8 +234,8 @@ public class AnalysisTransformer extends SceneTransformer {
         typeMap.computeIfAbsent(n, k -> new HashSet<>()).add(cls);
     }
 
-    private Set<SootMethod> resolveCHA(Hierarchy hierarchy, InvokeExpr invoke,
-                                       SootMethod declared, SootClass declaredClass) {
+        private Set<SootMethod> resolveCHA(Hierarchy hierarchy, InvokeExpr invoke,
+            SootMethod declared, SootClass declaredClass) {
         List<SootClass> concreteSubtypes = new ArrayList<>();
         if (invoke instanceof InterfaceInvokeExpr) {
             if (declaredClass.isInterface()) {
@@ -246,19 +255,21 @@ public class AnalysisTransformer extends SceneTransformer {
 
     private void addConcreteSubtypes(Hierarchy hierarchy, SootClass cls, List<SootClass> out) {
         if (!cls.isAbstract() && !cls.isInterface()) out.add(cls);
-        for (SootClass sub : hierarchy.getSubclassesOf(cls))
+        for (SootClass sub : hierarchy.getSubclassesOf(cls)) {
             if (!sub.isAbstract() && !sub.isInterface()) out.add(sub);
+        }
     }
 
     /** Standard virtual dispatch search up the class chain. */
     private SootMethod dispatch(SootClass cls, SootMethod declared) {
-        String     name   = declared.getName();
+        String name = declared.getName();
         List<Type> params = declared.getParameterTypes();
-        Type       ret    = declared.getReturnType();
-        SootClass  cur    = cls;
+        Type ret = declared.getReturnType();
+        SootClass cur = cls;
         while (cur != null) {
-            if (cur.declaresMethod(name, params, ret))
+            if (cur.declaresMethod(name, params, ret)) {
                 return cur.getMethod(name, params, ret);
+            }
             cur = cur.hasSuperclass() ? cur.getSuperclass() : null;
         }
         return null;
@@ -281,8 +292,10 @@ public class AnalysisTransformer extends SceneTransformer {
     }
 
     private Node localNode(SootMethod m, Local l) { return new LocalNode(m, l); }
-    private Node fieldNode(SootField  f)           { return new FieldNode(f);    }
-    private Node retNode  (SootMethod m)           { return new RetNode(m);      }
+
+    private Node fieldNode(SootField f) { return new FieldNode(f); }
+
+    private Node retNode(SootMethod m) { return new RetNode(m); }
 
     private void printCallGraph() {
         System.out.println("\n========== VTA Call Graph ==========\n");
@@ -313,15 +326,16 @@ public class AnalysisTransformer extends SceneTransformer {
         }
     }
 
-    abstract static class Node {}
+    abstract static class Node {
+    }
 
     static final class LocalNode extends Node {
         final SootMethod method;
-        final Local      local;
+        final Local local;
 
         LocalNode(SootMethod method, Local local) {
             this.method = method;
-            this.local  = local;
+            this.local = local;
         }
 
         @Override public boolean equals(Object o) {
@@ -366,14 +380,14 @@ public class AnalysisTransformer extends SceneTransformer {
     }
 
     private static final class CallSiteInfo {
-        final int             line;
-        final String          methodName;
+        final int line;
+        final String methodName;
         final Set<SootMethod> targets;
 
         CallSiteInfo(int line, String methodName, Set<SootMethod> targets) {
-            this.line       = line;
+            this.line = line;
             this.methodName = methodName;
-            this.targets    = targets;
+            this.targets = targets;
         }
     }
 }

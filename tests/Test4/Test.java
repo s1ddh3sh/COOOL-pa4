@@ -1,5 +1,8 @@
 package tests.Test4;
 
+// Scenario: deep helper chain in one class plus one alternate node for noise.
+// Expected: virtual eval call stays non-inline in this setup.
+
 abstract class Node {
     abstract int eval(int x);
 }
@@ -7,6 +10,7 @@ abstract class Node {
 class ChainNode extends Node {
     @Override
     int eval(int x) {
+        // Should NOT inline in this pass: private helper calls use special invoke.
         return step1(x);
     }
 
@@ -42,6 +46,7 @@ class Loop {
     int run(Node n, int rounds) {
         int acc = 0;
         for (int i = 0; i < rounds; i++) {
+            // Should NOT inline: virtual call on Node.
             acc ^= n.eval(i);
             acc += acc << 1;
         }

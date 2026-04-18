@@ -1,5 +1,8 @@
 package tests.Test2;
 
+// Scenario: one helper call is monomorphic, but loop body uses a virtual step call.
+// Expected: inline helper call, keep step call as non-inline.
+
 abstract class Stepper {
     abstract int step(int x);
 }
@@ -22,6 +25,7 @@ class Noise {
     static Stepper side = new Dec();
 
     static int warmup() {
+        // Should NOT inline: virtual call on Stepper and not a same-class helper call.
         return side.step(1);
     }
 }
@@ -32,9 +36,11 @@ class Runner {
     }
 
     int run(int n) {
+        // Should inline: same-class helper call with one concrete target here.
         Stepper s = newHotStepper();
         int acc = 0;
         for (int i = 0; i < n; i++) {
+            // Should NOT inline: virtual dispatch on Stepper in the hot loop.
             acc += s.step(i);
             acc ^= acc << 2;
         }
