@@ -8,7 +8,7 @@ build_root="$root/.build-algorithms"
 output_root="$root/sootOutput"
 
 iters="5"
-tests=(Test1 Test2 Test3 Test4 Test5 Test6 Test7 Test8 Test9 Test10)
+tests=(Test1 Test2 Test3 Test4 Test5 Test6 Test7 Test8 Test9 Test10 out-fop out-avrora out-batik out-luindex out-xalan)
 
 usage() {
   echo "Usage: ./run_test.sh [iterations] [TestName ...]" >&2
@@ -18,7 +18,7 @@ if [[ "$#" -ge 1 ]]; then
   if [[ "$1" =~ ^[0-9]+$ ]] && [[ "$1" -gt 0 ]]; then
     iters="$1"
     shift
-  elif [[ "$1" != Test* ]]; then
+  elif [[ "$1" != Test* && "$1" != out-* ]]; then
     usage
     exit 1
   fi
@@ -44,13 +44,25 @@ speedup() {
 measure() {
   local cp="$1"
   local main_class="$2"
+  local scratch_dir="$3"
+  shift 3
+  local args=("$@")
   local i start end total=0
 
-  java -Xint -cp "$cp" "$main_class" >/dev/null 2>&1 || return 1
+  # Warm up and verify success
+  if [[ -n "$scratch_dir" ]]; then rm -rf "$scratch_dir"; fi
+  if ! output="$(java -Xint -cp "$cp" "$main_class" "${args[@]}" 2>&1)"; then
+    echo "Measurement failed (warm-up): $output" >&2
+    return 1
+  fi
 
   for ((i = 1; i <= iters; i++)); do
+    if [[ -n "$scratch_dir" ]]; then rm -rf "$scratch_dir"; fi
     start="$(date +%s%N)"
-    java -Xint -cp "$cp" "$main_class" >/dev/null 2>&1 || return 1
+    if ! output="$(java -Xint -cp "$cp" "$main_class" "${args[@]}" 2>&1)"; then
+      echo "Measurement failed (iteration $i): $output" >&2
+      return 1
+    fi
     end="$(date +%s%N)"
     total=$((total + end - start))
   done
@@ -70,18 +82,36 @@ for algo in "${algorithms[@]}"; do
 done
 
 for t in "${tests[@]}"; do
-  test_file="$root/tests/$t/Test.java"
-  main_class="tests.${t}.Test"
-  class_rel="tests/$t/Test.class"
+  scratch_dir="$root/.tmp_scratch"
+  if [[ -d "$root/decapo/$t" ]]; then
+    is_dacapo=1
+    main_class="Harness"
+    class_rel="Harness.class"
+    orig_cp_base="$root/decapo/$t"
+    bench_id="${t#out-}"
+    # Use isolated scratch directory for DaCapo
+    extra_args=("-s" "small" "--scratch-directory" "$scratch_dir" "$bench_id")
+    measure_scratch="$scratch_dir"
+  else
+    is_dacapo=0
+    test_file="$root/tests/$t/Test.java"
+    main_class="tests.${t}.Test"
+    class_rel="tests/$t/Test.class"
+    orig_cp_base="$root"
+    extra_args=()
+    measure_scratch=""
 
-  if [[ ! -f "$test_file" ]]; then
-    echo "Unknown test: tests/$t" >&2
-    exit 1
+    if [[ ! -f "$test_file" ]]; then
+      echo "Unknown test: $t" >&2
+      exit 1
+    fi
   fi
 
   printf '\n================ %s ================\n' "$t"
 
-  javac "$test_file"
+  if [[ "$is_dacapo" -eq 0 ]]; then
+    javac "$test_file"
+  fi
 
   echo "Generating optimized bytecode..."
   for algo in "${algorithms[@]}"; do
@@ -90,10 +120,10 @@ for t in "${tests[@]}"; do
     rm -rf "$out_dir"
     mkdir -p "$out_dir"
 
-    java -cp "$build_root/$algo:$soot_jar" src.Main "$t" "$algo" C >"$log_file" 2>&1
+    java -Xmx8g -cp "$root:$build_root/$algo:$soot_jar" src.Main "$t" "$algo" C >"$log_file" 2>&1
   done
 
-  orig_cp="$root"
+  orig_cp="$orig_cp_base"
   cha_cp="$output_root/$t/CHA/after"
   rta_cp="$output_root/$t/RTA/after"
   vta_cp="$output_root/$t/VTA/after"
@@ -108,8 +138,20 @@ for t in "${tests[@]}"; do
     fi
   done
 
+  dacapo_jar="$root/decapo/dacapo-9.12-MR1-bach.jar"
+  if [[ "$is_dacapo" -eq 1 ]]; then
+    orig_cp="$orig_cp:$dacapo_jar"
+    cha_cp="$cha_cp:$dacapo_jar"
+    rta_cp="$rta_cp:$dacapo_jar"
+    vta_cp="$vta_cp:$dacapo_jar"
+    cha_before_cp="$cha_before_cp:$dacapo_jar"
+    rta_before_cp="$rta_before_cp:$dacapo_jar"
+    vta_before_cp="$vta_before_cp:$dacapo_jar"
+  fi
+
   echo "Validating functional equivalence..."
-  if ! expected_output="$(java -Xint -cp "$orig_cp" "$main_class" 2>&1)"; then
+  rm -rf "$scratch_dir"
+  if ! expected_output="$(java -Xint -cp "$orig_cp" "$main_class" "${extra_args[@]}" 2>&1)"; then
     echo "Original program failed for $t" >&2
     echo "$expected_output" >&2
     exit 1
@@ -121,24 +163,30 @@ for t in "${tests[@]}"; do
   for algo in "${algorithms[@]}"; do
     before_cp="$output_root/$t/$algo/before"
     after_cp="$output_root/$t/$algo/after"
+    if [[ "$is_dacapo" -eq 1 ]]; then
+      before_cp="$before_cp:$dacapo_jar"
+      after_cp="$after_cp:$dacapo_jar"
+    fi
 
-    if ! before_output="$(java -Xint -cp "$before_cp" "$main_class" 2>&1)"; then
+    rm -rf "$scratch_dir"
+    if ! before_output="$(java -Xint -cp "$before_cp" "$main_class" "${extra_args[@]}" 2>&1)"; then
       valid_after["$algo"]=0
       invalid_reason["$algo"]="before crashed"
       continue
     fi
-    if [[ "$before_output" != "$expected_output" ]]; then
+    if [[ "$is_dacapo" -eq 0 && "$before_output" != "$expected_output" ]]; then
       valid_after["$algo"]=0
       invalid_reason["$algo"]="before output mismatch"
       continue
     fi
 
-    if ! after_output="$(java -Xint -cp "$after_cp" "$main_class" 2>&1)"; then
+    rm -rf "$scratch_dir"
+    if ! after_output="$(java -Xint -cp "$after_cp" "$main_class" "${extra_args[@]}" 2>&1)"; then
       valid_after["$algo"]=0
       invalid_reason["$algo"]="after crashed"
       continue
     fi
-    if [[ "$after_output" != "$expected_output" ]]; then
+    if [[ "$is_dacapo" -eq 0 && "$after_output" != "$expected_output" ]]; then
       valid_after["$algo"]=0
       invalid_reason["$algo"]="after output mismatch"
       continue
@@ -148,7 +196,10 @@ for t in "${tests[@]}"; do
   done
 
   echo "Running benchmark ($iters runs each)..."
-  orig_ns="$(measure "$orig_cp" "$main_class")"
+  if ! orig_ns="$(measure "$orig_cp" "$main_class" "$measure_scratch" "${extra_args[@]}")"; then
+    echo "Failed to measure original program for $t" >&2
+    continue
+  fi
 
   orig_ms="$(to_ms "$orig_ns")"
 
@@ -157,8 +208,12 @@ for t in "${tests[@]}"; do
 
   for algo in "${algorithms[@]}"; do
     after_cp="$output_root/$t/$algo/after"
+    if [[ "$is_dacapo" -eq 1 ]]; then
+      after_cp="$after_cp:$dacapo_jar"
+    fi
+
     if [[ "${valid_after[$algo]}" == "1" ]]; then
-      ns="$(measure "$after_cp" "$main_class")"
+      ns="$(measure "$after_cp" "$main_class" "$measure_scratch" "${extra_args[@]}")"
       ms="$(to_ms "$ns")"
       sp="$(speedup "$orig_ns" "$ns")"
       printf '%-10s %-12s %s\n' "$algo" "$ms" "$sp"

@@ -4,3 +4,5 @@ sootOutput
 **/*_copy.java
 .tmp_compare
 .build-algorithms/
+scratch
+.tmp_scratch
